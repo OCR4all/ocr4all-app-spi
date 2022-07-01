@@ -24,6 +24,14 @@ import de.uniwuerzburg.zpd.ocr4all.application.spi.model.Model;
  */
 public interface ServiceProvider {
 	/**
+	 * Initializes the service provider.
+	 * 
+	 * @param configuration The configuration.
+	 * @since 1.8
+	 */
+	public void initialize(ConfigurationServiceProvider configuration);
+
+	/**
 	 * Returns the service provider name for given locale. The service provider is
 	 * only registered if the name is not null and not empty for the ocr4all
 	 * application language ocr4all.
@@ -75,26 +83,24 @@ public interface ServiceProvider {
 	/**
 	 * Returns the premise.
 	 * 
-	 * @param configuration The service provider configuration.
-	 * @param target        The target. Null if the premise is generic, this means,
-	 *                      it should not depend on a target.
+	 * @param target The target. Null if the premise is generic, this means, it
+	 *               should not depend on a target.
 	 * @return The premise.
 	 * @since 1.8
 	 */
-	default Premise getPremise(ConfigurationServiceProvider configuration, Target target) {
+	default Premise getPremise(Target target) {
 		return null;
 	}
 
 	/**
 	 * Returns the model.
 	 * 
-	 * @param configuration The service provider configuration.
-	 * @param target        The target. Null if the model is generic, this means, it
-	 *                      should not depend on a target.
+	 * @param target The target. Null if the model is generic, this means, it should
+	 *               not depend on a target.
 	 * @return The model.
 	 * @since 1.8
 	 */
-	default Model getModel(ConfigurationServiceProvider configuration, Target target) {
+	default Model getModel(Target target) {
 		return null;
 	}
 }

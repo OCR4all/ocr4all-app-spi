@@ -129,6 +129,95 @@ public class ConfigurationServiceProvider {
 	public SystemCommand getSystemCommand(SystemCommand.Type type) {
 		return type == null ? null : systemCommands.get(type);
 	}
+	
+	/**
+	 * Returns the value of the key of the service provider collection.
+	 * 
+	 * @param collection The service provider collection with a key and a default
+	 *                   value.
+	 * @return The value of the key of the service provider collection.
+	 * @since 1.8
+	 */
+	public String getValue(ServiceProviderCollectionKey collection) {
+		return getValue(this, collection);
+	}
+
+	/**
+	 * Returns the value of the key of the service provider collection.
+	 * 
+	 * @param configuration The service provider configuration.
+	 * @param collection    The service provider collection with a key and a default
+	 *                      value.
+	 * @return The value of the key of the service provider collection.
+	 * @since 1.8
+	 */
+	public static String getValue(ConfigurationServiceProvider configuration, ServiceProviderCollectionKey collection) {
+		if (configuration == null || collection == null || collection.getName() == null)
+			return null;
+
+		ConfigurationServiceProvider.Property property = configuration.getProperty(collection.getName(),
+				collection.getKey());
+
+		return property == null || property.getValue() == null
+				|| (!collection.isBlank() && property.getValue().isBlank()) ? collection.getDefaultValue()
+						: (collection.isTrim() ? property.getValue().trim() : property.getValue());
+	}
+
+	/**
+	 * Defines service provider collections with keys and default values.
+	 *
+	 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
+	 * @version 1.0
+	 * @since 1.8
+	 */
+	public interface ServiceProviderCollectionKey {
+		/**
+		 * Returns the collection name.
+		 * 
+		 * @return The collection name.
+		 * @since 1.8
+		 */
+		public String getName();
+
+		/**
+		 * Returns the collection key.
+		 * 
+		 * @return The collection key.
+		 * @since 1.8
+		 */
+		public String getKey();
+
+		/**
+		 * Returns the default value, if the key is not available in the collection.
+		 * 
+		 * @return The default value, if the key is not available in the collection.
+		 * @since 1.8
+		 */
+		public String getDefaultValue();
+
+		/**
+		 * True if black collection values are allowed. Otherwise returns the default
+		 * value. Default value is false.
+		 * 
+		 * @return True if black collection values are allowed.
+		 * @since 1.8
+		 */
+		public default boolean isBlank() {
+			return false;
+		}
+
+		/**
+		 * True if the collection value should be trimmed. Default value is true.
+		 * 
+		 * @return True if the collection value should be trimmed.
+		 * @since 1.8
+		 */
+		public default boolean isTrim() {
+			return true;
+		}
+	}
+
+
 
 	/**
 	 * Property is an immutable class that defines properties for service providers.
