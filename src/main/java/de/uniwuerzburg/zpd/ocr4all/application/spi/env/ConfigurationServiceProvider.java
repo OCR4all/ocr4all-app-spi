@@ -129,7 +129,7 @@ public class ConfigurationServiceProvider {
 	public SystemCommand getSystemCommand(SystemCommand.Type type) {
 		return type == null ? null : systemCommands.get(type);
 	}
-	
+
 	/**
 	 * Returns the value of the key of the service provider collection.
 	 * 
@@ -138,7 +138,7 @@ public class ConfigurationServiceProvider {
 	 * @return The value of the key of the service provider collection.
 	 * @since 1.8
 	 */
-	public String getValue(ServiceProviderCollectionKey collection) {
+	public String getValue(CollectionKey collection) {
 		return getValue(this, collection);
 	}
 
@@ -151,7 +151,7 @@ public class ConfigurationServiceProvider {
 	 * @return The value of the key of the service provider collection.
 	 * @since 1.8
 	 */
-	public static String getValue(ConfigurationServiceProvider configuration, ServiceProviderCollectionKey collection) {
+	public static String getValue(ConfigurationServiceProvider configuration, CollectionKey collection) {
 		if (configuration == null || collection == null || collection.getName() == null)
 			return null;
 
@@ -164,13 +164,13 @@ public class ConfigurationServiceProvider {
 	}
 
 	/**
-	 * Defines service provider collections with keys and default values.
+	 * Defines collections for service provider with keys and default values.
 	 *
 	 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
 	 * @version 1.0
 	 * @since 1.8
 	 */
-	public interface ServiceProviderCollectionKey {
+	public interface CollectionKey {
 		/**
 		 * Returns the collection name.
 		 * 
@@ -216,8 +216,6 @@ public class ConfigurationServiceProvider {
 			return true;
 		}
 	}
-
-
 
 	/**
 	 * Property is an immutable class that defines properties for service providers.
