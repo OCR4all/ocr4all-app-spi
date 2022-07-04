@@ -7,6 +7,7 @@
  */
 package de.uniwuerzburg.zpd.ocr4all.application.spi.core;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -24,12 +25,81 @@ import de.uniwuerzburg.zpd.ocr4all.application.spi.model.Model;
  */
 public interface ServiceProvider {
 	/**
+	 * Defines service provider statuses.
+	 *
+	 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
+	 * @version 1.0
+	 * @since 1.8
+	 */
+	public enum Status {
+		loaded, initialized, inactive, active
+	}
+
+	/**
 	 * Initializes the service provider.
 	 * 
+	 * @param isEnabled     True if the service provider is enabled.
 	 * @param configuration The configuration.
 	 * @since 1.8
 	 */
-	public void initialize(ConfigurationServiceProvider configuration);
+	public void initialize(boolean isEnabled, ConfigurationServiceProvider configuration);
+
+	/**
+	 * Returns true if the service provider is enabled.
+	 * 
+	 * @return True if the service provider is enabled.
+	 * @since 1.8
+	 */
+	public boolean isEnabled();
+
+	/**
+	 * Set to true if the service provider is enabled.
+	 * 
+	 * @param user      The user.
+	 * @param isEnabled The enabled flag to set.
+	 * @since 1.8
+	 */
+	public void setEnabled(String user, Boolean isEnabled);
+
+	/**
+	 * Returns the service provider status.
+	 * 
+	 * @return The service provider status.
+	 * @since 1.8
+	 */
+	public Status getStatus();
+
+	/**
+	 * Start the service provider.
+	 * 
+	 * @param user The user.
+	 * @since 1.8
+	 */
+	public void start(String user);
+
+	/**
+	 * Restart the service provider.
+	 * 
+	 * @param user The user.
+	 * @since 1.8
+	 */
+	public void restart(String user);
+
+	/**
+	 * Start the service provider.
+	 * 
+	 * @param user The user.
+	 * @since 1.8
+	 */
+	public void stop(String user);
+
+	/**
+	 * Returns the journal.
+	 * 
+	 * @return the journal.
+	 * @since 1.8
+	 */
+	public List<JournalEntryServiceProvider> getJournal();
 
 	/**
 	 * Returns the service provider name for given locale. The service provider is
