@@ -42,6 +42,11 @@ public class JournalEntryServiceProvider {
 	private final String user;
 
 	/**
+	 * True if the action succeeds.
+	 */
+	private final boolean isSucceed;
+
+	/**
 	 * The level.
 	 */
 	private final Level level;
@@ -62,20 +67,37 @@ public class JournalEntryServiceProvider {
 	private final ServiceProvider.Status targetStatus;
 
 	/**
-	 * Creates a service provider journal entry.
+	 * Creates a service provider journal entry with current time and without user.
 	 * 
-	 * @param user         The user.
+	 * @param isSucceed    True if the action succeeds.
 	 * @param level        The level.
 	 * @param message      The message.
 	 * @param sourceStatus The source status.
 	 * @param targetStatus The target status.
 	 * @since 1.8
 	 */
-	public JournalEntryServiceProvider(String user, Level level, String message, Status sourceStatus,
+	public JournalEntryServiceProvider(boolean isSucceed, Level level, String message, Status sourceStatus,
+			Status targetStatus) {
+		this(null, isSucceed, level, message, sourceStatus, targetStatus);
+	}
+
+	/**
+	 * Creates a service provider journal entry with current time.
+	 * 
+	 * @param user         The user.
+	 * @param isSucceed    True if the action succeeds.
+	 * @param level        The level.
+	 * @param message      The message.
+	 * @param sourceStatus The source status.
+	 * @param targetStatus The target status.
+	 * @since 1.8
+	 */
+	public JournalEntryServiceProvider(String user, boolean isSucceed, Level level, String message, Status sourceStatus,
 			Status targetStatus) {
 		super();
 
 		this.user = user;
+		this.isSucceed = isSucceed;
 		this.level = level;
 		this.message = message;
 		this.sourceStatus = sourceStatus;
@@ -100,6 +122,26 @@ public class JournalEntryServiceProvider {
 	 */
 	public String getUser() {
 		return user;
+	}
+
+	/**
+	 * Returns true if the action succeeds.
+	 *
+	 * @return True if the action succeeds.
+	 * @since 1.8
+	 */
+	public boolean isSucceed() {
+		return isSucceed;
+	}
+
+	/**
+	 * Returns true if the action fails.
+	 *
+	 * @return True if the action fails.
+	 * @since 1.8
+	 */
+	public boolean isFail() {
+		return !isSucceed;
 	}
 
 	/**

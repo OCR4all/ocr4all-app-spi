@@ -73,25 +73,28 @@ public interface ServiceProvider {
 	 * Start the service provider.
 	 * 
 	 * @param user The user.
+	 * @return The journal entry for the action.
 	 * @since 1.8
 	 */
-	public void start(String user);
+	public JournalEntryServiceProvider start(String user);
 
 	/**
 	 * Restart the service provider.
 	 * 
 	 * @param user The user.
+	 * @return The journal entry for the action.
 	 * @since 1.8
 	 */
-	public void restart(String user);
+	public JournalEntryServiceProvider restart(String user);
 
 	/**
 	 * Start the service provider.
 	 * 
 	 * @param user The user.
+	 * @return The journal entry for the action.
 	 * @since 1.8
 	 */
-	public void stop(String user);
+	public JournalEntryServiceProvider stop(String user);
 
 	/**
 	 * Returns the journal.
