@@ -36,6 +36,28 @@ public interface ServiceProvider {
 	}
 
 	/**
+	 * Returns the provider.
+	 *
+	 * @return The provider.
+	 * @since 1.8
+	 */
+	public String getProvider();
+
+	/**
+	 * Returns true if the initialization of the service provider is deferred and
+	 * will be performed in a new thread. Otherwise, initialization is performed as
+	 * soon as the provider is loaded.
+	 * 
+	 * @return True if the initialization of the service provider is deferred and
+	 *         will be performed in a new thread. Otherwise, initialization is
+	 *         performed as soon as the provider is loaded.
+	 * @since 1.8
+	 */
+	default boolean isLazyInitialization() {
+		return false;
+	}
+
+	/**
 	 * Initializes the service provider.
 	 * 
 	 * @param isEnabled     True if the service provider is enabled.
@@ -53,15 +75,6 @@ public interface ServiceProvider {
 	public boolean isEnabled();
 
 	/**
-	 * Set to true if the service provider is enabled.
-	 * 
-	 * @param user      The user.
-	 * @param isEnabled The enabled flag to set.
-	 * @since 1.8
-	 */
-	public void setEnabled(String user, Boolean isEnabled);
-
-	/**
 	 * Returns the service provider status.
 	 * 
 	 * @return The service provider status.
@@ -70,7 +83,25 @@ public interface ServiceProvider {
 	public Status getStatus();
 
 	/**
-	 * Start the service provider.
+	 * Enables the service provider.
+	 * 
+	 * @param user The user.
+	 * @return The journal entry for the action.
+	 * @since 1.8
+	 */
+	public JournalEntryServiceProvider enable(String user);
+
+	/**
+	 * Disables the service provider.
+	 * 
+	 * @param user The user.
+	 * @return The journal entry for the action.
+	 * @since 1.8
+	 */
+	public JournalEntryServiceProvider disable(String user);
+
+	/**
+	 * Starts the service provider. It can only be started in 'inactive' status.
 	 * 
 	 * @param user The user.
 	 * @return The journal entry for the action.
@@ -79,7 +110,8 @@ public interface ServiceProvider {
 	public JournalEntryServiceProvider start(String user);
 
 	/**
-	 * Restart the service provider.
+	 * Restarts the service provider. It can only be restarted in 'active' or
+	 * 'inactive' status.
 	 * 
 	 * @param user The user.
 	 * @return The journal entry for the action.
@@ -88,7 +120,7 @@ public interface ServiceProvider {
 	public JournalEntryServiceProvider restart(String user);
 
 	/**
-	 * Start the service provider.
+	 * Stops the service provider. It can only be stopped in 'active' status.
 	 * 
 	 * @param user The user.
 	 * @return The journal entry for the action.
