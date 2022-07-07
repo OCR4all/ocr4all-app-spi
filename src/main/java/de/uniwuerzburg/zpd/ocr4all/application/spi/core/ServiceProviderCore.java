@@ -97,7 +97,7 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 			status = ServiceProvider.Status.initializing;
 
 			journal.add(new JournalEntryServiceProvider(true, JournalEntryServiceProvider.Level.info,
-					"initialized service provider", ServiceProvider.Status.configured, status));
+					"initializing service provider", ServiceProvider.Status.configured, status));
 
 			// Nothing to do
 
