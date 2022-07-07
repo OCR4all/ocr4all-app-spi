@@ -32,7 +32,7 @@ public interface ServiceProvider {
 	 * @since 1.8
 	 */
 	public enum Status {
-		loaded, initialized, inactive, active
+		loaded, configured, initializing, inactive, active
 	}
 
 	/**
@@ -44,30 +44,44 @@ public interface ServiceProvider {
 	public String getProvider();
 
 	/**
-	 * Returns true if the initialization of the service provider is deferred and
-	 * will be performed in a new thread. Otherwise, initialization is performed as
-	 * soon as the provider is loaded.
+	 * Configures the service provider.
 	 * 
-	 * @return True if the initialization of the service provider is deferred and
-	 *         will be performed in a new thread. Otherwise, initialization is
-	 *         performed as soon as the provider is loaded.
+	 * @param isEagerInitialized True if the service provider is initialized as soon
+	 *                           as the provider is loaded. Otherwise, its
+	 *                           initialization is deferred and will be performed in
+	 *                           a new thread.
+	 * @param isEnabled          True if the service provider is enabled, this
+	 *                           means, the service provider is active when the
+	 *                           application is launched. Otherwise, it is inactive
+	 *                           when the application is launched.
+	 * @param configuration      The configuration.
 	 * @since 1.8
 	 */
-	default boolean isLazyInitialization() {
-		return false;
-	}
+	public void configure(boolean isEagerInitialized, boolean isEnabled, ConfigurationServiceProvider configuration);
 
 	/**
 	 * Initializes the service provider.
 	 * 
-	 * @param isEnabled     True if the service provider is enabled.
-	 * @param configuration The configuration.
 	 * @since 1.8
 	 */
-	public void initialize(boolean isEnabled, ConfigurationServiceProvider configuration);
+	public void initialize();
 
 	/**
-	 * Returns true if the service provider is enabled.
+	 * Returns true if the service provider is initialized as soon as the provider
+	 * is loaded. Otherwise, its initialization is deferred and will be performed in
+	 * a new thread.
+	 * 
+	 * @return True if the service provider is initialized as soon as the provider
+	 *         is loaded. Otherwise, its initialization is deferred and will be
+	 *         performed in a new thread.
+	 * @since 1.8
+	 */
+	public boolean isEagerInitialized();
+
+	/**
+	 * Returns true if the service provider is enabled, this means, the service
+	 * provider is active when the application is launched. Otherwise, it is
+	 * inactive when the application is launched.
 	 * 
 	 * @return True if the service provider is enabled.
 	 * @since 1.8
@@ -83,7 +97,28 @@ public interface ServiceProvider {
 	public Status getStatus();
 
 	/**
-	 * Enables the service provider.
+	 * Eager initializes the service provider, this means, the service provider
+	 * initialization is performed as soon as the provider is loaded.
+	 * 
+	 * @param user The user.
+	 * @return The journal entry for the action.
+	 * @since 1.8
+	 */
+	public JournalEntryServiceProvider eager(String user);
+
+	/**
+	 * Lazy initializes the service provider, this means, the service providers
+	 * initialization is deferred and will be performed in a new thread.
+	 * 
+	 * @param user The user.
+	 * @return The journal entry for the action.
+	 * @since 1.8
+	 */
+	public JournalEntryServiceProvider lazy(String user);
+
+	/**
+	 * Enables the service provider, this means, the service provider will be active
+	 * when the application is launched.
 	 * 
 	 * @param user The user.
 	 * @return The journal entry for the action.
@@ -92,7 +127,8 @@ public interface ServiceProvider {
 	public JournalEntryServiceProvider enable(String user);
 
 	/**
-	 * Disables the service provider.
+	 * Disables the service provider, this means, the service provider will be
+	 * inactive when the application is launched.
 	 * 
 	 * @param user The user.
 	 * @return The journal entry for the action.
