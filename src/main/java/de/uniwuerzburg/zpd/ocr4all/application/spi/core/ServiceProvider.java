@@ -36,15 +36,20 @@ public interface ServiceProvider {
 	}
 
 	/**
-	 * Returns the provider.
+	 * Returns the provider appellation.
 	 *
-	 * @return The provider.
+	 * @return The provider appellation.
 	 * @since 1.8
 	 */
 	public String getProvider();
 
 	/**
-	 * Configures the service provider.
+	 * Configures the service provider. This action is performed after the provider
+	 * is loaded by the application. The provider should only store locally the
+	 * information specified in the parameters. After that, the initialization is
+	 * performed, during which the provider can perform some logic that can be
+	 * executed in a new thread that does not block the initialization of the other
+	 * providers.
 	 * 
 	 * @param isEagerInitialized True if the service provider is initialized as soon
 	 *                           as the provider is loaded. Otherwise, its
@@ -60,7 +65,9 @@ public interface ServiceProvider {
 	public void configure(boolean isEagerInitialized, boolean isEnabled, ConfigurationServiceProvider configuration);
 
 	/**
-	 * Initializes the service provider.
+	 * Initializes the service provider. This action is performed after the
+	 * configuration. The provider can perform some logic that can be executed in a
+	 * new thread that does not block the initialization of the other providers.
 	 * 
 	 * @since 1.8
 	 */
@@ -68,12 +75,12 @@ public interface ServiceProvider {
 
 	/**
 	 * Returns true if the service provider is initialized as soon as the provider
-	 * is loaded. Otherwise, its initialization is deferred and will be performed in
-	 * a new thread.
+	 * is loaded/configured. Otherwise, its initialization is deferred and will be
+	 * performed in a new thread.
 	 * 
 	 * @return True if the service provider is initialized as soon as the provider
-	 *         is loaded. Otherwise, its initialization is deferred and will be
-	 *         performed in a new thread.
+	 *         is loaded/configured. Otherwise, its initialization is deferred and
+	 *         will be performed in a new thread.
 	 * @since 1.8
 	 */
 	public boolean isEagerInitialized();

@@ -7,6 +7,7 @@
  */
 package de.uniwuerzburg.zpd.ocr4all.application.spi.core;
 
+import java.security.ProviderException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,6 +86,18 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 					"the service provider can only be configured in 'loaded' status", status, status));
 	}
 
+	/**
+	 * Implementing subclasses that require special initialization can override this
+	 * method to implement their logic. This method is called during the
+	 * initialization process.
+	 * 
+	 * @throws ProviderException Throw specialized, provider-specific runtime
+	 *                           errors.
+	 * @since 1.8
+	 */
+	public void initializeCallback() throws ProviderException {
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -99,13 +112,28 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 			journal.add(new JournalEntryServiceProvider(true, JournalEntryServiceProvider.Level.info,
 					"initializing service provider", ServiceProvider.Status.configured, status));
 
-			// Nothing to do
+			String errorMessage = null;
+			try {
+				initializeCallback();
+			} catch (ProviderException e) {
+				errorMessage = "(provider exception) " + e.getMessage();
+			} catch (Exception e) {
+				errorMessage = "(unexpected exception) " + e.getMessage();
+			}
 
-			status = isEnabled ? ServiceProvider.Status.active : ServiceProvider.Status.inactive;
+			if (errorMessage == null) {
+				status = isEnabled ? ServiceProvider.Status.active : ServiceProvider.Status.inactive;
 
-			journal.add(new JournalEntryServiceProvider(true, JournalEntryServiceProvider.Level.info,
-					isEnabled ? "started service provider" : "stopped service provider",
-					ServiceProvider.Status.initializing, status));
+				journal.add(new JournalEntryServiceProvider(true, JournalEntryServiceProvider.Level.info,
+						isEnabled ? "started service provider" : "stopped service provider",
+						ServiceProvider.Status.initializing, status));
+			} else {
+				status = ServiceProvider.Status.inactive;
+
+				journal.add(new JournalEntryServiceProvider(false, JournalEntryServiceProvider.Level.warn,
+						"stopped service provider, since it can not be initialized - " + errorMessage.trim(),
+						ServiceProvider.Status.initializing, status));
+			}
 		} else
 			journal.add(new JournalEntryServiceProvider(false, JournalEntryServiceProvider.Level.warn,
 					"the service provider can only be initialized in 'configured' status", status, status));
