@@ -34,14 +34,15 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 	/**
 	 * True if the service provider is initialized as soon as the provider is
 	 * loaded. Otherwise, its initialization is deferred and will be performed in a
-	 * new thread.
+	 * new thread. Initialization is also deferred if it is disabled.
 	 */
 	protected boolean isEagerInitialized = true;
 
 	/**
 	 * True if the service provider is enabled, this means, the service provider is
 	 * active when the application is launched. Otherwise, it is inactive when the
-	 * application is launched.
+	 * application is launched and its initialization is deferred and will be
+	 * performed in a new thread.
 	 */
 	protected boolean isEnabled = false;
 

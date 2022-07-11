@@ -76,7 +76,7 @@ public interface ServiceProvider {
 	/**
 	 * Returns true if the service provider is initialized as soon as the provider
 	 * is loaded/configured. Otherwise, its initialization is deferred and will be
-	 * performed in a new thread.
+	 * performed in a new thread. Initialization is also deferred if it is disabled.
 	 * 
 	 * @return True if the service provider is initialized as soon as the provider
 	 *         is loaded/configured. Otherwise, its initialization is deferred and
@@ -88,7 +88,8 @@ public interface ServiceProvider {
 	/**
 	 * Returns true if the service provider is enabled, this means, the service
 	 * provider is active when the application is launched. Otherwise, it is
-	 * inactive when the application is launched.
+	 * inactive when the application is launched and its initialization is deferred
+	 * and will be performed in a new thread.
 	 * 
 	 * @return True if the service provider is enabled.
 	 * @since 1.8
@@ -227,6 +228,16 @@ public interface ServiceProvider {
 	 * @since 1.8
 	 */
 	public int getIndex();
+
+	/**
+	 * Returns an advice.
+	 * 
+	 * @return An advice.
+	 * @since 1.8
+	 */
+	default String getAdvice() {
+		return null;
+	}
 
 	/**
 	 * Returns the premise.
