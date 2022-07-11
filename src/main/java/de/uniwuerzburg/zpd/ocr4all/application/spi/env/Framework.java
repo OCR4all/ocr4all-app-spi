@@ -55,11 +55,6 @@ public class Framework {
 	private final String user;
 
 	/**
-	 * The configuration.
-	 */
-	private final ConfigurationServiceProvider configuration;
-
-	/**
 	 * The target.
 	 */
 	private final Target target;
@@ -88,7 +83,6 @@ public class Framework {
 	 * @param gid             The effective system group ID. -1 if not defined.
 	 * @param application     The application.
 	 * @param user            The user. Null if not defined.
-	 * @param configuration   The configuration.
 	 * @param target          The target.
 	 * @param output          The output directory.
 	 * @param snapshotTrack   The snapshot track for the output directory. The track
@@ -98,8 +92,7 @@ public class Framework {
 	 * @since 1.8
 	 */
 	public Framework(OperatingSystem operatingSystem, int uid, int gid, Application application, String user,
-			ConfigurationServiceProvider configuration, Target target, Path output, List<Integer> snapshotTrack,
-			Path temporary) {
+			Target target, Path output, List<Integer> snapshotTrack, Path temporary) {
 		super();
 
 		this.operatingSystem = operatingSystem;
@@ -107,7 +100,6 @@ public class Framework {
 		this.gid = gid;
 		this.application = application;
 		this.user = user;
-		this.configuration = configuration;
 		this.target = target;
 		this.output = output;
 		this.snapshotTrack = snapshotTrack;
@@ -232,16 +224,6 @@ public class Framework {
 	}
 
 	/**
-	 * Returns the configuration.
-	 *
-	 * @return The configuration.
-	 * @since 1.8
-	 */
-	public ConfigurationServiceProvider getConfiguration() {
-		return configuration;
-	}
-
-	/**
 	 * Returns the target.
 	 *
 	 * @return The target.
@@ -336,93 +318,6 @@ public class Framework {
 	 */
 	public Path getTemporary() {
 		return temporary;
-	}
-
-	/**
-	 * Returns the value of the key of the service provider collection.
-	 * 
-	 * @param collection The service provider collection with a key and a default
-	 *                   value.
-	 * @return The value of the key of the service provider collection.
-	 * @since 1.8
-	 */
-	public String getValue(ServiceProviderCollectionKey collection) {
-		return getValue(getConfiguration(), collection);
-	}
-
-	/**
-	 * Returns the value of the key of the service provider collection.
-	 * 
-	 * @param configuration The service provider configuration.
-	 * @param collection    The service provider collection with a key and a default
-	 *                      value.
-	 * @return The value of the key of the service provider collection.
-	 * @since 1.8
-	 */
-	public static String getValue(ConfigurationServiceProvider configuration, ServiceProviderCollectionKey collection) {
-		if (configuration == null || collection == null || collection.getName() == null)
-			return null;
-
-		ConfigurationServiceProvider.Property property = configuration.getProperty(collection.getName(),
-				collection.getKey());
-
-		return property == null || property.getValue() == null
-				|| (!collection.isBlank() && property.getValue().isBlank()) ? collection.getDefaultValue()
-						: (collection.isTrim() ? property.getValue().trim() : property.getValue());
-	}
-
-	/**
-	 * Defines service provider collections with keys and default values.
-	 *
-	 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
-	 * @version 1.0
-	 * @since 1.8
-	 */
-	public interface ServiceProviderCollectionKey {
-		/**
-		 * Returns the collection name.
-		 * 
-		 * @return The collection name.
-		 * @since 1.8
-		 */
-		public String getName();
-
-		/**
-		 * Returns the collection key.
-		 * 
-		 * @return The collection key.
-		 * @since 1.8
-		 */
-		public String getKey();
-
-		/**
-		 * Returns the default value, if the key is not available in the collection.
-		 * 
-		 * @return The default value, if the key is not available in the collection.
-		 * @since 1.8
-		 */
-		public String getDefaultValue();
-
-		/**
-		 * True if black collection values are allowed. Otherwise returns the default
-		 * value. Default value is false.
-		 * 
-		 * @return True if black collection values are allowed.
-		 * @since 1.8
-		 */
-		public default boolean isBlank() {
-			return false;
-		}
-
-		/**
-		 * True if the collection value should be trimmed. Default value is true.
-		 * 
-		 * @return True if the collection value should be trimmed.
-		 * @since 1.8
-		 */
-		public default boolean isTrim() {
-			return true;
-		}
 	}
 
 	/**
