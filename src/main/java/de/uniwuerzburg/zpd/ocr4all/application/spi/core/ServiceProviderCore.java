@@ -106,7 +106,9 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 	 * de.uniwuerzburg.zpd.ocr4all.application.spi.core.ServiceProvider#initialize()
 	 */
 	@Override
-	public void initialize() {
+	public JournalEntryServiceProvider initialize() {
+		JournalEntryServiceProvider journalEntry;
+
 		if (ServiceProvider.Status.configured.equals(status)) {
 			status = ServiceProvider.Status.initializing;
 
@@ -123,21 +125,26 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 			}
 
 			if (errorMessage == null) {
-				status = isEnabled ? ServiceProvider.Status.active : ServiceProvider.Status.inactive;
+				status = ServiceProvider.Status.active;
 
-				journal.add(new JournalEntryServiceProvider(true, JournalEntryServiceProvider.Level.info,
-						isEnabled ? "started service provider" : "stopped service provider",
-						ServiceProvider.Status.initializing, status));
+				journalEntry = new JournalEntryServiceProvider(true, JournalEntryServiceProvider.Level.info,
+						"started service provider", ServiceProvider.Status.initializing, status);
+				journal.add(journalEntry);
 			} else {
 				status = ServiceProvider.Status.inactive;
 
-				journal.add(new JournalEntryServiceProvider(false, JournalEntryServiceProvider.Level.warn,
+				journalEntry = new JournalEntryServiceProvider(false, JournalEntryServiceProvider.Level.warn,
 						"stopped service provider, since it can not be initialized - " + errorMessage.trim(),
-						ServiceProvider.Status.initializing, status));
+						ServiceProvider.Status.initializing, status);
+				journal.add(journalEntry);
 			}
-		} else
-			journal.add(new JournalEntryServiceProvider(false, JournalEntryServiceProvider.Level.warn,
-					"the service provider can only be initialized in 'configured' status", status, status));
+		} else {
+			journalEntry = new JournalEntryServiceProvider(false, JournalEntryServiceProvider.Level.warn,
+					"the service provider can only be initialized in 'configured' status", status, status);
+			journal.add(journalEntry);
+		}
+
+		return journalEntry;
 	}
 
 	/*
@@ -278,19 +285,24 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 	 */
 	@Override
 	public JournalEntryServiceProvider start(String user) {
-		JournalEntryServiceProvider journalEntry;
-		if (ServiceProvider.Status.inactive.equals(status)) {
-			status = ServiceProvider.Status.active;
+		if (ServiceProvider.Status.configured.equals(status))
+			return initialize();
+		else {
+			JournalEntryServiceProvider journalEntry;
 
-			journalEntry = new JournalEntryServiceProvider(user, true, JournalEntryServiceProvider.Level.info,
-					"started service provider", ServiceProvider.Status.inactive, status);
+			if (ServiceProvider.Status.inactive.equals(status)) {
+				status = ServiceProvider.Status.active;
 
-			journal.add(journalEntry);
-		} else
-			journalEntry = new JournalEntryServiceProvider(user, false, JournalEntryServiceProvider.Level.warn,
-					"the service provider can only be started in 'inactive' status", status, status);
+				journalEntry = new JournalEntryServiceProvider(user, true, JournalEntryServiceProvider.Level.info,
+						"started service provider", ServiceProvider.Status.inactive, status);
 
-		return journalEntry;
+				journal.add(journalEntry);
+			} else
+				journalEntry = new JournalEntryServiceProvider(user, false, JournalEntryServiceProvider.Level.warn,
+						"the service provider can only be started in 'inactive' status", status, status);
+
+			return journalEntry;
+		}
 	}
 
 	/*
@@ -302,20 +314,25 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 	 */
 	@Override
 	public JournalEntryServiceProvider restart(String user) {
-		JournalEntryServiceProvider journalEntry;
-		if (ServiceProvider.Status.active.equals(status) || ServiceProvider.Status.inactive.equals(status)) {
-			final ServiceProvider.Status sourceStatus = status;
-			status = ServiceProvider.Status.active;
+		if (ServiceProvider.Status.configured.equals(status))
+			return initialize();
+		else {
+			JournalEntryServiceProvider journalEntry;
+			
+			if (ServiceProvider.Status.active.equals(status) || ServiceProvider.Status.inactive.equals(status)) {
+				final ServiceProvider.Status sourceStatus = status;
+				status = ServiceProvider.Status.active;
 
-			journalEntry = new JournalEntryServiceProvider(user, true, JournalEntryServiceProvider.Level.info,
-					"restarted service provider", sourceStatus, status);
+				journalEntry = new JournalEntryServiceProvider(user, true, JournalEntryServiceProvider.Level.info,
+						"restarted service provider", sourceStatus, status);
 
-			journal.add(journalEntry);
-		} else
-			journalEntry = new JournalEntryServiceProvider(user, false, JournalEntryServiceProvider.Level.warn,
-					"the service provider can only be restarted in 'active' or 'inactive' status", status, status);
+				journal.add(journalEntry);
+			} else
+				journalEntry = new JournalEntryServiceProvider(user, false, JournalEntryServiceProvider.Level.warn,
+						"the service provider can only be restarted in 'active' or 'inactive' status", status, status);
 
-		return journalEntry;
+			return journalEntry;
+		}
 	}
 
 	/*
@@ -328,6 +345,7 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 	@Override
 	public JournalEntryServiceProvider stop(String user) {
 		JournalEntryServiceProvider journalEntry;
+		
 		if (ServiceProvider.Status.active.equals(status)) {
 			status = ServiceProvider.Status.inactive;
 
