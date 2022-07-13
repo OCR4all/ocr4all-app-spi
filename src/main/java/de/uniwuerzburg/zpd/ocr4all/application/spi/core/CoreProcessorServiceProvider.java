@@ -93,7 +93,7 @@ public abstract class CoreProcessorServiceProvider implements ProcessServiceProv
 	 * @param message The message.
 	 * @since 1.8
 	 */
-	protected void updatedStandardOutput(String message) {
+	public void updatedStandardOutput(String message) {
 		standardOutput.append(framework.formatLogMessage(message));
 
 		callback.updatedStandardOutput(standardOutput.toString());
@@ -105,7 +105,7 @@ public abstract class CoreProcessorServiceProvider implements ProcessServiceProv
 	 * @param message The current message.
 	 * @since 1.8
 	 */
-	protected void updatedStandardError(String message) {
+	public void updatedStandardError(String message) {
 		standardError.append(framework.formatLogMessage(message));
 
 		callback.updatedStandardError(standardError.toString());
