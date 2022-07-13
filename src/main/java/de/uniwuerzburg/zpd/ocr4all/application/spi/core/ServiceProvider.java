@@ -65,13 +65,17 @@ public interface ServiceProvider {
 	public void configure(boolean isEagerInitialized, boolean isEnabled, ConfigurationServiceProvider configuration);
 
 	/**
-	 * Initializes the service provider. This action is performed after the
-	 * configuration. The provider can perform some logic that can be executed in a
-	 * new thread that does not block the initialization of the other providers.
+	 * Initializes the service provider. This action is performed after
+	 * configuration and delays until the provider should be activated for the first
+	 * time. This allows the provider to perform some required logic. If the
+	 * provider is enabled, this means, it should be activated when the application is
+	 * launched, then the initialization can be executed in a new thread that does
+	 * not block the initialization of the other providers (lazy initialization).
 	 * 
+	 * @return The journal entry for the action.
 	 * @since 1.8
 	 */
-	public void initialize();
+	public JournalEntryServiceProvider initialize();
 
 	/**
 	 * Returns true if the service provider is initialized as soon as the provider
@@ -88,8 +92,7 @@ public interface ServiceProvider {
 	/**
 	 * Returns true if the service provider is enabled, this means, the service
 	 * provider is active when the application is launched. Otherwise, it is
-	 * inactive when the application is launched and its initialization is deferred
-	 * and will be performed in a new thread.
+	 * inactive when the application is launched.
 	 * 
 	 * @return True if the service provider is enabled.
 	 * @since 1.8
@@ -105,8 +108,9 @@ public interface ServiceProvider {
 	public Status getStatus();
 
 	/**
-	 * Eager initializes the service provider, this means, the service provider
-	 * initialization is performed as soon as the provider is loaded.
+	 * Eager initializes the service provider if it is enabled, this means, the
+	 * service provider initialization is performed as soon as the provider is
+	 * loaded.
 	 * 
 	 * @param user The user.
 	 * @return The journal entry for the action.
@@ -115,8 +119,9 @@ public interface ServiceProvider {
 	public JournalEntryServiceProvider eager(String user);
 
 	/**
-	 * Lazy initializes the service provider, this means, the service providers
-	 * initialization is deferred and will be performed in a new thread.
+	 * Lazy initializes the service provider if it is enabled, this means, the
+	 * service providers initialization is deferred and will be performed in a new
+	 * thread.
 	 * 
 	 * @param user The user.
 	 * @return The journal entry for the action.
@@ -145,7 +150,8 @@ public interface ServiceProvider {
 	public JournalEntryServiceProvider disable(String user);
 
 	/**
-	 * Starts the service provider. It can only be started in 'inactive' status.
+	 * Starts the service provider. The provider will be initialized if his status
+	 * is 'configured'.
 	 * 
 	 * @param user The user.
 	 * @return The journal entry for the action.
@@ -154,8 +160,8 @@ public interface ServiceProvider {
 	public JournalEntryServiceProvider start(String user);
 
 	/**
-	 * Restarts the service provider. It can only be restarted in 'active' or
-	 * 'inactive' status.
+	 * Restarts the service provider. The provider will be initialized if his status
+	 * is 'configured'.
 	 * 
 	 * @param user The user.
 	 * @return The journal entry for the action.
