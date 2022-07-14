@@ -129,6 +129,7 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 
 				journalEntry = new JournalEntryServiceProvider(true, JournalEntryServiceProvider.Level.info,
 						"started service provider", ServiceProvider.Status.initializing, status);
+
 				journal.add(journalEntry);
 			} else {
 				status = ServiceProvider.Status.inactive;
@@ -136,11 +137,13 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 				journalEntry = new JournalEntryServiceProvider(false, JournalEntryServiceProvider.Level.warn,
 						"stopped service provider, since it can not be initialized - " + errorMessage.trim(),
 						ServiceProvider.Status.initializing, status);
+
 				journal.add(journalEntry);
 			}
 		} else {
 			journalEntry = new JournalEntryServiceProvider(false, JournalEntryServiceProvider.Level.warn,
 					"the service provider can only be initialized in 'configured' status", status, status);
+
 			journal.add(journalEntry);
 		}
 
@@ -276,6 +279,17 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 		return journalEntry;
 	}
 
+	/**
+	 * Implementing subclasses that require special start logic can override this
+	 * method to implement it. This method is called during the start process.
+	 * 
+	 * @throws ProviderException Throw specialized, provider-specific runtime
+	 *                           errors.
+	 * @since 1.8
+	 */
+	public void startCallback() throws ProviderException {
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -291,18 +305,45 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 			JournalEntryServiceProvider journalEntry;
 
 			if (ServiceProvider.Status.inactive.equals(status)) {
-				status = ServiceProvider.Status.active;
+				String errorMessage = null;
+				try {
+					startCallback();
+				} catch (ProviderException e) {
+					errorMessage = "(provider exception) " + e.getMessage();
+				} catch (Exception e) {
+					errorMessage = "(unexpected exception) " + e.getMessage();
+				}
 
-				journalEntry = new JournalEntryServiceProvider(user, true, JournalEntryServiceProvider.Level.info,
-						"started service provider", ServiceProvider.Status.inactive, status);
+				if (errorMessage == null) {
+					status = ServiceProvider.Status.active;
 
-				journal.add(journalEntry);
+					journalEntry = new JournalEntryServiceProvider(user, true, JournalEntryServiceProvider.Level.info,
+							"started service provider", ServiceProvider.Status.inactive, status);
+
+					journal.add(journalEntry);
+				} else {
+					journalEntry = new JournalEntryServiceProvider(false, JournalEntryServiceProvider.Level.warn,
+							"the service provider can not be started - " + errorMessage.trim(), status, status);
+
+					journal.add(journalEntry);
+				}
 			} else
 				journalEntry = new JournalEntryServiceProvider(user, false, JournalEntryServiceProvider.Level.warn,
 						"the service provider can only be started in 'inactive' status", status, status);
 
 			return journalEntry;
 		}
+	}
+
+	/**
+	 * Implementing subclasses that require special restart logic can override this
+	 * method to implement it. This method is called during the restart process.
+	 * 
+	 * @throws ProviderException Throw specialized, provider-specific runtime
+	 *                           errors.
+	 * @since 1.8
+	 */
+	public void restartCallback() throws ProviderException {
 	}
 
 	/*
@@ -318,15 +359,37 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 			return initialize();
 		else {
 			JournalEntryServiceProvider journalEntry;
-			
+
 			if (ServiceProvider.Status.active.equals(status) || ServiceProvider.Status.inactive.equals(status)) {
+				String errorMessage = null;
+				try {
+					restartCallback();
+				} catch (ProviderException e) {
+					errorMessage = "(provider exception) " + e.getMessage();
+				} catch (Exception e) {
+					errorMessage = "(unexpected exception) " + e.getMessage();
+				}
+
 				final ServiceProvider.Status sourceStatus = status;
-				status = ServiceProvider.Status.active;
+				if (errorMessage == null) {
+					status = ServiceProvider.Status.active;
 
-				journalEntry = new JournalEntryServiceProvider(user, true, JournalEntryServiceProvider.Level.info,
-						"restarted service provider", sourceStatus, status);
+					journalEntry = new JournalEntryServiceProvider(user, true, JournalEntryServiceProvider.Level.info,
+							"restarted service provider", sourceStatus, status);
 
-				journal.add(journalEntry);
+					journal.add(journalEntry);
+				} else {
+					status = ServiceProvider.Status.inactive;
+
+					journalEntry = new JournalEntryServiceProvider(false, JournalEntryServiceProvider.Level.warn,
+							"the service provider can not be restarted"
+									+ (ServiceProvider.Status.active.equals(sourceStatus) ? ", stopped service provider"
+											: "")
+									+ " - " + errorMessage.trim(),
+							sourceStatus, status);
+
+					journal.add(journalEntry);
+				}
 			} else
 				journalEntry = new JournalEntryServiceProvider(user, false, JournalEntryServiceProvider.Level.warn,
 						"the service provider can only be restarted in 'active' or 'inactive' status", status, status);
@@ -345,7 +408,7 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 	@Override
 	public JournalEntryServiceProvider stop(String user) {
 		JournalEntryServiceProvider journalEntry;
-		
+
 		if (ServiceProvider.Status.active.equals(status)) {
 			status = ServiceProvider.Status.inactive;
 
