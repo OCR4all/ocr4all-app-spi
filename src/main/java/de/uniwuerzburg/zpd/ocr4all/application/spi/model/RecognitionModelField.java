@@ -44,22 +44,21 @@ public final class RecognitionModelField extends Field<String> {
 	 * selected.
 	 * 
 	 * @param argument    The argument.
-	 * @param description The description.
+	 * @param label       The label.
 	 * @param placeholder The placeholder. Null if no placeholder is required.
-	 * @throws IllegalArgumentException Throws if the argument or the description is
-	 *                                  null.
+	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	public RecognitionModelField(String argument, Internationalization description, Internationalization placeholder)
+	public RecognitionModelField(String argument, Internationalization label, Internationalization placeholder)
 			throws IllegalArgumentException {
-		this(argument, description, placeholder, true, true, false, true);
+		this(argument, label, placeholder, true, true, false, true);
 	}
 
 	/**
 	 * Creates a recognition model field for a model.
 	 * 
 	 * @param argument                  The argument.
-	 * @param description               The description.
+	 * @param label                     The label.
 	 * @param placeholder               The placeholder. Null if no placeholder is
 	 *                                  required.
 	 * @param isApplicationModels       True if the application recognition models
@@ -69,14 +68,13 @@ public final class RecognitionModelField extends Field<String> {
 	 * @param isRemainderProjectsModels True if the recognition models of the
 	 *                                  remainder projects are required.
 	 * @param isMultipleModels          True if multiple models can be selected.
-	 * @throws IllegalArgumentException Throws if the argument or the description is
-	 *                                  null.
+	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	public RecognitionModelField(String argument, Internationalization description, Internationalization placeholder,
+	public RecognitionModelField(String argument, Internationalization label, Internationalization placeholder,
 			boolean isApplicationModels, boolean isProjectModels, boolean isRemainderProjectsModels,
 			boolean isMultipleModels) throws IllegalArgumentException {
-		super(argument, null, description, null, placeholder, false);
+		super(argument, null, label, null, placeholder, false);
 
 		this.isApplicationModels = isApplicationModels;
 		this.isProjectModels = isProjectModels;
@@ -90,24 +88,24 @@ public final class RecognitionModelField extends Field<String> {
 	 * selected.
 	 * 
 	 * @param argument    The argument.
-	 * @param description The description.
-	 * @param warning     The warning. Null if no warning is required.
+	 * @param label       The label.
+	 * @param description The description. Null if no description is required.
 	 * @param placeholder The placeholder. Null if no placeholder is required.
-	 * @throws IllegalArgumentException Throws if the argument or the description is
-	 *                                  null.
+	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	public RecognitionModelField(String argument, Internationalization description, Internationalization warning,
+	public RecognitionModelField(String argument, Internationalization label, Internationalization description,
 			Internationalization placeholder) throws IllegalArgumentException {
-		this(argument, description, warning, placeholder, true, true, false, true, false);
+		this(argument, label, description, placeholder, true, true, false, true, false);
 	}
 
 	/**
 	 * Creates a recognition model field for a model.
 	 * 
 	 * @param argument                  The argument.
-	 * @param description               The description.
-	 * @param warning                   The warning. Null if no warning is required.
+	 * @param label                     The label.
+	 * @param description               The description. Null if no description is
+	 *                                  required.
 	 * @param placeholder               The placeholder. Null if no placeholder is
 	 *                                  required.
 	 * @param isApplicationModels       True if the application recognition models
@@ -118,15 +116,14 @@ public final class RecognitionModelField extends Field<String> {
 	 *                                  remainder projects are required.
 	 * @param isMultipleModels          True if multiple models can be selected.
 	 * @param isDisabled                True if the field is disabled.
-	 * @throws IllegalArgumentException Throws if the argument or the description is
-	 *                                  null.
+	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	public RecognitionModelField(String argument, Internationalization description, Internationalization warning,
+	public RecognitionModelField(String argument, Internationalization label, Internationalization description,
 			Internationalization placeholder, boolean isApplicationModels, boolean isProjectModels,
 			boolean isRemainderProjectsModels, boolean isMultipleModels, boolean isDisabled)
 			throws IllegalArgumentException {
-		super(argument, null, description, warning, placeholder, isDisabled);
+		super(argument, null, label, description, placeholder, isDisabled);
 
 		this.isApplicationModels = isApplicationModels;
 		this.isProjectModels = isProjectModels;

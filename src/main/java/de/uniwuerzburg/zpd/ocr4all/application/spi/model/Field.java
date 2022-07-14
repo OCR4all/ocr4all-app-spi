@@ -31,9 +31,9 @@ public class Field<F> extends Entry {
 	private final Optional<F> value;
 
 	/**
-	 * The warning. Null if no warning is required.
+	 * The description. Null if no description is required.
 	 */
-	private final Internationalization warning;
+	private final Internationalization description;
 
 	/**
 	 * The placeholder. Null if no placeholder is required.
@@ -45,15 +45,14 @@ public class Field<F> extends Entry {
 	 * 
 	 * @param argument    The argument.
 	 * @param value       The default value. Null if not required.
-	 * @param description The description.
+	 * @param label       The label.
 	 * @param placeholder The placeholder. Null if no placeholder is required.
-	 * @throws IllegalArgumentException Throws if the argument or the description is
-	 *                                  null.
+	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	Field(String argument, F value, Internationalization description, Internationalization placeholder)
+	Field(String argument, F value, Internationalization label, Internationalization placeholder)
 			throws IllegalArgumentException {
-		this(argument, value, description, null, placeholder, false);
+		this(argument, value, label, null, placeholder, false);
 	}
 
 	/**
@@ -61,17 +60,16 @@ public class Field<F> extends Entry {
 	 * 
 	 * @param argument    The argument.
 	 * @param value       The default value. Null if not required.
-	 * @param description The description.
-	 * @param warning     The warning. Null if no warning is required.
+	 * @param label       The label.
+	 * @param description The description. Null if no description is required.
 	 * @param placeholder The placeholder. Null if no placeholder is required.
 	 * @param isDisabled  True if the field is disabled.
-	 * @throws IllegalArgumentException Throws if the argument or the description is
-	 *                                  null.
+	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	Field(String argument, F value, Internationalization description, Internationalization warning,
+	Field(String argument, F value, Internationalization label, Internationalization description,
 			Internationalization placeholder, boolean isDisabled) throws IllegalArgumentException {
-		super(description, isDisabled);
+		super(label, isDisabled);
 
 		if (argument == null)
 			throw new IllegalArgumentException("the argument cannot be null.");
@@ -80,7 +78,7 @@ public class Field<F> extends Entry {
 
 		this.value = value == null ? Optional.empty() : Optional.of(value);
 
-		this.warning = warning;
+		this.description = description;
 		this.placeholder = placeholder;
 	}
 
@@ -105,15 +103,15 @@ public class Field<F> extends Entry {
 	}
 
 	/**
-	 * Returns the warning.
+	 * Returns the description.
 	 *
 	 * @param locale The locale.
-	 * @return The warning. Empty if not available.
+	 * @return The description. Empty if not available.
 	 * @since 1.8
 	 */
-	public Optional<String> getWarning(Locale locale) {
-		return warning == null || warning.getString(locale) == null ? Optional.empty()
-				: Optional.of(warning.getString(locale));
+	public Optional<String> getDescription(Locale locale) {
+		return description == null || description.getString(locale) == null ? Optional.empty()
+				: Optional.of(description.getString(locale));
 	}
 
 	/**

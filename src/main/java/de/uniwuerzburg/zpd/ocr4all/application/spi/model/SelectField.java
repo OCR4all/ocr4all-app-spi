@@ -36,104 +36,102 @@ public final class SelectField extends Field<Object> {
 	/**
 	 * Creates a select field for a model. Only one option can be selected at once.
 	 * 
-	 * @param argument    The argument.
-	 * @param description The description.
-	 * @param items       The items.
-	 * @throws IllegalArgumentException Throws if the argument, the description, the
-	 *                                  items is null. Furthermore, throws if the
-	 *                                  option items are empty.
+	 * @param argument The argument.
+	 * @param label    The label.
+	 * @param items    The items.
+	 * @throws IllegalArgumentException Throws if the argument, the label, the items
+	 *                                  is null. Furthermore, throws if the option
+	 *                                  items are empty.
 	 * @since 1.8
 	 */
-	public SelectField(String argument, Internationalization description, Item... items)
-			throws IllegalArgumentException {
-		this(argument, description, Arrays.asList(items));
+	public SelectField(String argument, Internationalization label, Item... items) throws IllegalArgumentException {
+		this(argument, label, Arrays.asList(items));
 	}
 
 	/**
 	 * Creates a select field for a model. Only one option can be selected at once.
 	 * 
-	 * @param argument    The argument.
-	 * @param description The description.
-	 * @param items       The items.
-	 * @throws IllegalArgumentException Throws if the argument, the description, the
-	 *                                  items is null. Furthermore, throws if the
-	 *                                  option items are empty.
+	 * @param argument The argument.
+	 * @param label    The label.
+	 * @param items    The items.
+	 * @throws IllegalArgumentException Throws if the argument, the label, the items
+	 *                                  is null. Furthermore, throws if the option
+	 *                                  items are empty.
 	 * @since 1.8
 	 */
-	public SelectField(String argument, Internationalization description, List<Item> items)
-			throws IllegalArgumentException {
-		this(argument, description, false, items);
+	public SelectField(String argument, Internationalization label, List<Item> items) throws IllegalArgumentException {
+		this(argument, label, false, items);
 	}
 
 	/**
 	 * Creates a select field for a model.
 	 * 
 	 * @param argument          The argument.
-	 * @param description       The description.
+	 * @param label             The label.
 	 * @param isMultipleOptions True if multiple options can be selected at once.
 	 * @param items             The items.
-	 * @throws IllegalArgumentException Throws if the argument, the description, the
-	 *                                  items is null. Furthermore, throws if the
-	 *                                  option items are empty.
+	 * @throws IllegalArgumentException Throws if the argument, the label, the items
+	 *                                  is null. Furthermore, throws if the option
+	 *                                  items are empty.
 	 * @since 1.8
 	 */
-	public SelectField(String argument, Internationalization description, boolean isMultipleOptions, Item... items)
+	public SelectField(String argument, Internationalization label, boolean isMultipleOptions, Item... items)
 			throws IllegalArgumentException {
-		this(argument, description, isMultipleOptions, Arrays.asList(items));
+		this(argument, label, isMultipleOptions, Arrays.asList(items));
 	}
 
 	/**
 	 * Creates a select field for a model.
 	 * 
 	 * @param argument          The argument.
-	 * @param description       The description.
+	 * @param label             The label.
 	 * @param isMultipleOptions True if multiple options can be selected at once.
 	 * @param items             The items.
-	 * @throws IllegalArgumentException Throws if the argument, the description, the
-	 *                                  items is null. Furthermore, throws if the
-	 *                                  option items are empty.
+	 * @throws IllegalArgumentException Throws if the argument, the label, the items
+	 *                                  is null. Furthermore, throws if the option
+	 *                                  items are empty.
 	 * @since 1.8
 	 */
-	public SelectField(String argument, Internationalization description, boolean isMultipleOptions, List<Item> items)
+	public SelectField(String argument, Internationalization label, boolean isMultipleOptions, List<Item> items)
 			throws IllegalArgumentException {
-		this(argument, description, null, isMultipleOptions, items, false);
+		this(argument, label, null, isMultipleOptions, items, false);
 	}
 
 	/**
 	 * Creates a select field for a model.
 	 * 
 	 * @param argument          The argument.
-	 * @param description       The description.
-	 * @param warning           The warning. Null if no warning is required.
+	 * @param label             The label.
+	 * @param description       The description. Null if no description is required.
 	 * @param isMultipleOptions True if multiple options can be selected at once.
 	 * @param items             The items.
-	 * @throws IllegalArgumentException Throws if the argument, the description, the
-	 *                                  items is null. Furthermore, throws if the
-	 *                                  option items are empty.
+	 * @throws IllegalArgumentException Throws if the argument, the label, the items
+	 *                                  is null. Furthermore, throws if the option
+	 *                                  items are empty.
 	 * @since 1.8
 	 */
-	public SelectField(String argument, Internationalization description, Internationalization warning,
+	public SelectField(String argument, Internationalization label, Internationalization description,
 			boolean isMultipleOptions, Item... items) throws IllegalArgumentException {
-		this(argument, description, warning, isMultipleOptions, Arrays.asList(items), false);
+		this(argument, label, description, isMultipleOptions, Arrays.asList(items), false);
 	}
 
 	/**
 	 * Creates a select field for a model.
 	 * 
 	 * @param argument          The argument.
-	 * @param description       The description.
-	 * @param warning           The warning. Null if no warning is required.
+	 * @param label             The label.
+	 * @param description       The description. Null if no description is required.
 	 * @param isMultipleOptions True if multiple options can be selected at once.
 	 * @param items             The items.
 	 * @param isDisabled        True if the field is disabled.
-	 * @throws IllegalArgumentException Throws if the argument, the description, the
-	 *                                  items is null. Furthermore, throws if the
-	 *                                  option items are empty.
+	 * @throws IllegalArgumentException Throws if the argument, the label, the items
+	 *                                  is null. Furthermore, throws if the option
+	 *                                  items are empty.
 	 * @since 1.8
 	 */
-	public SelectField(String argument, Internationalization description, Internationalization warning,
+	public SelectField(String argument, Internationalization label, Internationalization description,
 			boolean isMultipleOptions, List<Item> items, boolean isDisabled) throws IllegalArgumentException {
-		super(argument, null, description, warning, null, isDisabled);
+		super(argument, null, label, description, null, isDisabled);
 
 		if (items == null)
 			throw new IllegalArgumentException("the items cannot be null.");

@@ -45,15 +45,14 @@ public class NumberField<N extends Number> extends Field<N> {
 	 * 
 	 * @param argument    The argument.
 	 * @param value       The default value. Null if not required.
-	 * @param description The description.
+	 * @param label       The label.
 	 * @param placeholder The placeholder. Null if no placeholder is required.
-	 * @throws IllegalArgumentException Throws if the argument or the description is
-	 *                                  null.
+	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	NumberField(String argument, N value, Internationalization description, Internationalization placeholder)
+	NumberField(String argument, N value, Internationalization label, Internationalization placeholder)
 			throws IllegalArgumentException {
-		this(argument, value, description, null, placeholder, false);
+		this(argument, value, label, null, placeholder, false);
 	}
 
 	/**
@@ -61,17 +60,16 @@ public class NumberField<N extends Number> extends Field<N> {
 	 * 
 	 * @param argument    The argument.
 	 * @param value       The default value. Null if not required.
-	 * @param description The description.
-	 * @param warning     The warning. Null if no warning is required.
+	 * @param label       The label.
+	 * @param description The description. Null if no description is required.
 	 * @param placeholder The placeholder. Null if no placeholder is required.
 	 * @param isDisabled  True if the field is disabled.
-	 * @throws IllegalArgumentException Throws if the argument or the description is
-	 *                                  null.
+	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	NumberField(String argument, N value, Internationalization description, Internationalization warning,
+	NumberField(String argument, N value, Internationalization label, Internationalization description,
 			Internationalization placeholder, boolean isDisabled) throws IllegalArgumentException {
-		this(argument, value, description, warning, placeholder, null, null, null, null, isDisabled);
+		this(argument, value, label, description, placeholder, null, null, null, null, isDisabled);
 	}
 
 	/**
@@ -79,19 +77,18 @@ public class NumberField<N extends Number> extends Field<N> {
 	 * 
 	 * @param argument    The argument.
 	 * @param value       The default value. Null if not required.
-	 * @param description The description.
+	 * @param label       The label.
 	 * @param placeholder The placeholder. Null if no placeholder is required.
 	 * @param step        The legal number intervals. Null if no step is required.
 	 * @param minimum     The minimum value. Null if no minimum value is required.
 	 * @param maximum     The maximum value. Null if no maximum value is required.
 	 * @param unit        The unit. Null if no unit is available.
-	 * @throws IllegalArgumentException Throws if the argument or the description is
-	 *                                  null.
+	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	NumberField(String argument, N value, Internationalization description, Internationalization placeholder, N step,
+	NumberField(String argument, N value, Internationalization label, Internationalization placeholder, N step,
 			N minimum, N maximum, Internationalization unit) throws IllegalArgumentException {
-		this(argument, value, description, null, placeholder, step, minimum, maximum, unit, false);
+		this(argument, value, label, null, placeholder, step, minimum, maximum, unit, false);
 	}
 
 	/**
@@ -99,22 +96,21 @@ public class NumberField<N extends Number> extends Field<N> {
 	 * 
 	 * @param argument    The argument.
 	 * @param value       The default value. Null if not required.
-	 * @param description The description.
-	 * @param warning     The warning. Null if no warning is required.
+	 * @param label       The label.
+	 * @param description The description. Null if no description is required.
 	 * @param placeholder The placeholder. Null if no placeholder is required.
 	 * @param step        The legal number intervals. Null if no step is required.
 	 * @param minimum     The minimum value. Null if no minimum value is required.
 	 * @param maximum     The maximum value. Null if no maximum value is required.
 	 * @param unit        The unit. Null if no unit is available.
 	 * @param isDisabled  True if the field is disabled.
-	 * @throws IllegalArgumentException Throws if the argument or the description is
-	 *                                  null.
+	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	NumberField(String argument, N value, Internationalization description, Internationalization warning,
+	NumberField(String argument, N value, Internationalization label, Internationalization description,
 			Internationalization placeholder, N step, N minimum, N maximum, Internationalization unit,
 			boolean isDisabled) throws IllegalArgumentException {
-		super(argument, value, description, warning, placeholder, isDisabled);
+		super(argument, value, label, description, placeholder, isDisabled);
 
 		this.step = step == null ? Optional.empty() : Optional.of(step);
 		this.minimum = minimum == null ? Optional.empty() : Optional.of(minimum);
