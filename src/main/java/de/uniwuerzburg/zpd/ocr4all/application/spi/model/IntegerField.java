@@ -22,54 +22,14 @@ public final class IntegerField extends NumberField<Integer> {
 	 * 
 	 * @param argument    The argument.
 	 * @param value       The default value. Null if not required.
-	 * @param description The description.
+	 * @param label       The label.
 	 * @param placeholder The placeholder. Null if no placeholder is required.
-	 * @throws IllegalArgumentException Throws if the argument or the description is
-	 *                                  null.
+	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	public IntegerField(String argument, Integer value, Internationalization description,
-			Internationalization placeholder) throws IllegalArgumentException {
-		super(argument, value, description, placeholder);
-	}
-
-	/**
-	 * Creates an integer field for a model.
-	 * 
-	 * @param argument    The argument.
-	 * @param value       The default value. Null if not required.
-	 * @param description The description.
-	 * @param warning     The warning. Null if no warning is required.
-	 * @param placeholder The placeholder. Null if no placeholder is required.
-	 * @param isDisabled  True if the field is disabled.
-	 * @throws IllegalArgumentException Throws if the argument or the description is
-	 *                                  null.
-	 * @since 1.8
-	 */
-	public IntegerField(String argument, Integer value, Internationalization description, Internationalization warning,
-			Internationalization placeholder, boolean isDisabled) throws IllegalArgumentException {
-		super(argument, value, description, warning, placeholder, isDisabled);
-	}
-
-	/**
-	 * Creates an integer field for a model.
-	 * 
-	 * @param argument    The argument.
-	 * @param value       The default value. Null if not required.
-	 * @param description The description.
-	 * @param placeholder The placeholder. Null if no placeholder is required.
-	 * @param step        The legal number intervals. Null if no step is required.
-	 * @param minimum     The minimum value. Null if no minimum value is required.
-	 * @param maximum     The maximum value. Null if no maximum value is required.
-	 * @param unit        The unit. Null if no unit is available.
-	 * @throws IllegalArgumentException Throws if the argument or the description is
-	 *                                  null.
-	 * @since 1.8
-	 */
-	public IntegerField(String argument, Integer value, Internationalization description,
-			Internationalization placeholder, Integer step, Integer minimum, Integer maximum, Internationalization unit)
+	public IntegerField(String argument, Integer value, Internationalization label, Internationalization placeholder)
 			throws IllegalArgumentException {
-		super(argument, value, description, placeholder, step, minimum, maximum, unit);
+		super(argument, value, label, placeholder);
 	}
 
 	/**
@@ -77,22 +37,57 @@ public final class IntegerField extends NumberField<Integer> {
 	 * 
 	 * @param argument    The argument.
 	 * @param value       The default value. Null if not required.
-	 * @param description The description.
-	 * @param warning     The warning. Null if no warning is required.
+	 * @param label       The label.
+	 * @param description The description. Null if no description is required.
+	 * @param placeholder The placeholder. Null if no placeholder is required.
+	 * @param isDisabled  True if the field is disabled.
+	 * @throws IllegalArgumentException Throws if the argument or the label is null.
+	 * @since 1.8
+	 */
+	public IntegerField(String argument, Integer value, Internationalization label, Internationalization description,
+			Internationalization placeholder, boolean isDisabled) throws IllegalArgumentException {
+		super(argument, value, label, description, placeholder, isDisabled);
+	}
+
+	/**
+	 * Creates an integer field for a model.
+	 * 
+	 * @param argument    The argument.
+	 * @param value       The default value. Null if not required.
+	 * @param label       The label.
+	 * @param placeholder The placeholder. Null if no placeholder is required.
+	 * @param step        The legal number intervals. Null if no step is required.
+	 * @param minimum     The minimum value. Null if no minimum value is required.
+	 * @param maximum     The maximum value. Null if no maximum value is required.
+	 * @param unit        The unit. Null if no unit is available.
+	 * @throws IllegalArgumentException Throws if the argument or the label is null.
+	 * @since 1.8
+	 */
+	public IntegerField(String argument, Integer value, Internationalization label, Internationalization placeholder,
+			Integer step, Integer minimum, Integer maximum, Internationalization unit) throws IllegalArgumentException {
+		super(argument, value, label, placeholder, step, minimum, maximum, unit);
+	}
+
+	/**
+	 * Creates an integer field for a model.
+	 * 
+	 * @param argument    The argument.
+	 * @param value       The default value. Null if not required.
+	 * @param label       The label.
+	 * @param description The description. Null if no description is required.
 	 * @param placeholder The placeholder. Null if no placeholder is required.
 	 * @param step        The legal number intervals. Null if no step is required.
 	 * @param minimum     The minimum value. Null if no minimum value is required.
 	 * @param maximum     The maximum value. Null if no maximum value is required.
 	 * @param unit        The unit. Null if no unit is available.
 	 * @param isDisabled  True if the field is disabled.
-	 * @throws IllegalArgumentException Throws if the argument or the description is
-	 *                                  null.
+	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	public IntegerField(String argument, Integer value, Internationalization description, Internationalization warning,
+	public IntegerField(String argument, Integer value, Internationalization label, Internationalization description,
 			Internationalization placeholder, Integer step, Integer minimum, Integer maximum, Internationalization unit,
 			boolean isDisabled) throws IllegalArgumentException {
-		super(argument, value, description, warning, placeholder, step, minimum, maximum, unit, isDisabled);
+		super(argument, value, label, description, placeholder, step, minimum, maximum, unit, isDisabled);
 	}
 
 }

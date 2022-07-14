@@ -51,14 +51,13 @@ public final class ImageField extends Field<Object> {
 	 * Creates an image field for a model with all select options. Furthermore,
 	 * shows the check box and zooms the thumbnails.
 	 * 
-	 * @param argument    The argument.
-	 * @param description The description.
-	 * @throws IllegalArgumentException Throws if the argument or the description is
-	 *                                  null.
+	 * @param argument The argument.
+	 * @param label    The label.
+	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	public ImageField(String argument, Internationalization description) throws IllegalArgumentException {
-		this(argument, description, null);
+	public ImageField(String argument, Internationalization label) throws IllegalArgumentException {
+		this(argument, label, null);
 	}
 
 	/**
@@ -66,15 +65,14 @@ public final class ImageField extends Field<Object> {
 	 * shows the check box and zooms the thumbnails.
 	 * 
 	 * @param argument    The argument.
-	 * @param description The description.
-	 * @param warning     The warning. Null if no warning is required.
-	 * @throws IllegalArgumentException Throws if the argument or the description is
-	 *                                  null.
+	 * @param label       The label.
+	 * @param description The description. Null if no description is required.
+	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	public ImageField(String argument, Internationalization description, Internationalization warning)
+	public ImageField(String argument, Internationalization label, Internationalization description)
 			throws IllegalArgumentException {
-		this(argument, description, warning, false, false);
+		this(argument, label, description, false, false);
 	}
 
 	/**
@@ -82,25 +80,25 @@ public final class ImageField extends Field<Object> {
 	 * shows the check box and zooms the thumbnails.
 	 * 
 	 * @param argument    The argument.
-	 * @param description The description.
-	 * @param warning     The warning. Null if no warning is required.
+	 * @param label       The label.
+	 * @param description The description. Null if no description is required.
 	 * @param isWorkflow  True if it is a workflow image.
 	 * @param isDisabled  True if the field is disabled.
-	 * @throws IllegalArgumentException Throws if the argument or the description is
-	 *                                  null.
+	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	public ImageField(String argument, Internationalization description, Internationalization warning,
-			boolean isWorkflow, boolean isDisabled) throws IllegalArgumentException {
-		this(argument, description, warning, isWorkflow, false, true, true, true, true, isDisabled);
+	public ImageField(String argument, Internationalization label, Internationalization description, boolean isWorkflow,
+			boolean isDisabled) throws IllegalArgumentException {
+		this(argument, label, description, isWorkflow, false, true, true, true, true, isDisabled);
 	}
 
 	/**
 	 * Creates an image field for a model.
 	 * 
 	 * @param argument           The argument.
-	 * @param description        The description.
-	 * @param warning            The warning. Null if no warning is required.
+	 * @param label              The label.
+	 * @param description        The description. Null if no description is
+	 *                           required.
 	 * @param isWorkflow         True if it is a workflow image.
 	 * @param isHideCheckbox     True if hide check box.
 	 * @param isZoom             True if zoom the thumbnails.
@@ -108,14 +106,13 @@ public final class ImageField extends Field<Object> {
 	 * @param isSelectKeyword    True if select by image keyword.
 	 * @param isSelectAltogether True if select by image altogether.
 	 * @param isDisabled         True if the field is disabled.
-	 * @throws IllegalArgumentException Throws if the argument or the description is
-	 *                                  null.
+	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	public ImageField(String argument, Internationalization description, Internationalization warning,
-			boolean isWorkflow, boolean isHideCheckbox, boolean isZoom, boolean isSelectType, boolean isSelectKeyword,
+	public ImageField(String argument, Internationalization label, Internationalization description, boolean isWorkflow,
+			boolean isHideCheckbox, boolean isZoom, boolean isSelectType, boolean isSelectKeyword,
 			boolean isSelectAltogether, boolean isDisabled) throws IllegalArgumentException {
-		super(argument, null, description, warning, null, isDisabled);
+		super(argument, null, label, description, null, isDisabled);
 
 		this.isWorkflow = isWorkflow;
 		this.isHideCheckbox = isHideCheckbox;

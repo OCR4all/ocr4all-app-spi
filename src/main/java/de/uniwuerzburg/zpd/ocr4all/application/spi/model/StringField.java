@@ -29,15 +29,14 @@ public final class StringField extends Field<String> {
 	 * 
 	 * @param argument    The argument.
 	 * @param value       The default value. Null if not required.
-	 * @param description The description.
+	 * @param label       The label.
 	 * @param placeholder The placeholder. Null if no placeholder is required.
-	 * @throws IllegalArgumentException Throws if the argument or the description is
-	 *                                  null.
+	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	public StringField(String argument, String value, Internationalization description,
-			Internationalization placeholder) throws IllegalArgumentException {
-		this(argument, value, description, null, placeholder, false);
+	public StringField(String argument, String value, Internationalization label, Internationalization placeholder)
+			throws IllegalArgumentException {
+		this(argument, value, label, null, placeholder, false);
 	}
 
 	/**
@@ -45,17 +44,16 @@ public final class StringField extends Field<String> {
 	 * 
 	 * @param argument    The argument.
 	 * @param value       The default value. Null if not required.
-	 * @param description The description.
-	 * @param warning     The warning. Null if no warning is required.
+	 * @param label       The label.
+	 * @param description The description. Null if no description is required.
 	 * @param placeholder The placeholder. Null if no placeholder is required.
 	 * @param isDisabled  True if the field is disabled.
-	 * @throws IllegalArgumentException Throws if the argument or the description is
-	 *                                  null.
+	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	public StringField(String argument, String value, Internationalization description, Internationalization warning,
+	public StringField(String argument, String value, Internationalization label, Internationalization description,
 			Internationalization placeholder, boolean isDisabled) throws IllegalArgumentException {
-		this(argument, value, null, description, warning, placeholder, isDisabled);
+		this(argument, value, null, label, description, placeholder, isDisabled);
 	}
 
 	/**
@@ -64,18 +62,17 @@ public final class StringField extends Field<String> {
 	 * @param argument    The argument.
 	 * @param value       The default value. Null if not required.
 	 * @param contentType The content type. Null if not required.
-	 * @param description The description.
-	 * @param warning     The warning. Null if no warning is required.
+	 * @param label       The label.
+	 * @param description The description. Null if no description is required.
 	 * @param placeholder The placeholder. Null if no placeholder is required.
 	 * @param isDisabled  True if the field is disabled.
-	 * @throws IllegalArgumentException Throws if the argument or the description is
-	 *                                  null.
+	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	public StringField(String argument, String value, String contentType, Internationalization description,
-			Internationalization warning, Internationalization placeholder, boolean isDisabled)
+	public StringField(String argument, String value, String contentType, Internationalization label,
+			Internationalization description, Internationalization placeholder, boolean isDisabled)
 			throws IllegalArgumentException {
-		super(argument, value, description, warning, placeholder, isDisabled);
+		super(argument, value, label, description, placeholder, isDisabled);
 
 		this.contentType = contentType == null ? Optional.empty() : Optional.of(contentType);
 	}

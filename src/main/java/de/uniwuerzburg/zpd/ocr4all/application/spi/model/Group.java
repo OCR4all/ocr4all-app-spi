@@ -36,76 +36,75 @@ public final class Group extends Entry {
 	 * Creates a group of entries. The collapsible group container is closed at the
 	 * beginning.
 	 * 
-	 * @param description The description.
-	 * @param entries     The entries.
-	 * @throws IllegalArgumentException Throws if the description or one of its
-	 *                                  entries is null.
+	 * @param label   The label.
+	 * @param entries The entries.
+	 * @throws IllegalArgumentException Throws if the label or one of its entries is
+	 *                                  null.
 	 * @since 1.8
 	 */
-	public Group(Internationalization description, Entry... entries) throws IllegalArgumentException {
-		this(false, description, entries);
+	public Group(Internationalization label, Entry... entries) throws IllegalArgumentException {
+		this(false, label, entries);
 	}
 
 	/**
 	 * Creates a group of entries. The collapsible group container is closed at the
 	 * beginning.
 	 * 
-	 * @param description The description.
-	 * @param entries     The entries.
-	 * @throws IllegalArgumentException Throws if the description, the entries or
-	 *                                  one of its entries is null.
+	 * @param label   The label.
+	 * @param entries The entries.
+	 * @throws IllegalArgumentException Throws if the label, the entries or one of
+	 *                                  its entries is null.
 	 * @since 1.8
 	 */
-	public Group(Internationalization description, List<Entry> entries) throws IllegalArgumentException {
-		this(false, description, entries);
+	public Group(Internationalization label, List<Entry> entries) throws IllegalArgumentException {
+		this(false, label, entries);
 	}
 
 	/**
 	 * Creates a group of entries.
 	 * 
-	 * @param isOpen      True if the collapsible group container is open at the
-	 *                    beginning. Otherwise, it is closed.
-	 * @param description The description.
-	 * @param entries     The entries.
-	 * @throws IllegalArgumentException Throws if the description or one of its
-	 *                                  entries is null.
+	 * @param isOpen  True if the collapsible group container is open at the
+	 *                beginning. Otherwise, it is closed.
+	 * @param label   The label.
+	 * @param entries The entries.
+	 * @throws IllegalArgumentException Throws if the label or one of its entries is
+	 *                                  null.
 	 * @since 1.8
 	 */
-	public Group(boolean isOpen, Internationalization description, Entry... entries) throws IllegalArgumentException {
-		this(isOpen, description, Arrays.asList(entries));
+	public Group(boolean isOpen, Internationalization label, Entry... entries) throws IllegalArgumentException {
+		this(isOpen, label, Arrays.asList(entries));
 	}
 
 	/**
 	 * Creates a group of entries.
 	 * 
-	 * @param isOpen      True if the collapsible group container is open at the
-	 *                    beginning. Otherwise, it is closed.
-	 * @param description The description.
-	 * @param entries     The entries.
-	 * @throws IllegalArgumentException Throws if the description, the entries or
-	 *                                  one of its entries is null.
+	 * @param isOpen  True if the collapsible group container is open at the
+	 *                beginning. Otherwise, it is closed.
+	 * @param label   The label.
+	 * @param entries The entries.
+	 * @throws IllegalArgumentException Throws if the label, the entries or one of
+	 *                                  its entries is null.
 	 * @since 1.8
 	 */
-	public Group(boolean isOpen, Internationalization description, List<Entry> entries)
+	public Group(boolean isOpen, Internationalization label, List<Entry> entries) throws IllegalArgumentException {
+		this(isOpen, label, entries, false);
+	}
+
+	/**
+	 * Creates a group of entries.
+	 * 
+	 * @param isOpen     True if the collapsible group container is open at the
+	 *                   beginning. Otherwise, it is closed.
+	 * @param label      The label.
+	 * @param entries    The entries.
+	 * @param isDisabled True if the field is disabled.
+	 * @throws IllegalArgumentException Throws if the label, the entries or one of
+	 *                                  its entries is null.
+	 * @since 1.8
+	 */
+	public Group(boolean isOpen, Internationalization label, List<Entry> entries, boolean isDisabled)
 			throws IllegalArgumentException {
-		this(isOpen, description, entries, false);
-	}
-
-	/**
-	 * Creates a group of entries.
-	 * 
-	 * @param isOpen      True if the collapsible group container is open at the
-	 *                    beginning. Otherwise, it is closed.
-	 * @param description The description.
-	 * @param entries     The entries.
-	 * @param isDisabled  True if the field is disabled.
-	 * @throws IllegalArgumentException Throws if the description, the entries or
-	 *                                  one of its entries is null.
-	 * @since 1.8
-	 */
-	public Group(boolean isOpen, Internationalization description, List<Entry> entries, boolean isDisabled)
-			throws IllegalArgumentException {
-		super(description, isDisabled);
+		super(label, isDisabled);
 
 		if (entries == null)
 			throw new IllegalArgumentException("the entries cannot be null.");

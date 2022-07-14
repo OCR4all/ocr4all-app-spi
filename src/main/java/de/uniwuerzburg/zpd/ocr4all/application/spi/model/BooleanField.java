@@ -21,16 +21,14 @@ public final class BooleanField extends Field<Boolean> {
 	/**
 	 * Creates a boolean field for a model.
 	 * 
-	 * @param argument    The argument.
-	 * @param value       The default value. Null if not required.
-	 * @param description The description.
-	 * @throws IllegalArgumentException Throws if the argument or the description is
-	 *                                  null.
+	 * @param argument The argument.
+	 * @param value    The default value. Null if not required.
+	 * @param label    The label.
+	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	public BooleanField(String argument, Boolean value, Internationalization description)
-			throws IllegalArgumentException {
-		super(argument, value, description, null, null, false);
+	public BooleanField(String argument, Boolean value, Internationalization label) throws IllegalArgumentException {
+		super(argument, value, label, null, null, false);
 	}
 
 	/**
@@ -38,16 +36,15 @@ public final class BooleanField extends Field<Boolean> {
 	 * 
 	 * @param argument    The argument.
 	 * @param value       The default value. Null if not required.
-	 * @param description The description.
-	 * @param warning     The warning. Null if no warning is required.
+	 * @param label       The label.
+	 * @param description The description. Null if no description is required.
 	 * @param isDisabled  True if the field is disabled.
-	 * @throws IllegalArgumentException Throws if the argument or the description is
-	 *                                  null.
+	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	public BooleanField(String argument, Boolean value, Internationalization description, Internationalization warning,
+	public BooleanField(String argument, Boolean value, Internationalization label, Internationalization description,
 			boolean isDisabled) throws IllegalArgumentException {
-		super(argument, value, description, warning, null, isDisabled);
+		super(argument, value, label, description, null, isDisabled);
 	}
 
 }

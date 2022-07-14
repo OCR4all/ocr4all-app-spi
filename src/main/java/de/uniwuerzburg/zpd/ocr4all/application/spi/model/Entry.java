@@ -20,9 +20,9 @@ import de.uniwuerzburg.zpd.ocr4all.application.spi.env.Internationalization;
  */
 public class Entry {
 	/**
-	 * The description.
+	 * The label.
 	 */
-	private final Internationalization description;
+	private final Internationalization label;
 
 	/**
 	 * True if the field is disabled.
@@ -32,30 +32,30 @@ public class Entry {
 	/**
 	 * Creates an entry for a model.
 	 * 
-	 * @param description The description.
-	 * @param isDisabled  True if the field is disabled.
-	 * @throws IllegalArgumentException Throws if the description is null.
+	 * @param label      The label.
+	 * @param isDisabled True if the field is disabled.
+	 * @throws IllegalArgumentException Throws if the label is null.
 	 * @since 1.8
 	 */
-	Entry(Internationalization description, boolean isDisabled) throws IllegalArgumentException {
+	Entry(Internationalization label, boolean isDisabled) throws IllegalArgumentException {
 		super();
 
-		if (description == null)
-			throw new IllegalArgumentException("the description cannot be null.");
+		if (label == null)
+			throw new IllegalArgumentException("the label cannot be null.");
 
-		this.description = description;
+		this.label = label;
 		this.isDisabled = isDisabled;
 	}
 
 	/**
-	 * Returns the description.
+	 * Returns the label.
 	 *
 	 * @param locale The locale.
-	 * @return The description.
+	 * @return The label.
 	 * @since 1.8
 	 */
-	public String getDescription(Locale locale) {
-		return description.getString(locale);
+	public String getLabel(Locale locale) {
+		return label.getString(locale);
 	}
 
 	/**
