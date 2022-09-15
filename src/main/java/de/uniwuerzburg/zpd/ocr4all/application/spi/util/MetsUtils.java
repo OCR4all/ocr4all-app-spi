@@ -74,23 +74,23 @@ public class MetsUtils {
 	 * @return The mets file group. Null if framework is null.
 	 * @since 1.8
 	 */
-	public static FileGroup getFileGroup(Framework framework) {
-		return framework == null ? null : new FileGroup(framework);
+	public static FrameworkFileGroup getFileGroup(Framework framework) {
+		return framework == null ? null : new FrameworkFileGroup(framework);
 	}
 
 	/**
-	 * Returns the mets file group for given framework.
+	 * Returns the mets file group for given prefix.
 	 * 
-	 * @param framework The framework.
-	 * @return The mets file group. Null if framework is null.
+	 * @param prefix The file group prefix.
+	 * @return The mets file group.
 	 * @since 1.8
 	 */
-	public static TrackUtils getTrack(String fileGroupPrefix) {
-		return fileGroupPrefix == null || fileGroupPrefix.isBlank() ? null : new TrackUtils(fileGroupPrefix);
+	public static FileGroup getTrack(String prefix) {
+		return new FileGroup(prefix);
 	}
 
 	/**
-	 * FileGroup is an immutable class that defines mets file groups.
+	 * Defines utilities for mets file groups.
 	 *
 	 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
 	 * @version 1.0
@@ -100,8 +100,91 @@ public class MetsUtils {
 		/**
 		 * The file group prefix.
 		 */
-		private final String fileGroupPrefix;
+		private final String prefix;
 
+		/**
+		 * Creates utilities for a mets file group.
+		 * 
+		 * @param prefix The file group prefix.
+		 * @since 1.8
+		 */
+		protected FileGroup(String prefix) {
+			super();
+
+			this.prefix = prefix == null ? "" : prefix.trim();
+		}
+
+		/**
+		 * Returns the file group prefix.
+		 *
+		 * @return The file group prefix.
+		 * @since 1.8
+		 */
+		public String getPrefix() {
+			return prefix;
+		}
+
+		/**
+		 * Returns the mets file group for given track.
+		 * 
+		 * @param track The track.
+		 * @return The mets file group. If the track or one of its elements is null,
+		 *         null is returned.
+		 * @since 1.8
+		 */
+		public String getFileGroup(List<Integer> track) {
+			if (track == null)
+				return null;
+			else
+				try {
+					StringBuffer path = new StringBuffer();
+
+					for (int snapshotId : track)
+						path.append("-" + snapshotId);
+
+					return prefix + path.toString();
+				} catch (Exception e) {
+					return null;
+				}
+		}
+
+		/**
+		 * Returns the track for given mets file group.
+		 * 
+		 * @param group The mets file group.
+		 * @return The track.
+		 * @since 1.8
+		 */
+		public List<Integer> getTrack(String group) {
+			if (group == null || !group.startsWith(prefix))
+				return null;
+			else if (group.equals(prefix))
+				return new ArrayList<>();
+			else if (!group.startsWith(prefix + "-") || group.equals(prefix + "-"))
+				return null;
+			else {
+				List<Integer> track = new ArrayList<>();
+				for (String id : group.substring((prefix + "-").length()).split("-"))
+					try {
+						track.add(Integer.parseInt(id));
+					} catch (Exception e) {
+						return null;
+					}
+
+				return track;
+			}
+		}
+
+	}
+
+	/**
+	 * Defines mets file groups for frameworks.
+	 *
+	 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
+	 * @version 1.0
+	 * @since 1.8
+	 */
+	public static class FrameworkFileGroup extends FileGroup {
 		/**
 		 * The input file group.
 		 */
@@ -113,15 +196,13 @@ public class MetsUtils {
 		private final String output;
 
 		/**
-		 * Creates a mets file group.
+		 * Creates a mets file group for a framework.
 		 * 
 		 * @param framework The framework.
 		 * @since 1.8
 		 */
-		protected FileGroup(Framework framework) {
-			super();
-
-			fileGroupPrefix = framework.getMetsGroup();
+		protected FrameworkFileGroup(Framework framework) {
+			super(framework.getMetsGroup());
 
 			String fileGroup = null;
 			try {
@@ -138,32 +219,6 @@ public class MetsUtils {
 				// Ignore value
 			}
 			output = fileGroup;
-		}
-
-		/**
-		 * Returns the file group.
-		 * 
-		 * @param snapshotTrack The snapshot track.
-		 * @return The file group.
-		 * @since 1.8
-		 */
-		private String getFileGroup(List<Integer> snapshotTrack) {
-			StringBuffer path = new StringBuffer();
-
-			for (int snapshotId : snapshotTrack)
-				path.append("-" + snapshotId);
-
-			return fileGroupPrefix + path.toString();
-		}
-
-		/**
-		 * Returns the file group prefix.
-		 *
-		 * @return The file group prefix.
-		 * @since 1.8
-		 */
-		public String getFileGroupPrefix() {
-			return fileGroupPrefix;
 		}
 
 		/**
@@ -185,70 +240,6 @@ public class MetsUtils {
 		public String getOutput() {
 			return output;
 		}
-	}
-
-	/**
-	 * Defines utilities to extract tracks from mets file groups.
-	 *
-	 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
-	 * @version 1.0
-	 * @since 1.8
-	 */
-	public static class TrackUtils {
-		/**
-		 * The file group prefix.
-		 */
-		private final String fileGroupPrefix;
-
-		/**
-		 * Creates utilities to extract tracks from a mets file group.
-		 * 
-		 * @param fileGroupPrefix The file group prefix.
-		 * @since 1.8
-		 */
-		protected TrackUtils(String fileGroupPrefix) {
-			super();
-
-			this.fileGroupPrefix = fileGroupPrefix.trim();
-		}
-
-		/**
-		 * Returns the file group prefix.
-		 *
-		 * @return The file group prefix.
-		 * @since 1.8
-		 */
-		public String getFileGroupPrefix() {
-			return fileGroupPrefix;
-		}
-
-		/**
-		 * Returns the track for given mets file group.
-		 * 
-		 * @param fileGroup The mets file group.
-		 * @return The track.
-		 * @since 1.8
-		 */
-		public List<Integer> getTrack(String fileGroup) {
-			if (fileGroup == null || !fileGroup.startsWith(fileGroupPrefix))
-				return null;
-			else if (fileGroup.equals(fileGroupPrefix))
-				return new ArrayList<>();
-			else if (!fileGroup.startsWith(fileGroupPrefix + "-") || fileGroup.equals(fileGroupPrefix + "-"))
-				return null;
-			else {
-				List<Integer> track = new ArrayList<>();
-				for (String id : fileGroup.substring((fileGroupPrefix + "-").length()).split("-"))
-					try {
-						track.add(Integer.parseInt(id));
-					} catch (Exception e) {
-						return null;
-					}
-
-				return track;
-			}
-		}
-
 	}
 
 }
