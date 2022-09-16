@@ -81,12 +81,23 @@ public class MetsUtils {
 	/**
 	 * Returns the mets file group for given prefix.
 	 * 
-	 * @param prefix The file group prefix.
+	 * @param prefix The group prefix.
 	 * @return The mets file group.
 	 * @since 1.8
 	 */
-	public static FileGroup getTrack(String prefix) {
+	public static FileGroup getFileGroup(String prefix) {
 		return new FileGroup(prefix);
+	}
+
+	/**
+	 * Returns the mets page id prefix for given group prefix.
+	 * 
+	 * @param prefix The group prefix.
+	 * @return The mets page id prefix.
+	 * @since 1.8
+	 */
+	public static Page getPage(String prefix) {
+		return new Page(prefix);
 	}
 
 	/**
@@ -98,14 +109,14 @@ public class MetsUtils {
 	 */
 	public static class FileGroup {
 		/**
-		 * The file group prefix.
+		 * The group prefix.
 		 */
 		private final String prefix;
 
 		/**
 		 * Creates utilities for a mets file group.
 		 * 
-		 * @param prefix The file group prefix.
+		 * @param prefix The group prefix.
 		 * @since 1.8
 		 */
 		protected FileGroup(String prefix) {
@@ -115,9 +126,9 @@ public class MetsUtils {
 		}
 
 		/**
-		 * Returns the file group prefix.
+		 * Returns the group prefix.
 		 *
-		 * @return The file group prefix.
+		 * @return The group prefix.
 		 * @since 1.8
 		 */
 		public String getPrefix() {
@@ -240,6 +251,75 @@ public class MetsUtils {
 		public String getOutput() {
 			return output;
 		}
+	}
+
+	/**
+	 * Defines utilities for mets pages.
+	 *
+	 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
+	 * @version 1.0
+	 * @since 1.8
+	 */
+	public static class Page {
+		/**
+		 * The id pattern.
+		 */
+		private static final String idPattern = "-id_";
+
+		/**
+		 * The group prefix.
+		 */
+		private final String prefix;
+
+		/**
+		 * Creates utilities for a mets page.
+		 * 
+		 * @param prefix The group prefix.
+		 * @since 1.8
+		 */
+		protected Page(String prefix) {
+			super();
+
+			this.prefix = prefix == null ? "" : prefix.trim();
+		}
+
+		/**
+		 * Returns the group prefix.
+		 *
+		 * @return The group prefix.
+		 * @since 1.8
+		 */
+		public String getPrefix() {
+			return prefix;
+		}
+
+		/**
+		 * Returns the page id.
+		 * 
+		 * @param id The group id.
+		 * @return The page id.
+		 * @since 1.8
+		 */
+		public String getId(String id) {
+			return prefix + idPattern + (id == null ? "" : id.trim());
+		}
+
+		/**
+		 * Returns the group id.
+		 * 
+		 * @param id The page id.
+		 * @return The group id.
+		 * @since 1.8
+		 */
+		public String getGroupId(String id) {
+			if (id == null)
+				return null;
+
+			id = id.trim();
+
+			return id.startsWith(prefix + idPattern) ? id.substring((prefix + idPattern).length()) : null;
+		}
+
 	}
 
 }
