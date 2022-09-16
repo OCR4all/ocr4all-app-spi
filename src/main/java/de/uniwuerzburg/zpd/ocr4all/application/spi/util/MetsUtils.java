@@ -34,6 +34,71 @@ public class MetsUtils {
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatPattern);
 
 	/**
+	 * Defines roles.
+	 *
+	 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
+	 * @version 1.0
+	 * @since 1.8
+	 */
+	public enum Role {
+		creator, other
+	}
+
+	/**
+	 * Defines notes.
+	 *
+	 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
+	 * @version 1.0
+	 * @since 1.8
+	 */
+	public enum Note {
+		inputFileGroup("input-file-grp"), outputFileGroup("output-file-grp"), parameter, pageId("page-id");
+
+		/**
+		 * The label.
+		 */
+		private final String label;
+
+		/**
+		 * Default constructor for a note.
+		 * 
+		 * @since 1.8
+		 */
+		private Note() {
+			label = this.name();
+		}
+
+		/**
+		 * Creates a note.
+		 * 
+		 * @param label The label.
+		 * @since 1.8
+		 */
+		private Note(String label) {
+			this.label = label;
+		}
+
+		/**
+		 * Returns the note with given label.
+		 * 
+		 * @param label The label.
+		 * @return The note with given label.
+		 * @since 1.8
+		 */
+		public static Note getNote(String label) {
+			if (label != null && !label.isBlank()) {
+				label = label.trim().toLowerCase();
+
+				for (Note note : Note.values())
+					if (note.label.equals(label))
+						return note;
+			}
+
+			return null;
+		}
+	}
+
+	/**
 	 * Returns the current date formatted for mets.
 	 * 
 	 * @return The current date formatted for mets.
@@ -65,6 +130,24 @@ public class MetsUtils {
 	 */
 	public static Date getDate(String formattedDate) throws ParseException {
 		return dateFormat.parse(formattedDate);
+	}
+
+	/**
+	 * Returns the agent role.
+	 * 
+	 * @param role      The role.
+	 * @param otherRole The other role.
+	 * @return The agent role.
+	 * @since 1.8
+	 */
+	public static String getAgentRole(String role, String otherRole) {
+		if (Role.creator.name().equalsIgnoreCase(role))
+			return "creator";
+		else if (Role.other.name().equalsIgnoreCase(role))
+			return otherRole;
+		else
+			return null;
+
 	}
 
 	/**
