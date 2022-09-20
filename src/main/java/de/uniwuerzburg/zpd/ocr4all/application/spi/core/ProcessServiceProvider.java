@@ -100,6 +100,14 @@ public interface ProcessServiceProvider extends ServiceProvider {
 			 * @since 1.8
 			 */
 			public void updatedStandardError(String message);
+
+			/**
+			 * Callback method to lock the snapshot.
+			 * 
+			 * @param comment The snapshot lock comment.
+			 * @since 1.8
+			 */
+			public void lockSnapshot(String comment);
 		}
 	}
 }
