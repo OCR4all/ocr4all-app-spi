@@ -18,9 +18,9 @@ import de.uniwuerzburg.zpd.ocr4all.application.spi.env.Internationalization;
  */
 public final class ImageField extends Field<Object> {
 	/**
-	 * True if it is a workflow image.
+	 * True if it is a sandbox image.
 	 */
-	private final boolean isWorkflow;
+	private final boolean isSandbox;
 
 	/**
 	 * True if hide check box.
@@ -82,14 +82,14 @@ public final class ImageField extends Field<Object> {
 	 * @param argument    The argument.
 	 * @param label       The label.
 	 * @param description The description. Null if no description is required.
-	 * @param isWorkflow  True if it is a workflow image.
+	 * @param isSandbox   True if it is a sandbox image.
 	 * @param isDisabled  True if the field is disabled.
 	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	public ImageField(String argument, Internationalization label, Internationalization description, boolean isWorkflow,
+	public ImageField(String argument, Internationalization label, Internationalization description, boolean isSandbox,
 			boolean isDisabled) throws IllegalArgumentException {
-		this(argument, label, description, isWorkflow, false, true, true, true, true, isDisabled);
+		this(argument, label, description, isSandbox, false, true, true, true, true, isDisabled);
 	}
 
 	/**
@@ -99,7 +99,7 @@ public final class ImageField extends Field<Object> {
 	 * @param label              The label.
 	 * @param description        The description. Null if no description is
 	 *                           required.
-	 * @param isWorkflow         True if it is a workflow image.
+	 * @param isSandbox          True if it is a sandbox image.
 	 * @param isHideCheckbox     True if hide check box.
 	 * @param isZoom             True if zoom the thumbnails.
 	 * @param isSelectType       True if select by image type.
@@ -109,12 +109,12 @@ public final class ImageField extends Field<Object> {
 	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	public ImageField(String argument, Internationalization label, Internationalization description, boolean isWorkflow,
+	public ImageField(String argument, Internationalization label, Internationalization description, boolean isSandbox,
 			boolean isHideCheckbox, boolean isZoom, boolean isSelectType, boolean isSelectKeyword,
 			boolean isSelectAltogether, boolean isDisabled) throws IllegalArgumentException {
 		super(argument, null, label, description, null, isDisabled);
 
-		this.isWorkflow = isWorkflow;
+		this.isSandbox = isSandbox;
 		this.isHideCheckbox = isHideCheckbox;
 		this.isZoom = isZoom;
 		this.isSelectType = isSelectType;
@@ -123,13 +123,13 @@ public final class ImageField extends Field<Object> {
 	}
 
 	/**
-	 * Returns true if it is a workflow image.
+	 * Returns true if it is a sandbox image.
 	 *
-	 * @return True if it is a workflow image.
+	 * @return True if it is a sandbox image.
 	 * @since 1.8
 	 */
-	public boolean isWorkflow() {
-		return isWorkflow;
+	public boolean isSandbox() {
+		return isSandbox;
 	}
 
 	/**
