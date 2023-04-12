@@ -300,7 +300,7 @@ public class MetsUtils {
 
 			String fileGroup = null;
 			try {
-				fileGroup = getFileGroup(framework.getTarget().getWorkflow().getSnapshotTrack());
+				fileGroup = getFileGroup(framework.getTarget().getSandbox().getSnapshotTrack());
 			} catch (Exception e) {
 				// Ignore value
 			}

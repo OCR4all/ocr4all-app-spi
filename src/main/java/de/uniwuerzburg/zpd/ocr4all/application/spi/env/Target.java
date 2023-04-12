@@ -40,9 +40,9 @@ public class Target {
 	private final Project project;
 
 	/**
-	 * The workflow target.
+	 * The sandbox target.
 	 */
-	private final Workflow workflow;
+	private final Sandbox sandbox;
 
 	/**
 	 * Creates a target for a service provider.
@@ -50,16 +50,16 @@ public class Target {
 	 * @param exchange The exchange folder.
 	 * @param opt      The opt folder.
 	 * @param project  The project target.
-	 * @param workflow The workflow target.
+	 * @param sandbox  The sandbox target.
 	 * @since 1.8
 	 */
-	public Target(Path exchange, Path opt, Project project, Workflow workflow) {
+	public Target(Path exchange, Path opt, Project project, Sandbox sandbox) {
 		super();
 
 		this.exchange = exchange;
 		this.opt = opt;
 		this.project = project;
-		this.workflow = workflow;
+		this.sandbox = sandbox;
 	}
 
 	/**
@@ -129,27 +129,27 @@ public class Target {
 	}
 
 	/**
-	 * Returns true if the workflow target is set.
+	 * Returns true if the sandbox target is set.
 	 *
-	 * @return True if the workflow target is set.
+	 * @return True if the sandbox target is set.
 	 * @since 1.8
 	 */
-	public boolean isWorkflowSet() {
-		return workflow != null;
+	public boolean isSandboxSet() {
+		return sandbox != null;
 	}
 
 	/**
-	 * Returns the workflow target.
+	 * Returns the sandbox target.
 	 *
-	 * @return The workflow target.
+	 * @return The sandbox target.
 	 * @since 1.8
 	 */
-	public Workflow getWorkflow() {
-		return workflow;
+	public Sandbox getSandbox() {
+		return sandbox;
 	}
 
 	/**
-	 * Workflow is an immutable class that defines project targets.
+	 * Sandbox is an immutable class that defines project targets.
 	 *
 	 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
 	 * @version 1.0
@@ -469,13 +469,13 @@ public class Target {
 	}
 
 	/**
-	 * Workflow is an immutable class that defines workflow targets.
+	 * Sandbox is an immutable class that defines sandbox targets.
 	 *
 	 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
 	 * @version 1.0
 	 * @since 1.8
 	 */
-	public static class Workflow {
+	public static class Sandbox {
 		/**
 		 * The root path.
 		 */
@@ -487,7 +487,7 @@ public class Target {
 		private final Path snapshots;
 
 		/**
-		 * True if the workflow was launched.
+		 * True if the sandbox was launched.
 		 */
 		private final boolean isLaunched;
 
@@ -508,11 +508,11 @@ public class Target {
 		private final Mets mets;
 
 		/**
-		 * Creates a workflow target.
+		 * Creates a sandbox target.
 		 * 
 		 * @param root          The root path.
 		 * @param snapshots     The snapshots root path.
-		 * @param isLaunched    True if the workflow was launched.
+		 * @param isLaunched    True if the sandbox was launched.
 		 * @param input         The input path. Null if there is not input directory.
 		 * @param snapshotTrack The snapshot track for the input directory. The track
 		 *                      for a root snapshot is an empty list. Null if not
@@ -520,7 +520,7 @@ public class Target {
 		 * @param mets          The mets core configuration.
 		 * @since 1.8
 		 */
-		public Workflow(Path root, Path snapshots, boolean isLaunched, Path input, List<Integer> snapshotTrack,
+		public Sandbox(Path root, Path snapshots, boolean isLaunched, Path input, List<Integer> snapshotTrack,
 				Mets mets) {
 			super();
 
@@ -577,9 +577,9 @@ public class Target {
 		}
 
 		/**
-		 * Returns true if the workflow was launched.
+		 * Returns true if the sandbox was launched.
 		 *
-		 * @return True if the workflow was launched.
+		 * @return True if the sandbox was launched.
 		 * @since 1.8
 		 */
 		public boolean isLaunched() {
@@ -644,7 +644,7 @@ public class Target {
 			 */
 			public Mets(String file, String group) {
 				super();
-				
+
 				this.file = file;
 				this.group = group;
 			}

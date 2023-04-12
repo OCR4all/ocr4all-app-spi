@@ -271,7 +271,7 @@ public class Framework {
 	 * @since 1.8
 	 */
 	public Path getProcessorWorkspace() {
-		return target == null || target.getWorkflow() == null ? null : target.getWorkflow().getSnapshots();
+		return target == null || target.getSandbox() == null ? null : target.getSandbox().getSnapshots();
 	}
 
 	/**
@@ -281,9 +281,9 @@ public class Framework {
 	 * @since 1.8
 	 */
 	public Path getMets() {
-		return getProcessorWorkspace() == null || target.getWorkflow().getMets() == null
-				|| target.getWorkflow().getMets().getFile() == null ? null
-						: Paths.get(getProcessorWorkspace().toString(), target.getWorkflow().getMets().getFile());
+		return getProcessorWorkspace() == null || target.getSandbox().getMets() == null
+				|| target.getSandbox().getMets().getFile() == null ? null
+						: Paths.get(getProcessorWorkspace().toString(), target.getSandbox().getMets().getFile());
 	}
 
 	/**
@@ -293,21 +293,20 @@ public class Framework {
 	 * @since 1.8
 	 */
 	public String getMetsGroup() {
-		return target == null || target.getWorkflow() == null || target.getWorkflow().getMets() == null ? null
-				: target.getWorkflow().getMets().getGroup();
+		return target == null || target.getSandbox() == null || target.getSandbox().getMets() == null ? null
+				: target.getSandbox().getMets().getGroup();
 	}
 
 	/**
 	 * Returns the relative output path of the processor workspace, this means, the
-	 * workflow snapshots root path.
+	 * sandbox snapshots root path.
 	 *
 	 * @return The relative output path of the processor workspace. Null if the
 	 *         relative output path can not be specified.
 	 * @since 1.8
 	 */
 	public Path getOutputRelativeProcessorWorkspace() {
-		return target == null || target.getWorkflow() == null ? null
-				: target.getWorkflow().getSnapshotsRelative(output);
+		return target == null || target.getSandbox() == null ? null : target.getSandbox().getSnapshotsRelative(output);
 	}
 
 	/**
