@@ -111,6 +111,7 @@ public class ConfigurationServiceProvider {
 	/**
 	 * Returns true if the system command is registered and available.
 	 *
+	 * @param type The system command type.
 	 * @return True if the system command is registered and available.
 	 * @since 1.8
 	 */
@@ -123,6 +124,7 @@ public class ConfigurationServiceProvider {
 	/**
 	 * Returns the system command.
 	 *
+	 * @param type The system command type.
 	 * @return The system command. Null if not registered.
 	 * @since 1.8
 	 */

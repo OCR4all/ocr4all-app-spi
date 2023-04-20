@@ -17,6 +17,7 @@ import de.uniwuerzburg.zpd.ocr4all.application.spi.env.Internationalization;
  *
  * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
  * @version 1.0
+ * @param <F> The value type.
  * @since 1.8
  */
 public class Field<F> extends Entry {

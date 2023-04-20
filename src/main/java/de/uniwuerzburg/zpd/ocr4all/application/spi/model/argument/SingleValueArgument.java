@@ -14,7 +14,8 @@ import java.util.Optional;
  *
  * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
  * @version 1.0
- * @since 1.8
+ * @param <V> The value type.
+ * @since       1.8
  */
 public abstract class SingleValueArgument<V> extends Argument {
 	/**

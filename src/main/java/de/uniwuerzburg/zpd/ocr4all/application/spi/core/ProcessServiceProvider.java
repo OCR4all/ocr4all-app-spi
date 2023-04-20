@@ -21,7 +21,7 @@ public interface ProcessServiceProvider extends ServiceProvider {
 	/**
 	 * Returns a new processor for the service provider.
 	 * 
-	 * @return
+	 * @return A new processor for the service provider.
 	 * @since 1.8
 	 */
 	public Processor newProcessor();
