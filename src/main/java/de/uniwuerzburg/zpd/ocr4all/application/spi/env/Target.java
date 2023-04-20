@@ -298,6 +298,7 @@ public class Target {
 			/**
 			 * Returns true if the folios directory is empty.
 			 * 
+			 * @return True if the folios directory is empty.
 			 * @throws IOException If an I/O error occurs.
 			 * @since 1.8
 			 */

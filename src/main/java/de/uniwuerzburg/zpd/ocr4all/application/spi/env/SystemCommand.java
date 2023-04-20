@@ -46,6 +46,7 @@ public class SystemCommand {
 	/**
 	 * Creates a system command.
 	 * 
+	 * @param type        The type.
 	 * @param command     The command.
 	 * @param isAvailable True if available.
 	 * @since 1.8
