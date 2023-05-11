@@ -68,9 +68,10 @@ public interface ServiceProvider {
 	 * Initializes the service provider. This action is performed after
 	 * configuration and delays until the provider should be activated for the first
 	 * time. This allows the provider to perform some required logic. If the
-	 * provider is enabled, this means, it should be activated when the application is
-	 * launched, then the initialization can be executed in a new thread that does
-	 * not block the initialization of the other providers (lazy initialization).
+	 * provider is enabled, this means, it should be activated when the application
+	 * is launched, then the initialization can be executed in a new thread that
+	 * does not block the initialization of the other providers (lazy
+	 * initialization).
 	 * 
 	 * @return The journal entry for the action.
 	 * @since 1.8
@@ -216,6 +217,22 @@ public interface ServiceProvider {
 	default Optional<String> getDescription(Locale locale) {
 		return Optional.empty();
 	}
+
+	/**
+	 * Returns the categories.
+	 *
+	 * @return The categories.
+	 * @since 1.8
+	 */
+	public List<String> getCategories();
+
+	/**
+	 * Returns the steps.
+	 *
+	 * @return The steps.
+	 * @since 1.8
+	 */
+	public List<String> getSteps();
 
 	/**
 	 * Returns the service provider icon. Font Awesome 5.10.1 are supported.
