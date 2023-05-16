@@ -117,7 +117,7 @@ public class SystemProcess {
 	 * Execute the system process with given arguments in foreground if it is not
 	 * running.
 	 * 
-	 * @param arguments The arguments.
+	 * @param arguments The arguments. Null if no arguments are required.
 	 * @throws IOException Throws if an I/O exception of some sort has occurred or
 	 *                     the process is already running.
 	 * @since 1.8
@@ -149,7 +149,7 @@ public class SystemProcess {
 	 *                     means, in a new thread. Furthermore the standard output
 	 *                     and the error of the system process are fetched while the
 	 *                     process is running.
-	 * @param arguments    The arguments.
+	 * @param arguments    The arguments. Null if no arguments are required.
 	 * @throws IOException Throws if an I/O exception of some sort has occurred or
 	 *                     the process is already running.
 	 * @since 1.8
@@ -168,9 +168,10 @@ public class SystemProcess {
 		List<String> commandBuilder = new ArrayList<>();
 		commandBuilder.add(command);
 
-		for (String argument : arguments)
-			if (argument != null)
-				commandBuilder.add(argument);
+		if (arguments != null)
+			for (String argument : arguments)
+				if (argument != null)
+					commandBuilder.add(argument);
 
 		ProcessBuilder builder = new ProcessBuilder(commandBuilder);
 		if (directory != null)
