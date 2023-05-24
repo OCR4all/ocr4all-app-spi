@@ -47,6 +47,12 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 	protected boolean isEnabled = false;
 
 	/**
+	 * The thread pool for the execution of the service provider. If null, the
+	 * service provider will be executed using the scheduler default pool.
+	 */
+	protected String threadPool = null;
+
+	/**
 	 * The journal.
 	 */
 	protected List<JournalEntryServiceProvider> journal = new ArrayList<>();
@@ -68,14 +74,16 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 	 * 
 	 * @see
 	 * de.uniwuerzburg.zpd.ocr4all.application.spi.core.ServiceProvider#configure(
-	 * boolean, boolean,
+	 * boolean, boolean, java.lang.String,
 	 * de.uniwuerzburg.zpd.ocr4all.application.spi.env.ConfigurationServiceProvider)
 	 */
 	@Override
-	public void configure(boolean isEagerInitialized, boolean isEnabled, ConfigurationServiceProvider configuration) {
+	public void configure(boolean isEagerInitialized, boolean isEnabled, String threadPool,
+			ConfigurationServiceProvider configuration) {
 		if (ServiceProvider.Status.loaded.equals(status)) {
 			this.isEagerInitialized = isEagerInitialized;
 			this.isEnabled = isEnabled;
+			this.threadPool = threadPool;
 			this.configuration = configuration;
 
 			status = ServiceProvider.Status.configured;
@@ -422,6 +430,71 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 
 		return journalEntry;
 
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.uniwuerzburg.zpd.ocr4all.application.spi.core.ServiceProvider#
+	 * isThreadPoolSet()
+	 */
+	@Override
+	public boolean isThreadPoolSet() {
+		return threadPool != null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.uniwuerzburg.zpd.ocr4all.application.spi.core.ServiceProvider#
+	 * getThreadPool()
+	 */
+	@Override
+	public String getThreadPool() {
+		return threadPool;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.uniwuerzburg.zpd.ocr4all.application.spi.core.ServiceProvider#
+	 * setThreadPool(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public JournalEntryServiceProvider setThreadPool(String user, String pool) {
+		if (pool == null || pool.isEmpty())
+			return resetThreadPool(user);
+		else {
+			threadPool = pool;
+
+			JournalEntryServiceProvider journalEntry = new JournalEntryServiceProvider(user, true,
+					JournalEntryServiceProvider.Level.info, "set thread pool '" + threadPool + "'", status, status);
+
+			journal.add(journalEntry);
+
+			return journalEntry;
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.uniwuerzburg.zpd.ocr4all.application.spi.core.ServiceProvider#
+	 * resetThreadPool(java.lang.String)
+	 */
+	@Override
+	public JournalEntryServiceProvider resetThreadPool(String user) {
+		if (threadPool == null)
+			return new JournalEntryServiceProvider(user, false, JournalEntryServiceProvider.Level.warn,
+					"the thread pool is already reset", status, status);
+		else {
+			JournalEntryServiceProvider journalEntry = new JournalEntryServiceProvider(user, true,
+					JournalEntryServiceProvider.Level.info, "reset thread pool", status, status);
+
+			journal.add(journalEntry);
+
+			return journalEntry;
+		}
 	}
 
 	/*

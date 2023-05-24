@@ -59,10 +59,14 @@ public interface ServiceProvider {
 	 *                           means, the service provider is active when the
 	 *                           application is launched. Otherwise, it is inactive
 	 *                           when the application is launched.
+	 * @param threadPool         The thread pool for the execution of the service
+	 *                           provider. If null, the service provider will be
+	 *                           executed using the scheduler default pool.
 	 * @param configuration      The configuration.
 	 * @since 1.8
 	 */
-	public void configure(boolean isEagerInitialized, boolean isEnabled, ConfigurationServiceProvider configuration);
+	public void configure(boolean isEagerInitialized, boolean isEnabled, String threadPool,
+			ConfigurationServiceProvider configuration);
 
 	/**
 	 * Initializes the service provider. This action is performed after
@@ -178,6 +182,46 @@ public interface ServiceProvider {
 	 * @since 1.8
 	 */
 	public JournalEntryServiceProvider stop(String user);
+
+	/**
+	 * Returns true if the thread pool for the execution of the service provider is
+	 * set.
+	 * 
+	 * @return True if the thread pool for the execution of the service provider is
+	 *         set.
+	 * @since 1.8
+	 */
+	public boolean isThreadPoolSet();
+
+	/**
+	 * Returns the thread pool for the execution of the service provider.
+	 * 
+	 * @return The thread pool. Null if not set.
+	 * @since 1.8
+	 */
+	public String getThreadPool();
+
+	/**
+	 * Set the thread pool for the execution of the service provider.
+	 * 
+	 * @param user The user.
+	 * @param pool The thread pool. If null or blank, the pool is reset and the
+	 *             service provider will be executed using the scheduler default
+	 *             pool.
+	 * @return The journal entry for the action.
+	 * @since 1.8
+	 */
+	public JournalEntryServiceProvider setThreadPool(String user, String pool);
+
+	/**
+	 * Reset the thread pool. The service provider will be executed using the
+	 * scheduler default pool.
+	 * 
+	 * @param user The user.
+	 * @return The journal entry for the action.
+	 * @since 1.8
+	 */
+	public JournalEntryServiceProvider resetThreadPool(String user);
 
 	/**
 	 * Returns the journal.
