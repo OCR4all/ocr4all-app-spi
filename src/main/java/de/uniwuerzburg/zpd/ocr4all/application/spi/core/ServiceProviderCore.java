@@ -462,7 +462,7 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 	 */
 	@Override
 	public JournalEntryServiceProvider setThreadPool(String user, String pool) {
-		if (pool == null || pool.isEmpty())
+		if (pool == null || pool.isBlank())
 			return resetThreadPool(user);
 		else {
 			threadPool = pool;
