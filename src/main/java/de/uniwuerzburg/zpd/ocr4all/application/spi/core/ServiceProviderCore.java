@@ -488,6 +488,8 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 			return new JournalEntryServiceProvider(user, false, JournalEntryServiceProvider.Level.warn,
 					"the thread pool is already reset", status, status);
 		else {
+			threadPool = null;
+
 			JournalEntryServiceProvider journalEntry = new JournalEntryServiceProvider(user, true,
 					JournalEntryServiceProvider.Level.info, "reset thread pool", status, status);
 
