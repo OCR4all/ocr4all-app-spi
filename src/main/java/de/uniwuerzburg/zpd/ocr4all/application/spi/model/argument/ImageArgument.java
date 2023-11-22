@@ -17,7 +17,7 @@ import java.util.Optional;
  * @version 1.0
  * @since 1.8
  */
-public final class ImageArgument extends MultipleValueArgument<Integer> {
+public final class ImageArgument extends MultipleValueArgument<String> {
 
 	/**
 	 * Creates image values for a model argument.
@@ -27,7 +27,7 @@ public final class ImageArgument extends MultipleValueArgument<Integer> {
 	 * @throws IllegalArgumentException Throws if the argument is null.
 	 * @since 1.8
 	 */
-	public ImageArgument(String argument, List<Integer> values) throws IllegalArgumentException {
+	public ImageArgument(String argument, List<String> values) throws IllegalArgumentException {
 		super(argument, values);
 	}
 
