@@ -352,19 +352,19 @@ public class Target {
 				private final ImageFormat format;
 
 				/**
-				 * The folder for the folios derivatives quality thumbnail.
+				 * The resolution for the folios derivatives quality thumbnail.
 				 */
-				private final Path thumbnail;
+				private final Resolution thumbnail;
 
 				/**
-				 * The folder for the folios derivatives quality detail.
+				 * The resolution for the folios derivatives quality detail.
 				 */
-				private final Path detail;
+				private final Resolution detail;
 
 				/**
-				 * The folder for the folios derivatives quality best.
+				 * The resolution for the folios derivatives quality best.
 				 */
-				private final Path best;
+				private final Resolution best;
 
 				/**
 				 * Creates derivatives quality image folders for the folios.
@@ -375,7 +375,7 @@ public class Target {
 				 * @param best      The folder for the folios derivatives quality best.
 				 * @since 1.8
 				 */
-				public Derivatives(ImageFormat format, Path thumbnail, Path detail, Path best) {
+				public Derivatives(ImageFormat format, Resolution thumbnail, Resolution detail, Resolution best) {
 					super();
 
 					this.format = format;
@@ -395,76 +395,106 @@ public class Target {
 				}
 
 				/**
-				 * Returns true if the folder for the folios derivatives quality thumbnail is a
-				 * directory.
+				 * Returns the resolution for the folios derivatives quality thumbnail.
 				 *
-				 * @return True if the folder is a directory; false if the folder does not
-				 *         exist, is not a directory, or it cannot be determined if the folder
-				 *         is a directory or not.
-				 * 
+				 * @return The resolution for the folios derivatives quality thumbnail.
 				 * @since 1.8
 				 */
-				public boolean isThumbnailDirectory() {
-					return Files.isDirectory(thumbnail);
-				}
-
-				/**
-				 * Returns the folder for the folios derivatives quality thumbnail.
-				 *
-				 * @return The folder for the folios derivatives quality thumbnail.
-				 * @since 1.8
-				 */
-				public Path getThumbnail() {
+				public Resolution getThumbnail() {
 					return thumbnail;
 				}
 
 				/**
-				 * Returns true if the folder for the folios derivatives quality detail is a
-				 * directory.
+				 * Returns the resolution for the folios derivatives quality detail.
 				 *
-				 * @return True if the folder is a directory; false if the folder does not
-				 *         exist, is not a directory, or it cannot be determined if the folder
-				 *         is a directory or not.
-				 * 
+				 * @return The resolution for the folios derivatives quality detail.
 				 * @since 1.8
 				 */
-				public boolean isDetailDirectory() {
-					return Files.isDirectory(detail);
-				}
-
-				/**
-				 * Returns the folder for the folios derivatives quality detail.
-				 *
-				 * @return The folder for the folios derivatives quality detail.
-				 * @since 1.8
-				 */
-				public Path getDetail() {
+				public Resolution getDetail() {
 					return detail;
 				}
 
 				/**
-				 * Returns true if the folder for the folios derivatives quality best is a
-				 * directory.
+				 * Returns the resolution for the folios derivatives quality best.
 				 *
-				 * @return True if the folder is a directory; false if the folder does not
-				 *         exist, is not a directory, or it cannot be determined if the folder
-				 *         is a directory or not.
-				 * 
+				 * @return The resolution for the folios derivatives quality best.
 				 * @since 1.8
 				 */
-				public boolean isBestDirectory() {
-					return Files.isDirectory(best);
+				public Resolution getBest() {
+					return best;
 				}
 
 				/**
-				 * Returns the folder for the folios derivatives quality best.
+				 * Defines resolutions.
 				 *
-				 * @return The folder for the folios derivatives quality best.
+				 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
+				 * @version 1.0
 				 * @since 1.8
 				 */
-				public Path getBest() {
-					return best;
+				public static class Resolution {
+					/**
+					 * The folder.
+					 */
+					private final Path folder;
+
+					/**
+					 * The quality.
+					 */
+					private final int quality;
+
+					/**
+					 * The maximal size.
+					 */
+					private final String maxSize;
+
+					/**
+					 * Creates a resolution.
+					 * 
+					 * @param folder  The folder.
+					 * @param quality The quality.
+					 * @param maxSize The maximal size.
+					 * @since 1.8
+					 */
+					public Resolution(Path folder, int quality, String maxSize) {
+						super();
+
+						this.folder = folder;
+						this.quality = quality;
+						this.maxSize = maxSize;
+					}
+
+					/**
+					 * Returns the folder.
+					 *
+					 * @return The folder.
+					 * @since 1.8
+					 */
+					public Path getFolder() {
+						return folder;
+					}
+
+					/**
+					 * Returns the quality.
+					 *
+					 * @return The quality.
+					 * @since 1.8
+					 */
+					public int getQuality() {
+						return quality;
+					}
+
+					/**
+					 * Returns the maximal size.
+					 *
+					 * @return The maximal size.
+					 * @since 1.8
+					 */
+					public String getMaxSize() {
+						return maxSize;
+					}
+
 				}
+
 			}
 		}
 	}
