@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.uniwuerzburg.zpd.ocr4all.application.spi.env.ConfigurationServiceProvider;
+import de.uniwuerzburg.zpd.ocr4all.application.spi.env.MicroserviceArchitecture;
 
 /**
  * Defines core implementations for service providers.
@@ -25,6 +26,11 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 	 * The configuration.
 	 */
 	protected ConfigurationServiceProvider configuration;
+
+	/**
+	 * The microservice architecture.
+	 */
+	protected MicroserviceArchitecture microserviceArchitecture;
 
 	/**
 	 * The status.
@@ -79,12 +85,13 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 	 */
 	@Override
 	public void configure(boolean isEagerInitialized, boolean isEnabled, String threadPool,
-			ConfigurationServiceProvider configuration) {
+			ConfigurationServiceProvider configuration, MicroserviceArchitecture microserviceArchitecture) {
 		if (ServiceProvider.Status.loaded.equals(status)) {
 			this.isEagerInitialized = isEagerInitialized;
 			this.isEnabled = isEnabled;
 			this.threadPool = threadPool;
 			this.configuration = configuration;
+			this.microserviceArchitecture = microserviceArchitecture;
 
 			status = ServiceProvider.Status.configured;
 
@@ -104,7 +111,7 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 	 *                           errors.
 	 * @since 1.8
 	 */
-	public void initializeCallback() throws ProviderException {
+	protected void initializeCallback() throws ProviderException {
 	}
 
 	/*
@@ -295,7 +302,7 @@ public abstract class ServiceProviderCore implements ServiceProvider {
 	 *                           errors.
 	 * @since 1.8
 	 */
-	public void startCallback() throws ProviderException {
+	protected void startCallback() throws ProviderException {
 	}
 
 	/*
