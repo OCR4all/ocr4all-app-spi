@@ -14,6 +14,8 @@ import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.List;
 
+import de.uniwuerzburg.zpd.ocr4all.application.communication.message.spi.EventSPI;
+
 /**
  * MicroserviceArchitecture is an immutable class that defines microservice
  * architectures.
@@ -29,18 +31,36 @@ public class MicroserviceArchitecture {
 	private final Hashtable<String, Host> hosts = new Hashtable<>();
 
 	/**
+	 * The event controller.
+	 */
+	private final EventController eventController;
+
+	/**
 	 * Creates a microservice architecture.
 	 * 
-	 * @param hosts The hosts.
+	 * @param eventController The event controller.
+	 * @param hosts           The hosts. The host ids has to be unique and non null.
 	 * @since 17
 	 */
-	public MicroserviceArchitecture(Collection<Host> hosts) {
+	public MicroserviceArchitecture(EventController eventController, Collection<Host> hosts) {
 		super();
+
+		this.eventController = eventController;
 
 		if (hosts != null)
 			for (Host host : hosts)
 				if (host != null && host.getId() != null)
 					this.hosts.put(host.getId(), host);
+	}
+
+	/**
+	 * Returns the event controller.
+	 *
+	 * @return The event controller.
+	 * @since 17
+	 */
+	public EventController getEventController() {
+		return eventController;
 	}
 
 	/**
@@ -90,6 +110,51 @@ public class MicroserviceArchitecture {
 	 */
 	public Host getHost(String id) {
 		return id == null ? null : hosts.get(id);
+	}
+
+	/**
+	 * Defines event controllers.
+	 *
+	 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
+	 * @version 1.0
+	 * @since 17
+	 */
+	public interface EventController {
+		/**
+		 * Register an event handler to spi events.
+		 * 
+		 * @param key     The event key to register.
+		 * @param handler The event handler.
+		 * @return The id of the registered event handler.
+		 * @since 17
+		 */
+		public int register(String key, EventHandler handler);
+
+		/**
+		 * Unregister an event handler.
+		 * 
+		 * @param id The id of the event handler to unregister.
+		 * @since 17
+		 */
+		public void unregister(int id);
+	}
+
+	/**
+	 * Defines functional interfaces to handle spi events.
+	 *
+	 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
+	 * @version 1.0
+	 * @since 17
+	 */
+	@FunctionalInterface
+	public interface EventHandler {
+		/**
+		 * Handles the spi event.
+		 * 
+		 * @param event The spi event to handle.
+		 * @since 17
+		 */
+		public void handle(EventSPI event);
 	}
 
 	/**
