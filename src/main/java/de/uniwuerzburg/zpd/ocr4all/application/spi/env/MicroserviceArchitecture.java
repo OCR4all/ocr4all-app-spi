@@ -123,9 +123,9 @@ public class MicroserviceArchitecture {
 		/**
 		 * Register an event handler to spi events.
 		 * 
-		 * @param key     The event key to register.
-		 * @param handler The event handler.
-		 * @return The id of the registered event handler.
+		 * @param key     The event key to register. It can not be null.
+		 * @param handler The event handler. It can not be null.
+		 * @return The id of the registered event handler. 0 if it cannot be registered.
 		 * @since 17
 		 */
 		public int register(String key, EventHandler handler);
