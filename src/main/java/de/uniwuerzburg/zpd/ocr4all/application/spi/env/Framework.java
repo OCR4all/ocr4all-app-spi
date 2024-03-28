@@ -71,6 +71,11 @@ public class Framework {
 	private List<Integer> snapshotTrack;
 
 	/**
+	 * The projects directory.
+	 */
+	private final Path projects;
+
+	/**
 	 * The temporary directory.
 	 */
 	private final Path temporary;
@@ -88,11 +93,12 @@ public class Framework {
 	 * @param snapshotTrack   The snapshot track for the output directory. The track
 	 *                        for a root snapshot is an empty list. Null if not
 	 *                        available.
+	 * @param projects        The projects directory.
 	 * @param temporary       The temporary directory.
 	 * @since 1.8
 	 */
 	public Framework(OperatingSystem operatingSystem, int uid, int gid, Application application, String user,
-			Target target, Path output, List<Integer> snapshotTrack, Path temporary) {
+			Target target, Path output, List<Integer> snapshotTrack, Path projects, Path temporary) {
 		super();
 
 		this.operatingSystem = operatingSystem;
@@ -103,6 +109,7 @@ public class Framework {
 		this.target = target;
 		this.output = output;
 		this.snapshotTrack = snapshotTrack;
+		this.projects = projects;
 		this.temporary = temporary;
 	}
 
@@ -307,6 +314,16 @@ public class Framework {
 	 */
 	public Path getOutputRelativeProcessorWorkspace() {
 		return target == null || target.getSandbox() == null ? null : target.getSandbox().getSnapshotsRelative(output);
+	}
+
+	/**
+	 * Returns the projects directory.
+	 *
+	 * @return The projects directory.
+	 * @since 17
+	 */
+	public Path getProjects() {
+		return projects;
 	}
 
 	/**
