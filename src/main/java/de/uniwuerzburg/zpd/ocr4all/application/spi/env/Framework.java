@@ -282,6 +282,28 @@ public class Framework {
 	}
 
 	/**
+	 * Returns the processor workspace path relative to projects home.
+	 *
+	 * @return The processor workspace path relative to projects home. Null if not
+	 *         available.
+	 * @since 1.8
+	 */
+	public Path getProcessorWorkspaceRelativeProjects() {
+		if (projects == null)
+			return null;
+		else {
+			Path processorWorkspace = getProcessorWorkspace();
+
+			if (processorWorkspace == null || !processorWorkspace.startsWith(projects)
+					|| processorWorkspace.equals(projects))
+				return null;
+			else
+				return Paths.get(processorWorkspace.toString().substring(projects.toString().length() + 1));
+
+		}
+	}
+
+	/**
 	 * Returns the mets path.
 	 *
 	 * @return The mets path. Null if not available.
