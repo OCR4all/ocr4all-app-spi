@@ -36,18 +36,24 @@ public interface ProcessServiceProvider extends ServiceProvider {
 	public interface Processor {
 		/**
 		 * Defines return states for the execution of the process.
-		 * <ul>
-		 * <li>completed: the process was carried out without problems</li>
-		 * <li>canceled: the process was aborted during execution</li>
-		 * <li>interrupted: the process was interrupted due to failures</li>
-		 * </ul>
 		 *
 		 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
 		 * @version 1.0
 		 * @since 1.8
 		 */
 		public enum State {
-			completed, canceled, interrupted
+			/**
+			 * the process was carried out without problems
+			 */
+			completed,
+			/**
+			 * the process was aborted during execution
+			 */			
+			canceled,
+			/**
+			 * the process was interrupted due to failures
+			 */
+			interrupted
 		}
 
 		/**

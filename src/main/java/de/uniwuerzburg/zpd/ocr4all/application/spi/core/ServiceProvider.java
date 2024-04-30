@@ -12,6 +12,7 @@ import java.util.Locale;
 import java.util.Optional;
 
 import de.uniwuerzburg.zpd.ocr4all.application.spi.env.ConfigurationServiceProvider;
+import de.uniwuerzburg.zpd.ocr4all.application.spi.env.MicroserviceArchitecture;
 import de.uniwuerzburg.zpd.ocr4all.application.spi.env.Premise;
 import de.uniwuerzburg.zpd.ocr4all.application.spi.env.Target;
 import de.uniwuerzburg.zpd.ocr4all.application.spi.model.Model;
@@ -51,22 +52,24 @@ public interface ServiceProvider {
 	 * executed in a new thread that does not block the initialization of the other
 	 * providers.
 	 * 
-	 * @param isEagerInitialized True if the service provider is initialized as soon
-	 *                           as the provider is loaded. Otherwise, its
-	 *                           initialization is deferred and will be performed in
-	 *                           a new thread.
-	 * @param isEnabled          True if the service provider is enabled, this
-	 *                           means, the service provider is active when the
-	 *                           application is launched. Otherwise, it is inactive
-	 *                           when the application is launched.
-	 * @param threadPool         The thread pool for the execution of the service
-	 *                           provider. If null, the service provider will be
-	 *                           executed using the scheduler default pool.
-	 * @param configuration      The configuration.
+	 * @param isEagerInitialized       True if the service provider is initialized
+	 *                                 as soon as the provider is loaded. Otherwise,
+	 *                                 its initialization is deferred and will be
+	 *                                 performed in a new thread.
+	 * @param isEnabled                True if the service provider is enabled, this
+	 *                                 means, the service provider is active when
+	 *                                 the application is launched. Otherwise, it is
+	 *                                 inactive when the application is launched.
+	 * @param threadPool               The thread pool for the execution of the
+	 *                                 service provider. If null, the service
+	 *                                 provider will be executed using the scheduler
+	 *                                 default pool.
+	 * @param configuration            The configuration.
+	 * @param microserviceArchitecture The microservice architecture.
 	 * @since 1.8
 	 */
 	public void configure(boolean isEagerInitialized, boolean isEnabled, String threadPool,
-			ConfigurationServiceProvider configuration);
+			ConfigurationServiceProvider configuration, MicroserviceArchitecture microserviceArchitecture);
 
 	/**
 	 * Initializes the service provider. This action is performed after
