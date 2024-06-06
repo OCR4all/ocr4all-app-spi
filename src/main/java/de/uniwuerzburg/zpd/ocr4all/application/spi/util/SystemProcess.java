@@ -123,7 +123,7 @@ public class SystemProcess {
 	 * @since 1.8
 	 */
 	public void execute(List<String> arguments) throws IOException {
-		execute(false, arguments);
+		execute(false, false, arguments);
 	}
 
 	/**
@@ -139,22 +139,27 @@ public class SystemProcess {
 	 * @since 1.8
 	 */
 	public void execute(boolean isBackground, String... arguments) throws IOException {
-		execute(isBackground, Arrays.asList(arguments));
+		execute(isBackground, false, Arrays.asList(arguments));
 	}
 
 	/**
 	 * Execute the system process with given arguments if it is not running.
 	 * 
-	 * @param isBackground True if only if the process will run in background, this
-	 *                     means, in a new thread. Furthermore the standard output
-	 *                     and the error of the system process are fetched while the
-	 *                     process is running.
-	 * @param arguments    The arguments. Null if no arguments are required.
+	 * @param isBackground                   True if only if the process will run in
+	 *                                       background, this means, in a new
+	 *                                       thread. Furthermore the standard output
+	 *                                       and the error of the system process are
+	 *                                       fetched while the process is running.
+	 * @param isAddEnvironmentStandardOutput True if add the process environment to
+	 *                                       the standard output.
+	 * @param arguments                      The arguments. Null if no arguments are
+	 *                                       required.
 	 * @throws IOException Throws if an I/O exception of some sort has occurred or
 	 *                     the process is already running.
 	 * @since 1.8
 	 */
-	public synchronized void execute(boolean isBackground, List<String> arguments) throws IOException {
+	public synchronized void execute(boolean isBackground, boolean isAddEnvironmentStandardOutput,
+			List<String> arguments) throws IOException {
 		if (isRunning())
 			throw new IOException("The system process is already running.");
 
@@ -176,6 +181,9 @@ public class SystemProcess {
 		ProcessBuilder builder = new ProcessBuilder(commandBuilder);
 		if (directory != null)
 			builder.directory(directory.toFile());
+
+		if (isAddEnvironmentStandardOutput)
+			append(standardOutput, "Process environment: " + builder.environment().toString());
 
 		// Start the system process
 		process = builder.start();
@@ -297,10 +305,10 @@ public class SystemProcess {
 	}
 
 	/**
-	 * Append the content to the stream to the buffer.
+	 * Append the content to the buffer.
 	 * 
 	 * @param buffer  The buffer to add the content.
-	 * @param content The content. If null, do not update the stream buffer.
+	 * @param content The content. If null, do not update the buffer.
 	 * @since 1.8
 	 */
 	private static void append(StringBuffer buffer, String content) {
