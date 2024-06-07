@@ -123,7 +123,7 @@ public class SystemProcess {
 	 * @since 1.8
 	 */
 	public void execute(List<String> arguments) throws IOException {
-		execute(false, false, arguments);
+		execute(false, false, false, false, arguments);
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class SystemProcess {
 	 * @since 1.8
 	 */
 	public void execute(boolean isBackground, String... arguments) throws IOException {
-		execute(isBackground, false, Arrays.asList(arguments));
+		execute(isBackground, false, false, false, Arrays.asList(arguments));
 	}
 
 	/**
@@ -152,6 +152,8 @@ public class SystemProcess {
 	 *                                       fetched while the process is running.
 	 * @param isAddEnvironmentStandardOutput True if add the process environment to
 	 *                                       the standard output.
+	 * @param isDiscardOutput                True if discards the standard output.
+	 * @param isDiscardError                 True if discards the standard error.
 	 * @param arguments                      The arguments. Null if no arguments are
 	 *                                       required.
 	 * @throws IOException Throws if an I/O exception of some sort has occurred or
@@ -159,7 +161,7 @@ public class SystemProcess {
 	 * @since 1.8
 	 */
 	public synchronized void execute(boolean isBackground, boolean isAddEnvironmentStandardOutput,
-			List<String> arguments) throws IOException {
+			boolean isDiscardOutput, boolean isDiscardError, List<String> arguments) throws IOException {
 		if (isRunning())
 			throw new IOException("The system process is already running.");
 
@@ -185,16 +187,24 @@ public class SystemProcess {
 		if (isAddEnvironmentStandardOutput)
 			append(standardOutput, "Process environment: " + builder.environment().toString());
 
+		if (isDiscardOutput)
+			builder.redirectOutput(ProcessBuilder.Redirect.DISCARD);
+
+		if (isDiscardError)
+			builder.redirectError(ProcessBuilder.Redirect.DISCARD);
+
 		// Start the system process
 		process = builder.start();
 
 		if (isBackground) {
 			// Handles the system process output and error streams
-			Executors.newSingleThreadExecutor().submit(
-					new InputStreamHandler(process.getInputStream(), (output) -> append(standardOutput, output)));
+			if (!isDiscardOutput)
+				Executors.newSingleThreadExecutor().submit(
+						new InputStreamHandler(process.getInputStream(), (output) -> append(standardOutput, output)));
 
-			Executors.newSingleThreadExecutor()
-					.submit(new InputStreamHandler(process.getErrorStream(), (error) -> append(standardError, error)));
+			if (!isDiscardError)
+				Executors.newSingleThreadExecutor().submit(
+						new InputStreamHandler(process.getErrorStream(), (error) -> append(standardError, error)));
 
 			// Start the system process in background
 			new Thread(new Runnable() {
@@ -229,8 +239,11 @@ public class SystemProcess {
 				}
 			}
 
-			copy(process.getInputStream(), standardOutput);
-			copy(process.getErrorStream(), standardError);
+			if (!isDiscardOutput)
+				copy(process.getInputStream(), standardOutput);
+
+			if (!isDiscardError)
+				copy(process.getErrorStream(), standardError);
 
 			process = null;
 		}
