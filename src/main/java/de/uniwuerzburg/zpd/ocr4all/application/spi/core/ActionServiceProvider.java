@@ -1,23 +1,23 @@
 /**
- * File:     ProcessServiceProvider.java
+ * File:     ActionServiceProvider.java
  * Package:  de.uniwuerzburg.zpd.ocr4all.application.spi.core
  * 
  * Author:   Herbert Baier (herbert.baier@uni-wuerzburg.de)
- * Date:     19.11.2020
+ * Date:     20.06.2024
  */
 package de.uniwuerzburg.zpd.ocr4all.application.spi.core;
 
-import de.uniwuerzburg.zpd.ocr4all.application.spi.env.Framework;
+import de.uniwuerzburg.zpd.ocr4all.application.spi.env.FrameworkCore;
 import de.uniwuerzburg.zpd.ocr4all.application.spi.model.argument.ModelArgument;
 
 /**
- * Defines service provider interfaces for processes.
+ * Defines service provider interfaces for actions.
  *
  * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
  * @version 1.0
  * @since 17
  */
-public interface ProcessServiceProvider extends ProcessorServiceProvider<ProcessServiceProvider.Processor> {
+public interface ActionServiceProvider extends ProcessorServiceProvider<ActionServiceProvider.Processor> {
 	/**
 	 * Defines processors for service providers.
 	 *
@@ -36,7 +36,7 @@ public interface ProcessServiceProvider extends ProcessorServiceProvider<Process
 		 * @return The state of the execution of the process.
 		 * @since 17
 		 */
-		public State execute(Callback callback, Framework framework, ModelArgument modelArgument);
+		public State execute(Callback callback, FrameworkCore framework, ModelArgument modelArgument);
 	}
 
 }
