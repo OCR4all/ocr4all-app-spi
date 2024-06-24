@@ -149,7 +149,7 @@ public class Target {
 	}
 
 	/**
-	 * Sandbox is an immutable class that defines project targets.
+	 * Project is an immutable class that defines project targets.
 	 *
 	 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
 	 * @version 1.0

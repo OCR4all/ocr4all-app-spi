@@ -17,7 +17,8 @@ import de.uniwuerzburg.zpd.ocr4all.application.spi.model.argument.ModelArgument;
  * @version 1.0
  * @since 17
  */
-public interface ActionServiceProvider extends ProcessorServiceProvider<ActionServiceProvider.Processor> {
+public interface ActionServiceProvider<T extends FrameworkCore>
+		extends ProcessorServiceProvider<ActionServiceProvider.Processor<T>> {
 	/**
 	 * Defines processors for service providers.
 	 *
@@ -25,7 +26,7 @@ public interface ActionServiceProvider extends ProcessorServiceProvider<ActionSe
 	 * @version 1.0
 	 * @since 17
 	 */
-	public interface Processor extends ProcessorCore {
+	public interface Processor<T> extends ProcessorCore {
 		/**
 		 * Executes the process.
 		 * 
@@ -36,7 +37,7 @@ public interface ActionServiceProvider extends ProcessorServiceProvider<ActionSe
 		 * @return The state of the execution of the process.
 		 * @since 17
 		 */
-		public State execute(Callback callback, FrameworkCore framework, ModelArgument modelArgument);
+		public State execute(Callback callback, T framework, ModelArgument modelArgument);
 	}
 
 }
