@@ -19,7 +19,7 @@ import de.uniwuerzburg.zpd.ocr4all.application.spi.env.Framework;
  * @version 1.0
  * @since 1.8
  */
-public abstract class CoreProcessorServiceProvider implements ProcessServiceProvider.Processor {
+public abstract class CoreProcessorServiceProvider implements ProcessServiceProvider.Processor<Framework> {
 	/**
 	 * True if the processor was canceled.
 	 */

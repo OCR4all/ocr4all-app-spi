@@ -7,6 +7,9 @@
  */
 package de.uniwuerzburg.zpd.ocr4all.application.spi.core;
 
+import de.uniwuerzburg.zpd.ocr4all.application.spi.env.FrameworkCore;
+import de.uniwuerzburg.zpd.ocr4all.application.spi.model.argument.ModelArgument;
+
 /**
  * Defines service provider interfaces with processors.
  *
@@ -14,12 +17,34 @@ package de.uniwuerzburg.zpd.ocr4all.application.spi.core;
  * @version 1.0
  * @since 17
  */
-public interface ProcessorServiceProvider<P extends ProcessorCore> extends ServiceProvider {
+public interface ProcessorServiceProvider<T extends FrameworkCore> extends ServiceProvider {
 	/**
 	 * Returns a new processor for the service provider.
 	 * 
 	 * @return A new processor for the service provider.
 	 * @since 17
 	 */
-	public P newProcessor();
+	public Processor<T> newProcessor();
+	
+	/**
+	 * Defines processors for service providers.
+	 *
+	 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
+	 * @version 1.0
+	 * @since 17
+	 */
+	public interface Processor<T> extends ProcessorCore {
+		/**
+		 * Executes the process.
+		 * 
+		 * @param callback      The callback method for processor updates. If null, no
+		 *                      callback is performed.
+		 * @param framework     The framework for the processor.
+		 * @param modelArgument The models with their arguments.
+		 * @return The state of the execution of the process.
+		 * @since 17
+		 */
+		public State execute(Callback callback, T framework, ModelArgument modelArgument);
+	}
+
 }
