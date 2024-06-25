@@ -7,7 +7,7 @@
  */
 package de.uniwuerzburg.zpd.ocr4all.application.spi;
 
-import de.uniwuerzburg.zpd.ocr4all.application.spi.core.ActionServiceProvider;
+import de.uniwuerzburg.zpd.ocr4all.application.spi.core.ProcessorServiceProvider;
 import de.uniwuerzburg.zpd.ocr4all.application.spi.env.TrainingFramework;
 
 /**
@@ -17,6 +17,6 @@ import de.uniwuerzburg.zpd.ocr4all.application.spi.env.TrainingFramework;
  * @version 1.0
  * @since 1.8
  */
-public interface TrainingServiceProvider extends ActionServiceProvider<TrainingFramework> {
+public interface TrainingServiceProvider extends ProcessorServiceProvider<TrainingFramework> {
 
 }

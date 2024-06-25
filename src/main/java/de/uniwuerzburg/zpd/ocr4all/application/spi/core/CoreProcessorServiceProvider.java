@@ -11,15 +11,15 @@ import de.uniwuerzburg.zpd.ocr4all.application.spi.env.ProcessFramework;
 
 /**
  * Defines core processors for service providers. When implementing the required
- * method {@link ProcessServiceProvider.Processor#execute}, this class should be
- * initialized by calling the method {@link #initialize} at the beginning and
+ * method {@link ProcessorServiceProvider.Processor#execute}, this class should
+ * be initialized by calling the method {@link #initialize} at the beginning and
  * completed by calling the method {@link #complete}.
  *
  * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
  * @version 1.0
  * @since 1.8
  */
-public abstract class CoreProcessorServiceProvider implements ProcessServiceProvider.Processor<ProcessFramework> {
+public abstract class CoreProcessorServiceProvider implements ProcessorServiceProvider.Processor<ProcessFramework> {
 	/**
 	 * True if the processor was canceled.
 	 */
@@ -33,7 +33,7 @@ public abstract class CoreProcessorServiceProvider implements ProcessServiceProv
 	/**
 	 * The callback interface for processor updates.
 	 */
-	private ProcessServiceProvider.Processor.Callback callback;
+	private ProcessorServiceProvider.Processor.Callback callback;
 
 	/**
 	 * The framework.
@@ -79,12 +79,12 @@ public abstract class CoreProcessorServiceProvider implements ProcessServiceProv
 	 * @return The process execution state completed.
 	 * @since 1.8
 	 */
-	protected ProcessServiceProvider.Processor.State complete() {
+	protected ProcessorServiceProvider.Processor.State complete() {
 		updatedStandardOutput(identifier + " completed.");
 
 		callback.updatedProgress(1F);
 
-		return ProcessServiceProvider.Processor.State.completed;
+		return ProcessorServiceProvider.Processor.State.completed;
 	}
 
 	/**
@@ -127,7 +127,7 @@ public abstract class CoreProcessorServiceProvider implements ProcessServiceProv
 	 * @return The callback interface for processor updates.
 	 * @since 1.8
 	 */
-	public ProcessServiceProvider.Processor.Callback getCallback() {
+	public ProcessorServiceProvider.Processor.Callback getCallback() {
 		return callback;
 	}
 

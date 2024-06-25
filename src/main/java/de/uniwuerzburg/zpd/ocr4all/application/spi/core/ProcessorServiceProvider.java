@@ -7,7 +7,7 @@
  */
 package de.uniwuerzburg.zpd.ocr4all.application.spi.core;
 
-import de.uniwuerzburg.zpd.ocr4all.application.spi.env.StorageFramework;
+import de.uniwuerzburg.zpd.ocr4all.application.spi.env.Framework;
 import de.uniwuerzburg.zpd.ocr4all.application.spi.model.argument.ModelArgument;
 
 /**
@@ -17,7 +17,7 @@ import de.uniwuerzburg.zpd.ocr4all.application.spi.model.argument.ModelArgument;
  * @version 1.0
  * @since 17
  */
-public interface ProcessorServiceProvider<T extends StorageFramework> extends ServiceProvider {
+public interface ProcessorServiceProvider<T extends Framework> extends ServiceProvider {
 	/**
 	 * Returns a new processor for the service provider.
 	 * 
@@ -33,7 +33,7 @@ public interface ProcessorServiceProvider<T extends StorageFramework> extends Se
 	 * @version 1.0
 	 * @since 17
 	 */
-	public interface Processor<T> extends ProcessorCore {
+	public interface Processor<T extends Framework> extends ProcessorCore {
 		/**
 		 * Executes the process.
 		 * 
