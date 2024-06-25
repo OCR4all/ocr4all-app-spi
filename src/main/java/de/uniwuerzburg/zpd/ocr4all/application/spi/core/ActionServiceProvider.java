@@ -7,7 +7,7 @@
  */
 package de.uniwuerzburg.zpd.ocr4all.application.spi.core;
 
-import de.uniwuerzburg.zpd.ocr4all.application.spi.env.FrameworkCore;
+import de.uniwuerzburg.zpd.ocr4all.application.spi.env.StorageFramework;
 
 /**
  * Defines service provider interfaces for actions.
@@ -16,6 +16,6 @@ import de.uniwuerzburg.zpd.ocr4all.application.spi.env.FrameworkCore;
  * @version 1.0
  * @since 17
  */
-public interface ActionServiceProvider<T extends FrameworkCore> extends ProcessorServiceProvider<T> {
+public interface ActionServiceProvider<T extends StorageFramework> extends ProcessorServiceProvider<T> {
 
 }

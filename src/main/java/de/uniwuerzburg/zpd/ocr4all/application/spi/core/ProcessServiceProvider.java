@@ -7,7 +7,7 @@
  */
 package de.uniwuerzburg.zpd.ocr4all.application.spi.core;
 
-import de.uniwuerzburg.zpd.ocr4all.application.spi.env.Framework;
+import de.uniwuerzburg.zpd.ocr4all.application.spi.env.ProcessFramework;
 
 /**
  * Defines service provider interfaces for processes.
@@ -16,6 +16,6 @@ import de.uniwuerzburg.zpd.ocr4all.application.spi.env.Framework;
  * @version 1.0
  * @since 17
  */
-public interface ProcessServiceProvider extends ProcessorServiceProvider<Framework> {
+public interface ProcessServiceProvider extends ProcessorServiceProvider<ProcessFramework> {
 
 }

@@ -7,7 +7,7 @@
  */
 package de.uniwuerzburg.zpd.ocr4all.application.spi.core;
 
-import de.uniwuerzburg.zpd.ocr4all.application.spi.env.Framework;
+import de.uniwuerzburg.zpd.ocr4all.application.spi.env.ProcessFramework;
 
 /**
  * Defines core processors for service providers. When implementing the required
@@ -19,7 +19,7 @@ import de.uniwuerzburg.zpd.ocr4all.application.spi.env.Framework;
  * @version 1.0
  * @since 1.8
  */
-public abstract class CoreProcessorServiceProvider implements ProcessServiceProvider.Processor<Framework> {
+public abstract class CoreProcessorServiceProvider implements ProcessServiceProvider.Processor<ProcessFramework> {
 	/**
 	 * True if the processor was canceled.
 	 */
@@ -38,7 +38,7 @@ public abstract class CoreProcessorServiceProvider implements ProcessServiceProv
 	/**
 	 * The framework.
 	 */
-	private Framework framework;
+	private ProcessFramework framework;
 
 	/**
 	 * The processor standard output.
@@ -61,7 +61,7 @@ public abstract class CoreProcessorServiceProvider implements ProcessServiceProv
 	 *         not canceled in the meantime.
 	 * @since 1.8
 	 */
-	protected boolean initialize(String identifier, Callback callback, Framework framework) {
+	protected boolean initialize(String identifier, Callback callback, ProcessFramework framework) {
 		this.identifier = identifier;
 		this.callback = callback;
 		this.framework = framework;
@@ -137,7 +137,7 @@ public abstract class CoreProcessorServiceProvider implements ProcessServiceProv
 	 * @return The framework.
 	 * @since 1.8
 	 */
-	public Framework getFramework() {
+	public ProcessFramework getFramework() {
 		return framework;
 	}
 
