@@ -7,6 +7,8 @@
  */
 package de.uniwuerzburg.zpd.ocr4all.application.spi.model;
 
+import java.util.Optional;
+
 import de.uniwuerzburg.zpd.ocr4all.application.spi.env.Internationalization;
 
 /**
@@ -19,19 +21,19 @@ import de.uniwuerzburg.zpd.ocr4all.application.spi.env.Internationalization;
  */
 public final class RecognitionModelField extends Field<String> {
 	/**
-	 * True if the application recognition models are required.
+	 * The type.
 	 */
-	private final boolean isApplicationModels;
+	private final String type;
 
 	/**
-	 * True if the recognition models of the selected project are required.
+	 * The minimum version.
 	 */
-	private final boolean isProjectModels;
+	private final Optional<String> minimumVersion;
 
 	/**
-	 * True if the recognition models of the remainder projects are required.
+	 * The maximum version.
 	 */
-	private final boolean isRemainderProjectsModels;
+	private final Optional<String> maximumVersion;
 
 	/**
 	 * True if multiple models can be selected.
@@ -45,122 +47,100 @@ public final class RecognitionModelField extends Field<String> {
 	 * 
 	 * @param argument    The argument.
 	 * @param label       The label.
-	 * @param placeholder The placeholder. Null if no placeholder is required.
-	 * @throws IllegalArgumentException Throws if the argument or the label is null.
-	 * @since 1.8
-	 */
-	public RecognitionModelField(String argument, Internationalization label, Internationalization placeholder)
-			throws IllegalArgumentException {
-		this(argument, label, placeholder, true, true, false, true);
-	}
-
-	/**
-	 * Creates a recognition model field for a model.
-	 * 
-	 * @param argument                  The argument.
-	 * @param label                     The label.
-	 * @param placeholder               The placeholder. Null if no placeholder is
-	 *                                  required.
-	 * @param isApplicationModels       True if the application recognition models
-	 *                                  are required.
-	 * @param isProjectModels           True if the recognition models of the
-	 *                                  selected project are required.
-	 * @param isRemainderProjectsModels True if the recognition models of the
-	 *                                  remainder projects are required.
-	 * @param isMultipleModels          True if multiple models can be selected.
-	 * @throws IllegalArgumentException Throws if the argument or the label is null.
-	 * @since 1.8
-	 */
-	public RecognitionModelField(String argument, Internationalization label, Internationalization placeholder,
-			boolean isApplicationModels, boolean isProjectModels, boolean isRemainderProjectsModels,
-			boolean isMultipleModels) throws IllegalArgumentException {
-		super(argument, null, label, null, placeholder, false);
-
-		this.isApplicationModels = isApplicationModels;
-		this.isProjectModels = isProjectModels;
-		this.isRemainderProjectsModels = isRemainderProjectsModels;
-		this.isMultipleModels = isMultipleModels;
-	}
-
-	/**
-	 * Creates a recognition model field for a model. The recognition models of the
-	 * application and selected project are required. Multiple models can be
-	 * selected.
-	 * 
-	 * @param argument    The argument.
-	 * @param label       The label.
 	 * @param description The description. Null if no description is required.
 	 * @param placeholder The placeholder. Null if no placeholder is required.
+	 * @param type        The type.
 	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
 	public RecognitionModelField(String argument, Internationalization label, Internationalization description,
-			Internationalization placeholder) throws IllegalArgumentException {
-		this(argument, label, description, placeholder, true, true, false, true, false);
+			Internationalization placeholder, String type) throws IllegalArgumentException {
+		this(argument, label, description, placeholder, type, null, null, true, false);
 	}
 
 	/**
 	 * Creates a recognition model field for a model.
 	 * 
-	 * @param argument                  The argument.
-	 * @param label                     The label.
-	 * @param description               The description. Null if no description is
-	 *                                  required.
-	 * @param placeholder               The placeholder. Null if no placeholder is
-	 *                                  required.
-	 * @param isApplicationModels       True if the application recognition models
-	 *                                  are required.
-	 * @param isProjectModels           True if the recognition models of the
-	 *                                  selected project are required.
-	 * @param isRemainderProjectsModels True if the recognition models of the
-	 *                                  remainder projects are required.
-	 * @param isMultipleModels          True if multiple models can be selected.
-	 * @param isDisabled                True if the field is disabled.
-	 * @throws IllegalArgumentException Throws if the argument or the label is null.
+	 * @param argument         The argument.
+	 * @param label            The label.
+	 * @param description      The description. Null if no description is required.
+	 * @param placeholder      The placeholder. Null if no placeholder is required.
+	 * @param type             The type.
+	 * @param minimumVersion   The minimum version.
+	 * @param maximumVersion   The maximum version.
+	 * @param isMultipleModels True if multiple models can be selected.
+	 * @throws IllegalArgumentException Throws if the argument or the label or the
+	 *                                  type is null.
 	 * @since 1.8
 	 */
 	public RecognitionModelField(String argument, Internationalization label, Internationalization description,
-			Internationalization placeholder, boolean isApplicationModels, boolean isProjectModels,
-			boolean isRemainderProjectsModels, boolean isMultipleModels, boolean isDisabled)
-			throws IllegalArgumentException {
+			Internationalization placeholder, String type, String minimumVersion, String maximumVersion,
+			boolean isMultipleModels) throws IllegalArgumentException {
+		this(argument, label, description, placeholder, type, minimumVersion, maximumVersion, isMultipleModels, false);
+	}
+
+	/**
+	 * Creates a recognition model field for a model.
+	 * 
+	 * @param argument         The argument.
+	 * @param label            The label.
+	 * @param description      The description. Null if no description is required.
+	 * @param placeholder      The placeholder. Null if no placeholder is required.
+	 * @param type             The type.
+	 * @param minimumVersion   The minimum version.
+	 * @param maximumVersion   The maximum version.
+	 * @param isMultipleModels True if multiple models can be selected.
+	 * @param isDisabled       True if the field is disabled.
+	 * @throws IllegalArgumentException Throws if the argument or the label or the
+	 *                                  type is null.
+	 * @since 1.8
+	 */
+	public RecognitionModelField(String argument, Internationalization label, Internationalization description,
+			Internationalization placeholder, String type, String minimumVersion, String maximumVersion,
+			boolean isMultipleModels, boolean isDisabled) throws IllegalArgumentException {
 		super(argument, null, label, description, placeholder, isDisabled);
 
-		this.isApplicationModels = isApplicationModels;
-		this.isProjectModels = isProjectModels;
-		this.isRemainderProjectsModels = isRemainderProjectsModels;
+		if (type == null || type.isBlank())
+			throw new IllegalArgumentException("the argument type can not be empty.");
+
+		this.type = type.trim();
+
+		this.minimumVersion = minimumVersion == null || minimumVersion.isBlank() ? Optional.empty()
+				: Optional.of(minimumVersion.trim());
+		this.maximumVersion = maximumVersion == null || maximumVersion.isBlank() ? Optional.empty()
+				: Optional.of(maximumVersion.trim());
+
 		this.isMultipleModels = isMultipleModels;
 	}
 
 	/**
-	 * Returns true if the application recognition models are required.
+	 * Returns the type.
 	 *
-	 * @return True if the application recognition models are required.
-	 * @since 1.8
+	 * @return The type.
+	 * @since 17
 	 */
-	public boolean isApplicationModels() {
-		return isApplicationModels;
+	public String getType() {
+		return type;
 	}
 
 	/**
-	 * Returns true if the recognition models of the selected project are required.
+	 * Returns the minimum version.
 	 *
-	 * @return True if the recognition models of the selected project are required.
-	 * @since 1.8
+	 * @return The minimum version.
+	 * @since 17
 	 */
-	public boolean isProjectModels() {
-		return isProjectModels;
+	public Optional<String> getMinimumVersion() {
+		return minimumVersion;
 	}
 
 	/**
-	 * Returns true if the recognition models of the remainder projects are
-	 * required.
+	 * Returns the maximum version.
 	 *
-	 * @return True if the recognition models of the remainder projects are
-	 *         required.
-	 * @since 1.8
+	 * @return The maximum version.
+	 * @since 17
 	 */
-	public boolean isRemainderProjectsModels() {
-		return isRemainderProjectsModels;
+	public Optional<String> getMaximumVersion() {
+		return maximumVersion;
 	}
 
 	/**
