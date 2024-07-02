@@ -21,9 +21,27 @@ import de.uniwuerzburg.zpd.ocr4all.application.spi.env.Internationalization;
  */
 public final class RecognitionModelField extends Field<String> {
 	/**
+	 * Defines types.
+	 *
+	 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
+	 * @version 1.0
+	 * @since 17
+	 */
+	public enum Type {
+		/**
+		 * The Calamari engine.
+		 */
+		Calamari,
+		/**
+		 * The Tesseract engine.
+		 */
+		Tesseract
+	}
+
+	/**
 	 * The type.
 	 */
-	private final String type;
+	private final Type type;
 
 	/**
 	 * The minimum version.
@@ -54,7 +72,7 @@ public final class RecognitionModelField extends Field<String> {
 	 * @since 1.8
 	 */
 	public RecognitionModelField(String argument, Internationalization label, Internationalization description,
-			Internationalization placeholder, String type) throws IllegalArgumentException {
+			Internationalization placeholder, Type type) throws IllegalArgumentException {
 		this(argument, label, description, placeholder, type, null, null, true, false);
 	}
 
@@ -74,7 +92,7 @@ public final class RecognitionModelField extends Field<String> {
 	 * @since 1.8
 	 */
 	public RecognitionModelField(String argument, Internationalization label, Internationalization description,
-			Internationalization placeholder, String type, String minimumVersion, String maximumVersion,
+			Internationalization placeholder, Type type, String minimumVersion, String maximumVersion,
 			boolean isMultipleModels) throws IllegalArgumentException {
 		this(argument, label, description, placeholder, type, minimumVersion, maximumVersion, isMultipleModels, false);
 	}
@@ -96,14 +114,14 @@ public final class RecognitionModelField extends Field<String> {
 	 * @since 1.8
 	 */
 	public RecognitionModelField(String argument, Internationalization label, Internationalization description,
-			Internationalization placeholder, String type, String minimumVersion, String maximumVersion,
+			Internationalization placeholder, Type type, String minimumVersion, String maximumVersion,
 			boolean isMultipleModels, boolean isDisabled) throws IllegalArgumentException {
 		super(argument, null, label, description, placeholder, isDisabled);
 
-		if (type == null || type.isBlank())
-			throw new IllegalArgumentException("the argument type can not be empty.");
+		if (type == null)
+			throw new IllegalArgumentException("the argument type can not be null.");
 
-		this.type = type.trim();
+		this.type = type;
 
 		this.minimumVersion = minimumVersion == null || minimumVersion.isBlank() ? Optional.empty()
 				: Optional.of(minimumVersion.trim());
@@ -119,7 +137,7 @@ public final class RecognitionModelField extends Field<String> {
 	 * @return The type.
 	 * @since 17
 	 */
-	public String getType() {
+	public Type getType() {
 		return type;
 	}
 

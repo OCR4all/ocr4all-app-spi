@@ -1,5 +1,5 @@
 /**
- * File:     ActionServiceProvider.java
+ * File:     ProcessorServiceProvider.java
  * Package:  de.uniwuerzburg.zpd.ocr4all.application.spi.core
  * 
  * Author:   Herbert Baier (herbert.baier@uni-wuerzburg.de)

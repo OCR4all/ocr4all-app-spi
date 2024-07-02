@@ -15,26 +15,26 @@ import java.util.Optional;
  *
  * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
  * @version 1.0
- * @since 1.8
+ * @since 17
  */
 public final class RecognitionModelArgument extends Argument {
 	/**
-	 * The collections.
+	 * The assembles.
 	 */
-	private final Optional<List<Collection>> collections;
+	private final Optional<List<Assemble>> assembles;
 
 	/**
 	 * Creates recognition model values for a model argument.
 	 * 
-	 * @param argument    The argument.
-	 * @param collections The collections.
+	 * @param argument  The argument.
+	 * @param assembles The assembles.
 	 * @throws IllegalArgumentException Throws if the argument is null.
-	 * @since 1.8
+	 * @since 17
 	 */
-	public RecognitionModelArgument(String argument, List<Collection> collections) throws IllegalArgumentException {
+	public RecognitionModelArgument(String argument, List<Assemble> assembles) throws IllegalArgumentException {
 		super(argument);
 
-		this.collections = collections == null || collections.isEmpty() ? Optional.empty() : Optional.of(collections);
+		this.assembles = assembles == null || assembles.isEmpty() ? Optional.empty() : Optional.of(assembles);
 	}
 
 	/*
@@ -46,52 +46,63 @@ public final class RecognitionModelArgument extends Argument {
 	@Override
 	protected Summary getSummary() {
 		return new Summary("recognition model", getArgument(),
-				collections.isPresent() ? Optional.of(collections.get().toString()) : Optional.empty());
+				assembles.isPresent() ? Optional.of(assembles.get().toString()) : Optional.empty());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.uniwuerzburg.zpd.ocr4all.application.spi.model.argument.Argument#
+	 * isSingleValue()
+	 */
+	@Override
+	public boolean isSingleValue() {
+		return false;
 	}
 
 	/**
-	 * Returns the collections.
+	 * Returns the assembles.
 	 *
-	 * @return The collections.
+	 * @return The assembles.
 	 * @since 17
 	 */
-	public Optional<List<Collection>> getCollections() {
-		return collections;
+	public Optional<List<Assemble>> getAssembles() {
+		return assembles;
 	}
 
 	/**
-	 * Collection is an immutable class that defines collections for datasets.
+	 * Model is an immutable class that defines assembles.
 	 *
 	 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
 	 * @version 1.0
-	 * @since 1.8
+	 * @since 17
 	 */
-	public static class Collection {
+	public static class Assemble {
 		/**
 		 * The id.
 		 */
 		private final String id;
 
 		/**
-		 * The images.
+		 * The models.
 		 */
-		private final List<String> images;
+		private final List<String> models;
 
 		/**
-		 * Creates a dataset.
+		 * Creates an assemble.
 		 * 
 		 * @param id     The id.
-		 * @param images The images.
+		 * @param models The models.
 		 * @since 17
 		 */
-		public Collection(String id, List<String> images) {
+		public Assemble(String id, List<String> models) throws IllegalArgumentException {
 			super();
 
 			if (id == null || id.isBlank())
-				throw new IllegalArgumentException("the collection argument id can not be empty.");
+				throw new IllegalArgumentException("the assemble argument id can not be empty.");
 			this.id = id;
 
-			this.images = images;
+			this.models = models;
 		}
 
 		/**
@@ -105,15 +116,14 @@ public final class RecognitionModelArgument extends Argument {
 		}
 
 		/**
-		 * Returns the images.
+		 * Returns the models.
 		 *
-		 * @return The images.
+		 * @return The models.
 		 * @since 17
 		 */
-		public List<String> getImages() {
-			return images;
+		public List<String> getModels() {
+			return models;
 		}
-
 	}
 
 }
