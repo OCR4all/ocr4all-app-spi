@@ -75,7 +75,17 @@ public interface ProcessorCore {
 		 * @since 17
 		 */
 		public void updatedStandardError(String message);
+	}
 
+
+	/**
+	 * Defines callback.
+	 *
+	 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
+	 * @version 1.0
+	 * @since 17
+	 */
+	public interface LockSnapshotCallback extends Callback{
 		/**
 		 * Callback method to lock the snapshot.
 		 * 
@@ -84,5 +94,4 @@ public interface ProcessorCore {
 		 */
 		public void lockSnapshot(String comment);
 	}
-
 }

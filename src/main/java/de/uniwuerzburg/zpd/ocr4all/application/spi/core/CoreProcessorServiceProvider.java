@@ -19,7 +19,8 @@ import de.uniwuerzburg.zpd.ocr4all.application.spi.env.ProcessFramework;
  * @version 1.0
  * @since 1.8
  */
-public abstract class CoreProcessorServiceProvider implements ProcessorServiceProvider.Processor<ProcessFramework> {
+public abstract class CoreProcessorServiceProvider
+		implements ProcessorServiceProvider.Processor<ProcessorCore.LockSnapshotCallback, ProcessFramework> {
 	/**
 	 * True if the processor was canceled.
 	 */
@@ -33,7 +34,7 @@ public abstract class CoreProcessorServiceProvider implements ProcessorServicePr
 	/**
 	 * The callback interface for processor updates.
 	 */
-	private ProcessorServiceProvider.Processor.Callback callback;
+	private LockSnapshotCallback callback;
 
 	/**
 	 * The framework.
@@ -61,7 +62,7 @@ public abstract class CoreProcessorServiceProvider implements ProcessorServicePr
 	 *         not canceled in the meantime.
 	 * @since 1.8
 	 */
-	protected boolean initialize(String identifier, Callback callback, ProcessFramework framework) {
+	protected boolean initialize(String identifier, LockSnapshotCallback callback, ProcessFramework framework) {
 		this.identifier = identifier;
 		this.callback = callback;
 		this.framework = framework;

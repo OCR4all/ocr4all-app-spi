@@ -35,6 +35,16 @@ public class Target {
 	private final Path opt;
 
 	/**
+	 * The folder for data.
+	 */
+	private final Path data;
+
+	/**
+	 * The folder for assemble.
+	 */
+	private final Path assemble;
+
+	/**
 	 * The project target.
 	 */
 	private final Project project;
@@ -49,15 +59,19 @@ public class Target {
 	 * 
 	 * @param exchange The exchange folder.
 	 * @param opt      The opt folder.
+	 * @param data     The data folder.
+	 * @param assemble The assemble folder.
 	 * @param project  The project target.
 	 * @param sandbox  The sandbox target.
 	 * @since 1.8
 	 */
-	public Target(Path exchange, Path opt, Project project, Sandbox sandbox) {
+	public Target(Path exchange, Path opt, Path data, Path assemble, Project project, Sandbox sandbox) {
 		super();
 
 		this.exchange = exchange;
 		this.opt = opt;
+		this.data = data;
+		this.assemble = assemble;
 		this.project = project;
 		this.sandbox = sandbox;
 	}
@@ -106,6 +120,52 @@ public class Target {
 	 */
 	public Path getOpt() {
 		return opt;
+	}
+
+	/**
+	 * Returns true if the folder for data is a directory.
+	 *
+	 * @return True if the folder is a directory; false if the folder does not
+	 *         exist, is not a directory, or it cannot be determined if the folder
+	 *         is a directory or not.
+	 * 
+	 * @since 1.8
+	 */
+	public boolean isDataDirectory() {
+		return Files.isDirectory(data);
+	}
+
+	/**
+	 * Returns the folder for data.
+	 *
+	 * @return The folder for data.
+	 * @since 1.8
+	 */
+	public Path getData() {
+		return data;
+	}
+
+	/**
+	 * Returns true if the folder for assemble is a directory.
+	 *
+	 * @return True if the folder is a directory; false if the folder does not
+	 *         exist, is not a directory, or it cannot be determined if the folder
+	 *         is a directory or not.
+	 * 
+	 * @since 1.8
+	 */
+	public boolean isAssembleDirectory() {
+		return Files.isDirectory(assemble);
+	}
+
+	/**
+	 * Returns the folder for assemble.
+	 *
+	 * @return The folder for assemble.
+	 * @since 1.8
+	 */
+	public Path getAssemble() {
+		return assemble;
 	}
 
 	/**

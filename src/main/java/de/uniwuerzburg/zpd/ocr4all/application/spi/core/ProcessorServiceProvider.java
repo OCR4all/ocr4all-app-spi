@@ -17,14 +17,15 @@ import de.uniwuerzburg.zpd.ocr4all.application.spi.model.argument.ModelArgument;
  * @version 1.0
  * @since 17
  */
-public interface ProcessorServiceProvider<T extends Framework> extends ServiceProvider {
+public interface ProcessorServiceProvider<C extends ProcessorCore.Callback, F extends Framework>
+		extends ServiceProvider {
 	/**
 	 * Returns a new processor for the service provider.
 	 * 
 	 * @return A new processor for the service provider.
 	 * @since 17
 	 */
-	public Processor<T> newProcessor();
+	public Processor<C, F> newProcessor();
 
 	/**
 	 * Defines processors for service providers.
@@ -33,7 +34,7 @@ public interface ProcessorServiceProvider<T extends Framework> extends ServicePr
 	 * @version 1.0
 	 * @since 17
 	 */
-	public interface Processor<T extends Framework> extends ProcessorCore {
+	public interface Processor<C extends ProcessorCore.Callback, F extends Framework> extends ProcessorCore {
 		/**
 		 * Executes the process.
 		 * 
@@ -44,7 +45,7 @@ public interface ProcessorServiceProvider<T extends Framework> extends ServicePr
 		 * @return The state of the execution of the process.
 		 * @since 17
 		 */
-		public State execute(Callback callback, T framework, ModelArgument modelArgument);
+		public State execute(C callback, F framework, ModelArgument modelArgument);
 	}
 
 }

@@ -7,6 +7,7 @@
  */
 package de.uniwuerzburg.zpd.ocr4all.application.spi;
 
+import de.uniwuerzburg.zpd.ocr4all.application.spi.core.ProcessorCore;
 import de.uniwuerzburg.zpd.ocr4all.application.spi.core.ProcessorServiceProvider;
 import de.uniwuerzburg.zpd.ocr4all.application.spi.env.ProcessFramework;
 
@@ -17,6 +18,7 @@ import de.uniwuerzburg.zpd.ocr4all.application.spi.env.ProcessFramework;
  * @version 1.0
  * @since 1.8
  */
-public interface ImportServiceProvider extends ProcessorServiceProvider<ProcessFramework> {
+public interface ImportServiceProvider
+		extends ProcessorServiceProvider<ProcessorCore.LockSnapshotCallback, ProcessFramework> {
 
 }

@@ -19,7 +19,7 @@ import java.util.List;
  * @version 1.0
  * @since 1.8
  */
-public class ProcessFramework extends StorageFramework {
+public class ProcessFramework extends Framework {
 	/**
 	 * The target.
 	 */
@@ -35,6 +35,11 @@ public class ProcessFramework extends StorageFramework {
 	 * The projects directory.
 	 */
 	private final Path projects;
+
+	/**
+	 * The output directory.
+	 */
+	private final Path output;
 
 	/**
 	 * Creates a process framework for a service provider.
@@ -55,11 +60,12 @@ public class ProcessFramework extends StorageFramework {
 	 */
 	public ProcessFramework(OperatingSystem operatingSystem, int uid, int gid, Application application, String user,
 			Target target, Path output, List<Integer> snapshotTrack, Path projects, Path temporary) {
-		super(operatingSystem, uid, gid, application, user, output, temporary);
+		super(operatingSystem, uid, gid, application, user, temporary);
 
 		this.target = target;
 		this.snapshotTrack = snapshotTrack;
 		this.projects = projects;
+		this.output = output;
 	}
 
 	/**
@@ -169,6 +175,16 @@ public class ProcessFramework extends StorageFramework {
 	 */
 	public Path getProjects() {
 		return projects;
+	}
+
+	/**
+	 * Returns the output directory.
+	 *
+	 * @return The output directory.
+	 * @since 17
+	 */
+	public Path getOutput() {
+		return output;
 	}
 
 }
