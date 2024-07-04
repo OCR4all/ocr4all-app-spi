@@ -7,7 +7,7 @@
  */
 package de.uniwuerzburg.zpd.ocr4all.application.spi.core;
 
-import de.uniwuerzburg.zpd.ocr4all.application.spi.env.ProcessFramework;
+import de.uniwuerzburg.zpd.ocr4all.application.spi.env.Framework;
 
 /**
  * Defines core processors for service providers. When implementing the required
@@ -19,8 +19,8 @@ import de.uniwuerzburg.zpd.ocr4all.application.spi.env.ProcessFramework;
  * @version 1.0
  * @since 1.8
  */
-public abstract class CoreProcessorServiceProvider
-		implements ProcessorServiceProvider.Processor<ProcessorCore.LockSnapshotCallback, ProcessFramework> {
+public abstract class CoreProcessorServiceProvider<C extends ProcessorCore.Callback, F extends Framework>
+		implements ProcessorServiceProvider.Processor<C, F> {
 	/**
 	 * True if the processor was canceled.
 	 */
@@ -34,12 +34,12 @@ public abstract class CoreProcessorServiceProvider
 	/**
 	 * The callback interface for processor updates.
 	 */
-	private LockSnapshotCallback callback;
+	private C callback;
 
 	/**
 	 * The framework.
 	 */
-	private ProcessFramework framework;
+	private F framework;
 
 	/**
 	 * The processor standard output.
@@ -62,7 +62,7 @@ public abstract class CoreProcessorServiceProvider
 	 *         not canceled in the meantime.
 	 * @since 1.8
 	 */
-	protected boolean initialize(String identifier, LockSnapshotCallback callback, ProcessFramework framework) {
+	protected boolean initialize(String identifier, C callback, F framework) {
 		this.identifier = identifier;
 		this.callback = callback;
 		this.framework = framework;
@@ -138,7 +138,7 @@ public abstract class CoreProcessorServiceProvider
 	 * @return The framework.
 	 * @since 1.8
 	 */
-	public ProcessFramework getFramework() {
+	public F getFramework() {
 		return framework;
 	}
 

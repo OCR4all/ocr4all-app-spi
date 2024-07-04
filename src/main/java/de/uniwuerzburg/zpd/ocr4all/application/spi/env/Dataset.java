@@ -32,7 +32,7 @@ public class Dataset {
 		super();
 
 		for (Collection collection : collections)
-			if (collection.isConsistent())
+			if (collection != null && collection.isConsistent())
 				this.collections.add(collection);
 	}
 
@@ -76,7 +76,7 @@ public class Dataset {
 
 			this.id = id;
 			for (Set set : sets)
-				if (set.isConsistent())
+				if (set != null && set.isConsistent())
 					this.sets.add(set);
 		}
 
