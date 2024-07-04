@@ -80,12 +80,12 @@ public abstract class CoreProcessorServiceProvider<C extends ProcessorCore.Callb
 	 * @return The process execution state completed.
 	 * @since 1.8
 	 */
-	protected ProcessorServiceProvider.Processor.State complete() {
+	protected ProcessorCore.State complete() {
 		updatedStandardOutput(identifier + " completed.");
 
 		callback.updatedProgress(1F);
 
-		return ProcessorServiceProvider.Processor.State.completed;
+		return ProcessorCore.State.completed;
 	}
 
 	/**
@@ -128,7 +128,7 @@ public abstract class CoreProcessorServiceProvider<C extends ProcessorCore.Callb
 	 * @return The callback interface for processor updates.
 	 * @since 1.8
 	 */
-	public ProcessorServiceProvider.Processor.Callback getCallback() {
+	public ProcessorCore.Callback getCallback() {
 		return callback;
 	}
 
