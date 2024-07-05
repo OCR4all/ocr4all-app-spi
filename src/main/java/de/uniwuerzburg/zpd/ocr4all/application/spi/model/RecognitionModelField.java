@@ -59,6 +59,11 @@ public final class RecognitionModelField extends Field<String> {
 	private final boolean isMultipleModels;
 
 	/**
+	 * The suffix for the model file names.
+	 */
+	private final String suffix;
+
+	/**
 	 * Creates a recognition model field for a model. The recognition models of the
 	 * application and selected project are required. Multiple models can be
 	 * selected.
@@ -68,12 +73,13 @@ public final class RecognitionModelField extends Field<String> {
 	 * @param description The description. Null if no description is required.
 	 * @param placeholder The placeholder. Null if no placeholder is required.
 	 * @param type        The type.
+	 * @param suffix      The suffix for the model file names.
 	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
 	public RecognitionModelField(String argument, Internationalization label, Internationalization description,
-			Internationalization placeholder, Type type) throws IllegalArgumentException {
-		this(argument, label, description, placeholder, type, null, null, true, false);
+			Internationalization placeholder, Type type, String suffix) throws IllegalArgumentException {
+		this(argument, label, description, placeholder, type, null, null, true, suffix);
 	}
 
 	/**
@@ -87,14 +93,16 @@ public final class RecognitionModelField extends Field<String> {
 	 * @param minimumVersion   The minimum version.
 	 * @param maximumVersion   The maximum version.
 	 * @param isMultipleModels True if multiple models can be selected.
+	 * @param suffix           The suffix for the model file names.
 	 * @throws IllegalArgumentException Throws if the argument or the label or the
 	 *                                  type is null.
 	 * @since 1.8
 	 */
 	public RecognitionModelField(String argument, Internationalization label, Internationalization description,
 			Internationalization placeholder, Type type, String minimumVersion, String maximumVersion,
-			boolean isMultipleModels) throws IllegalArgumentException {
-		this(argument, label, description, placeholder, type, minimumVersion, maximumVersion, isMultipleModels, false);
+			boolean isMultipleModels, String suffix) throws IllegalArgumentException {
+		this(argument, label, description, placeholder, type, minimumVersion, maximumVersion, isMultipleModels, suffix,
+				false);
 	}
 
 	/**
@@ -108,6 +116,7 @@ public final class RecognitionModelField extends Field<String> {
 	 * @param minimumVersion   The minimum version.
 	 * @param maximumVersion   The maximum version.
 	 * @param isMultipleModels True if multiple models can be selected.
+	 * @param suffix           The suffix for the model file names.
 	 * @param isDisabled       True if the field is disabled.
 	 * @throws IllegalArgumentException Throws if the argument or the label or the
 	 *                                  type is null.
@@ -115,11 +124,14 @@ public final class RecognitionModelField extends Field<String> {
 	 */
 	public RecognitionModelField(String argument, Internationalization label, Internationalization description,
 			Internationalization placeholder, Type type, String minimumVersion, String maximumVersion,
-			boolean isMultipleModels, boolean isDisabled) throws IllegalArgumentException {
+			boolean isMultipleModels, String suffix, boolean isDisabled) throws IllegalArgumentException {
 		super(argument, null, label, description, placeholder, isDisabled);
 
 		if (type == null)
 			throw new IllegalArgumentException("the argument type can not be null.");
+
+		if (suffix == null || suffix.isBlank())
+			throw new IllegalArgumentException("the argument suffix can not be empty.");
 
 		this.type = type;
 
@@ -129,6 +141,8 @@ public final class RecognitionModelField extends Field<String> {
 				: Optional.of(maximumVersion.trim());
 
 		this.isMultipleModels = isMultipleModels;
+
+		this.suffix = suffix.trim();
 	}
 
 	/**
@@ -169,6 +183,16 @@ public final class RecognitionModelField extends Field<String> {
 	 */
 	public boolean isMultipleModels() {
 		return isMultipleModels;
+	}
+
+	/**
+	 * Returns the suffix for the model file names.
+	 *
+	 * @return The suffix for the model file names.
+	 * @since 17
+	 */
+	public String getSuffix() {
+		return suffix;
 	}
 
 }
