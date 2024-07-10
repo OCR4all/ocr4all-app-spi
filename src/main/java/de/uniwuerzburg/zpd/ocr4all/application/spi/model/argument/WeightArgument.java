@@ -1,5 +1,5 @@
 /**
- * File:     RecognitionModelArgument.java
+ * File:     WeightArgument.java
  * Package:  de.uniwuerzburg.zpd.ocr4all.application.spi.model.argument
  * 
  * Author:   Herbert Baier (herbert.baier@uni-wuerzburg.de)
@@ -11,27 +11,27 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Defines recognition model values for model arguments.
+ * Defines weight values for model arguments.
  *
  * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
  * @version 1.0
  * @since 17
  */
-public final class RecognitionModelArgument extends Argument {
+public final class WeightArgument extends Argument {
 	/**
 	 * The assembles.
 	 */
 	private final Optional<List<Assemble>> assembles;
 
 	/**
-	 * Creates recognition model values for a model argument.
+	 * Creates weight values for a model argument.
 	 * 
 	 * @param argument  The argument.
 	 * @param assembles The assembles.
 	 * @throws IllegalArgumentException Throws if the argument is null.
 	 * @since 17
 	 */
-	public RecognitionModelArgument(String argument, List<Assemble> assembles) throws IllegalArgumentException {
+	public WeightArgument(String argument, List<Assemble> assembles) throws IllegalArgumentException {
 		super(argument);
 
 		this.assembles = assembles == null || assembles.isEmpty() ? Optional.empty() : Optional.of(assembles);

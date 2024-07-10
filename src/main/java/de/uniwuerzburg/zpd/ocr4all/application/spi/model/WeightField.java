@@ -1,5 +1,5 @@
 /**
- * File:     RecognitionModelField.java
+ * File:     WeightField.java
  * Package:  de.uniwuerzburg.zpd.ocr4all.application.spi.model
  * 
  * Author:   Herbert Baier (herbert.baier@uni-wuerzburg.de)
@@ -12,14 +12,13 @@ import java.util.Optional;
 import de.uniwuerzburg.zpd.ocr4all.application.spi.env.Internationalization;
 
 /**
- * RecognitionModelField is an immutable class that defines recognition model
- * fields for models.
+ * WeightField is an immutable class that defines weight fields for models.
  *
  * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
  * @version 1.0
  * @since 1.8
  */
-public final class RecognitionModelField extends Field<String> {
+public final class WeightField extends Field<String> {
 	/**
 	 * Defines types.
 	 *
@@ -54,9 +53,9 @@ public final class RecognitionModelField extends Field<String> {
 	private final Optional<String> maximumVersion;
 
 	/**
-	 * True if multiple models can be selected.
+	 * True if multiple weights can be selected.
 	 */
-	private final boolean isMultipleModels;
+	private final boolean isMultipleSelect;
 
 	/**
 	 * The suffix for the model file names.
@@ -64,9 +63,8 @@ public final class RecognitionModelField extends Field<String> {
 	private final String suffix;
 
 	/**
-	 * Creates a recognition model field for a model. The recognition models of the
-	 * application and selected project are required. Multiple models can be
-	 * selected.
+	 * Creates a weight field for a model. The recognition models of the application
+	 * and selected project are required. Multiple models can be selected.
 	 * 
 	 * @param argument    The argument.
 	 * @param label       The label.
@@ -77,13 +75,13 @@ public final class RecognitionModelField extends Field<String> {
 	 * @throws IllegalArgumentException Throws if the argument or the label is null.
 	 * @since 1.8
 	 */
-	public RecognitionModelField(String argument, Internationalization label, Internationalization description,
+	public WeightField(String argument, Internationalization label, Internationalization description,
 			Internationalization placeholder, Type type, String suffix) throws IllegalArgumentException {
 		this(argument, label, description, placeholder, type, null, null, true, suffix);
 	}
 
 	/**
-	 * Creates a recognition model field for a model.
+	 * Creates a weight field for a model.
 	 * 
 	 * @param argument         The argument.
 	 * @param label            The label.
@@ -92,21 +90,21 @@ public final class RecognitionModelField extends Field<String> {
 	 * @param type             The type.
 	 * @param minimumVersion   The minimum version.
 	 * @param maximumVersion   The maximum version.
-	 * @param isMultipleModels True if multiple models can be selected.
+	 * @param isMultipleSelect True if multiple weights can be selected.
 	 * @param suffix           The suffix for the model file names.
 	 * @throws IllegalArgumentException Throws if the argument or the label or the
 	 *                                  type is null.
 	 * @since 1.8
 	 */
-	public RecognitionModelField(String argument, Internationalization label, Internationalization description,
+	public WeightField(String argument, Internationalization label, Internationalization description,
 			Internationalization placeholder, Type type, String minimumVersion, String maximumVersion,
-			boolean isMultipleModels, String suffix) throws IllegalArgumentException {
-		this(argument, label, description, placeholder, type, minimumVersion, maximumVersion, isMultipleModels, suffix,
+			boolean isMultipleSelect, String suffix) throws IllegalArgumentException {
+		this(argument, label, description, placeholder, type, minimumVersion, maximumVersion, isMultipleSelect, suffix,
 				false);
 	}
 
 	/**
-	 * Creates a recognition model field for a model.
+	 * Creates a weight field for a model.
 	 * 
 	 * @param argument         The argument.
 	 * @param label            The label.
@@ -115,16 +113,16 @@ public final class RecognitionModelField extends Field<String> {
 	 * @param type             The type.
 	 * @param minimumVersion   The minimum version.
 	 * @param maximumVersion   The maximum version.
-	 * @param isMultipleModels True if multiple models can be selected.
+	 * @param isMultipleSelect True if multiple weights can be selected.
 	 * @param suffix           The suffix for the model file names.
 	 * @param isDisabled       True if the field is disabled.
 	 * @throws IllegalArgumentException Throws if the argument or the label or the
 	 *                                  type is null.
 	 * @since 1.8
 	 */
-	public RecognitionModelField(String argument, Internationalization label, Internationalization description,
+	public WeightField(String argument, Internationalization label, Internationalization description,
 			Internationalization placeholder, Type type, String minimumVersion, String maximumVersion,
-			boolean isMultipleModels, String suffix, boolean isDisabled) throws IllegalArgumentException {
+			boolean isMultipleSelect, String suffix, boolean isDisabled) throws IllegalArgumentException {
 		super(argument, null, label, description, placeholder, isDisabled);
 
 		if (type == null)
@@ -140,7 +138,7 @@ public final class RecognitionModelField extends Field<String> {
 		this.maximumVersion = maximumVersion == null || maximumVersion.isBlank() ? Optional.empty()
 				: Optional.of(maximumVersion.trim());
 
-		this.isMultipleModels = isMultipleModels;
+		this.isMultipleSelect = isMultipleSelect;
 
 		this.suffix = suffix.trim();
 	}
@@ -176,13 +174,13 @@ public final class RecognitionModelField extends Field<String> {
 	}
 
 	/**
-	 * Returns true if multiple models can be selected.
+	 * Returns true if multiple weights can be selected.
 	 *
-	 * @return True if multiple models can be selected.
-	 * @since 1.8
+	 * @return True if multiple weights can be selected.
+	 * @since 17
 	 */
-	public boolean isMultipleModels() {
-		return isMultipleModels;
+	public boolean isMultipleSelect() {
+		return isMultipleSelect;
 	}
 
 	/**
