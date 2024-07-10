@@ -56,7 +56,7 @@ public class TrainingFramework extends Framework {
 	 * @param assemble           The assemble folder.
 	 * @param dataset            The dataset.
 	 * @param modelConfiguration The model configuration.
-	 * @param dataset            The dataset.
+	 * @param modelId            The model id.
 	 * @param temporary          The temporary directory.
 	 * @since 17
 	 */

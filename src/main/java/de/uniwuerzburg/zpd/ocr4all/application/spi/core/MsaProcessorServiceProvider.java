@@ -14,9 +14,8 @@ import de.uniwuerzburg.zpd.ocr4all.application.spi.util.SPIUtils;
 
 /**
  * Defines processors for microservice architecture (MSA) service providers.
- * When implementing the required method
- * {@link ProcessServiceProvider.Processor#execute}, this class should be
- * initialized by calling the method
+ * When implementing the required method <code>execute</code>, this class should
+ * be initialized by calling the method
  * {@link CoreProcessorServiceProvider#initialize} at the beginning and
  * completed by calling the method
  * {@link CoreProcessorServiceProvider#complete}.
