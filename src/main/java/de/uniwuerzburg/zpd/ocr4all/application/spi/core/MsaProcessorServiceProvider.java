@@ -8,14 +8,14 @@
 package de.uniwuerzburg.zpd.ocr4all.application.spi.core;
 
 import de.uniwuerzburg.zpd.ocr4all.application.communication.message.spi.EventSPI;
+import de.uniwuerzburg.zpd.ocr4all.application.spi.env.Framework;
 import de.uniwuerzburg.zpd.ocr4all.application.spi.env.MicroserviceArchitecture;
 import de.uniwuerzburg.zpd.ocr4all.application.spi.util.SPIUtils;
 
 /**
  * Defines processors for microservice architecture (MSA) service providers.
- * When implementing the required method
- * {@link ProcessServiceProvider.Processor#execute}, this class should be
- * initialized by calling the method
+ * When implementing the required method <code>execute</code>, this class should
+ * be initialized by calling the method
  * {@link CoreProcessorServiceProvider#initialize} at the beginning and
  * completed by calling the method
  * {@link CoreProcessorServiceProvider#complete}.
@@ -24,7 +24,8 @@ import de.uniwuerzburg.zpd.ocr4all.application.spi.util.SPIUtils;
  * @version 1.0
  * @since 17
  */
-public abstract class MsaProcessorServiceProvider extends CoreProcessorServiceProvider {
+public abstract class MsaProcessorServiceProvider<C extends ProcessorCore.Callback, F extends Framework>
+		extends CoreProcessorServiceProvider<C, F> {
 	/**
 	 * The job key.
 	 */

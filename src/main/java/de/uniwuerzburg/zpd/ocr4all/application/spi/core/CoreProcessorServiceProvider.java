@@ -11,15 +11,16 @@ import de.uniwuerzburg.zpd.ocr4all.application.spi.env.Framework;
 
 /**
  * Defines core processors for service providers. When implementing the required
- * method {@link ProcessServiceProvider.Processor#execute}, this class should be
- * initialized by calling the method {@link #initialize} at the beginning and
+ * method {@link ProcessorServiceProvider.Processor#execute}, this class should
+ * be initialized by calling the method {@link #initialize} at the beginning and
  * completed by calling the method {@link #complete}.
  *
  * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
  * @version 1.0
  * @since 1.8
  */
-public abstract class CoreProcessorServiceProvider implements ProcessServiceProvider.Processor {
+public abstract class CoreProcessorServiceProvider<C extends ProcessorCore.Callback, F extends Framework>
+		implements ProcessorServiceProvider.Processor<C, F> {
 	/**
 	 * True if the processor was canceled.
 	 */
@@ -33,12 +34,12 @@ public abstract class CoreProcessorServiceProvider implements ProcessServiceProv
 	/**
 	 * The callback interface for processor updates.
 	 */
-	private ProcessServiceProvider.Processor.Callback callback;
+	private C callback;
 
 	/**
 	 * The framework.
 	 */
-	private Framework framework;
+	private F framework;
 
 	/**
 	 * The processor standard output.
@@ -61,7 +62,7 @@ public abstract class CoreProcessorServiceProvider implements ProcessServiceProv
 	 *         not canceled in the meantime.
 	 * @since 1.8
 	 */
-	protected boolean initialize(String identifier, Callback callback, Framework framework) {
+	protected boolean initialize(String identifier, C callback, F framework) {
 		this.identifier = identifier;
 		this.callback = callback;
 		this.framework = framework;
@@ -79,12 +80,12 @@ public abstract class CoreProcessorServiceProvider implements ProcessServiceProv
 	 * @return The process execution state completed.
 	 * @since 1.8
 	 */
-	protected ProcessServiceProvider.Processor.State complete() {
+	protected ProcessorCore.State complete() {
 		updatedStandardOutput(identifier + " completed.");
 
 		callback.updatedProgress(1F);
 
-		return ProcessServiceProvider.Processor.State.completed;
+		return ProcessorCore.State.completed;
 	}
 
 	/**
@@ -127,7 +128,7 @@ public abstract class CoreProcessorServiceProvider implements ProcessServiceProv
 	 * @return The callback interface for processor updates.
 	 * @since 1.8
 	 */
-	public ProcessServiceProvider.Processor.Callback getCallback() {
+	public ProcessorCore.Callback getCallback() {
 		return callback;
 	}
 
@@ -137,7 +138,7 @@ public abstract class CoreProcessorServiceProvider implements ProcessServiceProv
 	 * @return The framework.
 	 * @since 1.8
 	 */
-	public Framework getFramework() {
+	public F getFramework() {
 		return framework;
 	}
 

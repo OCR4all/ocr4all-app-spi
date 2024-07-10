@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import de.uniwuerzburg.zpd.ocr4all.application.spi.env.Framework;
+import de.uniwuerzburg.zpd.ocr4all.application.spi.env.ProcessFramework;
 
 /**
  * Defines mets utilities.
@@ -157,7 +157,7 @@ public class MetsUtils {
 	 * @return The mets file group. Null if framework is null.
 	 * @since 1.8
 	 */
-	public static FrameworkFileGroup getFileGroup(Framework framework) {
+	public static FrameworkFileGroup getFileGroup(ProcessFramework framework) {
 		return framework == null ? null : new FrameworkFileGroup(framework);
 	}
 
@@ -295,7 +295,7 @@ public class MetsUtils {
 		 * @param framework The framework.
 		 * @since 1.8
 		 */
-		protected FrameworkFileGroup(Framework framework) {
+		protected FrameworkFileGroup(ProcessFramework framework) {
 			super(framework.getMetsGroup());
 
 			String fileGroup = null;
