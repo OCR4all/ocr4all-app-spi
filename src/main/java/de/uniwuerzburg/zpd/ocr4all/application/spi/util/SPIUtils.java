@@ -7,6 +7,8 @@
  */
 package de.uniwuerzburg.zpd.ocr4all.application.spi.util;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 /**
@@ -28,6 +30,28 @@ public class SPIUtils {
 	 */
 	public static String getUUID() {
 		return UUID.randomUUID().toString();
+	}
+
+	/**
+	 * Returns the relative path part of target path with respect to the root path.
+	 * 
+	 * @param root   The root path.
+	 * @param target The target path.
+	 * @return The relative path. Null if the root path is not a prefix of the
+	 *         target path.
+	 * @since 1.8
+	 */
+	public static Path getRelativePath(Path root, Path target) {
+		if (root == null || target == null)
+			return null;
+		else {
+			target = target.normalize();
+
+			if (!target.startsWith(root))
+				return null;
+			else
+				return Paths.get(root.equals(target) ? "" : target.toString().substring(root.toString().length() + 1));
+		}
 	}
 
 }
