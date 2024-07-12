@@ -1,11 +1,11 @@
 /**
  * File:     MetsParser.java
- * Package:  de.uniwuerzburg.zpd.ocr4all.application.core.parser.mets
+ * Package:  de.uniwuerzburg.zpd.ocr4all.application.spi.util.mets
  * 
  * Author:   Herbert Baier (herbert.baier@uni-wuerzburg.de)
  * Date:     12.09.2022
  */
-package de.uniwuerzburg.zpd.ocr4all.application.spi.util;
+package de.uniwuerzburg.zpd.ocr4all.application.spi.util.mets;
 
 import java.io.File;
 import java.io.IOException;

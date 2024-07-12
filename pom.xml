@@ -38,6 +38,7 @@
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
 			<version>${SpringBoot_ocr4all-app_com.fasterxml.jackson.dataformat.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- ocr4all application communication -->
