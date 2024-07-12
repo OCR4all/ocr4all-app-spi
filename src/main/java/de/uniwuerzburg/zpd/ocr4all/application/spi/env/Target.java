@@ -11,10 +11,10 @@ import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 import de.uniwuerzburg.zpd.ocr4all.application.spi.util.ImageFormat;
+import de.uniwuerzburg.zpd.ocr4all.application.spi.util.SPIUtils;
 
 /**
  * Target is an immutable class that defines targets for service providers.
@@ -266,7 +266,7 @@ public class Target {
 		 * @since 1.8
 		 */
 		public Path getRootRelative(Path path) {
-			return getRelativePath(root, path);
+			return SPIUtils.getRelativePath(root, path);
 		}
 
 		/**
@@ -642,7 +642,7 @@ public class Target {
 		 * @since 1.8
 		 */
 		public Path getRootRelative(Path path) {
-			return getRelativePath(root, path);
+			return SPIUtils.getRelativePath(root, path);
 		}
 
 		/**
@@ -664,7 +664,7 @@ public class Target {
 		 * @since 1.8
 		 */
 		public Path getSnapshotsRelative(Path path) {
-			return getRelativePath(snapshots, path);
+			return SPIUtils.getRelativePath(snapshots, path);
 		}
 
 		/**
@@ -794,28 +794,6 @@ public class Target {
 	private static boolean isDirectoryEmpty(final Path path) throws IOException {
 		try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(path)) {
 			return !dirStream.iterator().hasNext();
-		}
-	}
-
-	/**
-	 * Returns the relative path part of target path with respect to the root path.
-	 * 
-	 * @param root   The root path.
-	 * @param target The target path.
-	 * @return The relative path. Null if the root path is not a prefix of the
-	 *         target path.
-	 * @since 1.8
-	 */
-	private static Path getRelativePath(Path root, Path target) {
-		if (root == null || target == null)
-			return null;
-		else {
-			target = target.normalize();
-
-			if (!target.startsWith(root))
-				return null;
-			else
-				return Paths.get(root.equals(target) ? "" : target.toString().substring(root.toString().length() + 1));
 		}
 	}
 

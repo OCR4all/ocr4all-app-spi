@@ -11,6 +11,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import de.uniwuerzburg.zpd.ocr4all.application.spi.util.SPIUtils;
+
 /**
  * ProcessFramework is an immutable class that defines process frameworks for
  * service providers.
@@ -155,19 +157,6 @@ public class ProcessFramework extends Framework {
 	}
 
 	/**
-	 * Returns the relative output path of the processor workspace, this means, the
-	 * sandbox snapshots root path.
-	 *
-	 * @return The relative output path of the processor workspace. Null if the
-	 *         relative output path can not be specified.
-	 * @since 1.8
-	 */
-	public Path getOutputRelativeProcessorWorkspace() {
-		return target == null || target.getSandbox() == null ? null
-				: target.getSandbox().getSnapshotsRelative(getOutput());
-	}
-
-	/**
 	 * Returns the projects directory.
 	 *
 	 * @return The projects directory.
@@ -187,4 +176,25 @@ public class ProcessFramework extends Framework {
 		return output;
 	}
 
+	/**
+	 * Returns the output path relative to projects path.
+	 *
+	 * @return The output path relative to projects path.
+	 * @since 1.8
+	 */
+	public Path getOutputRelativeProjects() {
+		return SPIUtils.getRelativePath(projects, output);
+	}
+
+	/**
+	 * Returns the relative output path of the processor workspace, this means, the
+	 * sandbox snapshots root path.
+	 *
+	 * @return The relative output path of the processor workspace. Null if the
+	 *         relative output path can not be specified.
+	 * @since 1.8
+	 */
+	public Path getOutputRelativeProcessorWorkspace() {
+		return target == null || target.getSandbox() == null ? null : target.getSandbox().getSnapshotsRelative(output);
+	}
 }
