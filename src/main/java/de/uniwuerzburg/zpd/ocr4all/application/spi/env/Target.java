@@ -324,6 +324,11 @@ public class Target {
 			private final Path folios;
 
 			/**
+			 * The folder for the normalized images.
+			 */
+			private final Path normalized;
+
+			/**
 			 * The derivatives quality images for the folios.
 			 */
 			private final Derivatives derivatives;
@@ -332,13 +337,15 @@ public class Target {
 			 * Creates folders for the project images.
 			 * 
 			 * @param folios      The folder for the folios.
+			 * @param normalized  The folder for the normalized images.
 			 * @param derivatives The derivatives quality image folders for the folios.
 			 * @since 1.8
 			 */
-			public Images(Path folios, Derivatives derivatives) {
+			public Images(Path folios, Path normalized, Derivatives derivatives) {
 				super();
 
 				this.folios = folios;
+				this.normalized = normalized;
 				this.derivatives = derivatives;
 			}
 
@@ -374,6 +381,40 @@ public class Target {
 			 */
 			public Path getFolios() {
 				return folios;
+			}
+
+			/**
+			 * Returns true if the folder for the normalized images is a directory.
+			 *
+			 * @return True if the folder is a directory; false if the folder does not
+			 *         exist, is not a directory, or it cannot be determined if the folder
+			 *         is a directory or not.
+			 * 
+			 * @since 1.8
+			 */
+			public boolean isNormalizedDirectory() {
+				return Files.isDirectory(normalized);
+			}
+
+			/**
+			 * Returns true if the normalized images directory is empty.
+			 * 
+			 * @return True if the normalized images directory is empty.
+			 * @throws IOException If an I/O error occurs.
+			 * @since 1.8
+			 */
+			public boolean isNormalizedEmpty() throws IOException {
+				return isDirectoryEmpty(normalized);
+			}
+
+			/**
+			 * Returns the folder for the normalized images.
+			 *
+			 * @return The folder for the normalized images.
+			 * @since 17
+			 */
+			public Path getNormalized() {
+				return normalized;
 			}
 
 			/**
