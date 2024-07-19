@@ -324,6 +324,11 @@ public class Target {
 			private final Path folios;
 
 			/**
+			 * The normalized images.
+			 */
+			private final Normalized normalized;
+
+			/**
 			 * The derivatives quality images for the folios.
 			 */
 			private final Derivatives derivatives;
@@ -332,13 +337,15 @@ public class Target {
 			 * Creates folders for the project images.
 			 * 
 			 * @param folios      The folder for the folios.
+			 * @param normalized  The normalized images.
 			 * @param derivatives The derivatives quality image folders for the folios.
 			 * @since 1.8
 			 */
-			public Images(Path folios, Derivatives derivatives) {
+			public Images(Path folios, Normalized normalized, Derivatives derivatives) {
 				super();
 
 				this.folios = folios;
+				this.normalized = normalized;
 				this.derivatives = derivatives;
 			}
 
@@ -377,6 +384,16 @@ public class Target {
 			}
 
 			/**
+			 * Returns the folder for the normalized images.
+			 *
+			 * @return The folder for the normalized images.
+			 * @since 17
+			 */
+			public Normalized getNormalized() {
+				return normalized;
+			}
+
+			/**
 			 * Returns true if the derivatives quality images for the folios is set.
 			 *
 			 * @return True if the derivatives quality images for the folios is set.
@@ -394,6 +411,86 @@ public class Target {
 			 */
 			public Derivatives getDerivatives() {
 				return derivatives;
+			}
+
+			/**
+			 * Derivatives is an immutable class that defines normalized image folders for
+			 * folios.
+			 *
+			 * 
+			 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
+			 * @version 1.0
+			 * @since 17
+			 */
+			public static class Normalized {
+				/**
+				 * The normalized image format.
+				 */
+				private final ImageFormat format;
+
+				/**
+				 * The folder.
+				 */
+				private final Path folder;
+
+				/**
+				 * Creates normalized image folders for folios.
+				 * 
+				 * @param format The normalized image format.
+				 * @param folder The folder.
+				 * @since 17
+				 */
+				public Normalized(ImageFormat format, Path folder) {
+					super();
+
+					this.format = format;
+					this.folder = folder;
+				}
+
+				/**
+				 * Returns the folios derivatives format.
+				 *
+				 * @return The folios derivatives format.
+				 * @since 1.8
+				 */
+				public ImageFormat getFormat() {
+					return format;
+				}
+
+				/**
+				 * Returns true if the folder is a directory.
+				 *
+				 * @return True if the folder is a directory; false if the folder does not
+				 *         exist, is not a directory, or it cannot be determined if the folder
+				 *         is a directory or not.
+				 * 
+				 * @since 1.8
+				 */
+				public boolean isNormalizedDirectory() {
+					return Files.isDirectory(folder);
+				}
+
+				/**
+				 * Returns true if the directory is empty.
+				 * 
+				 * @return True if the directory is empty.
+				 * @throws IOException If an I/O error occurs.
+				 * @since 1.8
+				 */
+				public boolean isNormalizedEmpty() throws IOException {
+					return isDirectoryEmpty(folder);
+				}
+
+				/**
+				 * Returns the folder.
+				 *
+				 * @return The folder.
+				 * @since 1.8
+				 */
+				public Path getFolder() {
+					return folder;
+				}
+
 			}
 
 			/**
