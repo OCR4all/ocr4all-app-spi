@@ -25,11 +25,6 @@ import de.uniwuerzburg.zpd.ocr4all.application.spi.util.SPIUtils;
  */
 public class Target {
 	/**
-	 * The folder for exchange.
-	 */
-	private final Path exchange;
-
-	/**
 	 * The folder for opt.
 	 */
 	private final Path opt;
@@ -57,7 +52,6 @@ public class Target {
 	/**
 	 * Creates a target for a service provider.
 	 * 
-	 * @param exchange The exchange folder.
 	 * @param opt      The opt folder.
 	 * @param data     The data folder.
 	 * @param assemble The assemble folder.
@@ -65,38 +59,14 @@ public class Target {
 	 * @param sandbox  The sandbox target.
 	 * @since 1.8
 	 */
-	public Target(Path exchange, Path opt, Path data, Path assemble, Project project, Sandbox sandbox) {
+	public Target(Path opt, Path data, Path assemble, Project project, Sandbox sandbox) {
 		super();
 
-		this.exchange = exchange;
 		this.opt = opt;
 		this.data = data;
 		this.assemble = assemble;
 		this.project = project;
 		this.sandbox = sandbox;
-	}
-
-	/**
-	 * Returns true if the folder for exchange is a directory.
-	 *
-	 * @return True if the folder is a directory; false if the folder does not
-	 *         exist, is not a directory, or it cannot be determined if the folder
-	 *         is a directory or not.
-	 * 
-	 * @since 1.8
-	 */
-	public boolean isExchangeDirectory() {
-		return Files.isDirectory(exchange);
-	}
-
-	/**
-	 * Returns the folder for exchange.
-	 *
-	 * @return The folder for exchange.
-	 * @since 1.8
-	 */
-	public Path getExchange() {
-		return exchange;
 	}
 
 	/**
