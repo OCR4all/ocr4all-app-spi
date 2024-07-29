@@ -196,16 +196,16 @@ public class SystemProcess {
 		// Start the system process
 		process = builder.start();
 
+		// Handles the system process output and error streams
+		if (!isDiscardOutput)
+			Executors.newSingleThreadExecutor().submit(
+					new InputStreamHandler(process.getInputStream(), (output) -> append(standardOutput, output)));
+
+		if (!isDiscardError)
+			Executors.newSingleThreadExecutor()
+					.submit(new InputStreamHandler(process.getErrorStream(), (error) -> append(standardError, error)));
+
 		if (isBackground) {
-			// Handles the system process output and error streams
-			if (!isDiscardOutput)
-				Executors.newSingleThreadExecutor().submit(
-						new InputStreamHandler(process.getInputStream(), (output) -> append(standardOutput, output)));
-
-			if (!isDiscardError)
-				Executors.newSingleThreadExecutor().submit(
-						new InputStreamHandler(process.getErrorStream(), (error) -> append(standardError, error)));
-
 			// Start the system process in background
 			new Thread(new Runnable() {
 				/*
@@ -238,12 +238,6 @@ public class SystemProcess {
 					// can not recover system job exit value
 				}
 			}
-
-			if (!isDiscardOutput)
-				copy(process.getInputStream(), standardOutput);
-
-			if (!isDiscardError)
-				copy(process.getErrorStream(), standardError);
 
 			process = null;
 		}
@@ -298,23 +292,6 @@ public class SystemProcess {
 	 */
 	public int getExitValue() {
 		return exitValue;
-	}
-
-	/**
-	 * Copies the input stream content to the buffer.
-	 * 
-	 * @param inputStream The input stream.
-	 * @param buffer      The buffer.
-	 * @since 1.8
-	 */
-	private static void copy(InputStream inputStream, StringBuffer buffer) {
-		try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-			String nextLine = null;
-			while ((nextLine = reader.readLine()) != null)
-				append(buffer, nextLine);
-		} catch (IOException e) {
-			// The stream was closed
-		}
 	}
 
 	/**
