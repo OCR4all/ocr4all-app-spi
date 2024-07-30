@@ -24,7 +24,7 @@ import java.util.function.Consumer;
  *
  * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
  * @version 1.0
- * @since 1.8
+ * @since 17
  */
 public class SystemProcess {
 	/**
@@ -65,7 +65,7 @@ public class SystemProcess {
 	 * 
 	 * @param command The operating system command.
 	 * @throws IllegalArgumentException Throws if the command is not defined.
-	 * @since 1.8
+	 * @since 17
 	 */
 	public SystemProcess(String command) throws IllegalArgumentException {
 		this(null, command);
@@ -78,7 +78,7 @@ public class SystemProcess {
 	 *                  of the current Java process.
 	 * @param command   The operating system command.
 	 * @throws IllegalArgumentException Throws if the command is not defined.
-	 * @since 1.8
+	 * @since 17
 	 */
 	public SystemProcess(Path directory, String command) throws IllegalArgumentException {
 		super();
@@ -94,7 +94,7 @@ public class SystemProcess {
 	 * Returns the operating system command.
 	 *
 	 * @return The operating system command.
-	 * @since 1.8
+	 * @since 17
 	 */
 	public String getCommand() {
 		return command;
@@ -107,7 +107,7 @@ public class SystemProcess {
 	 * @param arguments The arguments.
 	 * @throws IOException Throws if an I/O exception of some sort has occurred or
 	 *                     the process is already running.
-	 * @since 1.8
+	 * @since 17
 	 */
 	public void execute(String... arguments) throws IOException {
 		execute(false, arguments);
@@ -120,7 +120,7 @@ public class SystemProcess {
 	 * @param arguments The arguments. Null if no arguments are required.
 	 * @throws IOException Throws if an I/O exception of some sort has occurred or
 	 *                     the process is already running.
-	 * @since 1.8
+	 * @since 17
 	 */
 	public void execute(List<String> arguments) throws IOException {
 		execute(false, false, false, false, arguments);
@@ -136,7 +136,7 @@ public class SystemProcess {
 	 * @param arguments    The arguments.
 	 * @throws IOException Throws if an I/O exception of some sort has occurred or
 	 *                     the process is already running.
-	 * @since 1.8
+	 * @since 17
 	 */
 	public void execute(boolean isBackground, String... arguments) throws IOException {
 		execute(isBackground, false, false, false, Arrays.asList(arguments));
@@ -158,7 +158,7 @@ public class SystemProcess {
 	 *                                       required.
 	 * @throws IOException Throws if an I/O exception of some sort has occurred or
 	 *                     the process is already running.
-	 * @since 1.8
+	 * @since 17
 	 */
 	public synchronized void execute(boolean isBackground, boolean isAddEnvironmentStandardOutput,
 			boolean isDiscardOutput, boolean isDiscardError, List<String> arguments) throws IOException {
@@ -171,7 +171,9 @@ public class SystemProcess {
 		standardOutput = new StringBuffer();
 		standardError = new StringBuffer();
 
-		// Build the command with arguments
+		/*
+		 * Build the command with arguments
+		 */
 		List<String> commandBuilder = new ArrayList<>();
 		commandBuilder.add(command);
 
@@ -187,6 +189,9 @@ public class SystemProcess {
 		if (isAddEnvironmentStandardOutput)
 			append(standardOutput, "Process environment: " + builder.environment().toString());
 
+		/*
+		 * Discard the required system process outputs
+		 */
 		if (isDiscardOutput)
 			builder.redirectOutput(ProcessBuilder.Redirect.DISCARD);
 
@@ -196,7 +201,11 @@ public class SystemProcess {
 		// Start the system process
 		process = builder.start();
 
-		// Handles the system process output and error streams
+		/*
+		 * Consumes the output/error streams of the system process as soon as they are
+		 * generated. Otherwise, the parent process may block if it produces too many
+		 * outputs.
+		 */
 		if (!isDiscardOutput)
 			Executors.newSingleThreadExecutor().submit(
 					new InputStreamHandler(process.getInputStream(), (output) -> append(standardOutput, output)));
@@ -247,7 +256,7 @@ public class SystemProcess {
 	 * Returns true if the system job is running.
 	 * 
 	 * @return True if the system job is running.
-	 * @since 1.8
+	 * @since 17
 	 */
 	public boolean isRunning() {
 		return process != null;
@@ -256,7 +265,7 @@ public class SystemProcess {
 	/**
 	 * Cancels the system job.
 	 * 
-	 * @since 1.8
+	 * @since 17
 	 */
 	final public void cancel() {
 		if (isRunning())
@@ -267,7 +276,7 @@ public class SystemProcess {
 	 * Returns the system process standard output.
 	 *
 	 * @return The system process standard output.
-	 * @since 1.8
+	 * @since 17
 	 */
 	public String getStandardOutput() {
 		return standardOutput.toString();
@@ -277,7 +286,7 @@ public class SystemProcess {
 	 * Returns the system process standard error.
 	 *
 	 * @return The system process standard error.
-	 * @since 1.8
+	 * @since 17
 	 */
 	public String getStandardError() {
 		return standardError.toString();
@@ -288,7 +297,7 @@ public class SystemProcess {
 	 * termination. -1 if the exit value is not set.
 	 *
 	 * @return The exit value.
-	 * @since 1.8
+	 * @since 17
 	 */
 	public int getExitValue() {
 		return exitValue;
@@ -299,7 +308,7 @@ public class SystemProcess {
 	 * 
 	 * @param buffer  The buffer to add the content.
 	 * @param content The content. If null, do not update the buffer.
-	 * @since 1.8
+	 * @since 17
 	 */
 	private static void append(StringBuffer buffer, String content) {
 		if (content != null)
@@ -311,7 +320,7 @@ public class SystemProcess {
 	 *
 	 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
 	 * @version 1.0
-	 * @since 1.8
+	 * @since 17
 	 */
 	private static class InputStreamHandler implements Runnable {
 		/**
@@ -329,7 +338,7 @@ public class SystemProcess {
 		 * 
 		 * @param inputStream The input stream to handle.
 		 * @param consumer    The consumer for input contents.
-		 * @since 1.8
+		 * @since 17
 		 */
 		public InputStreamHandler(InputStream inputStream, Consumer<String> consumer) {
 			this.inputStream = inputStream;
