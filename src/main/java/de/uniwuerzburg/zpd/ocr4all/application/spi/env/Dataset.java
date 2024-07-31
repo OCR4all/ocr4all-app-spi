@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Dataset is an immutable class that defines datasets.
+ * Defines data sets.
  *
  * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
  * @version 1.0
@@ -21,7 +21,16 @@ public class Dataset {
 	/**
 	 * The collections.
 	 */
-	private final List<Collection> collections = new ArrayList<>();
+	private List<Collection> collections;
+
+	/**
+	 * Default constructor for a data set.
+	 * 
+	 * @since 17
+	 */
+	public Dataset() {
+		super();
+	}
 
 	/**
 	 * Creates a dataset.
@@ -31,6 +40,7 @@ public class Dataset {
 	public Dataset(java.util.Collection<Collection> collections) {
 		super();
 
+		this.collections = new ArrayList<>();
 		for (Collection collection : collections)
 			if (collection != null && collection.isConsistent())
 				this.collections.add(collection);
@@ -47,7 +57,17 @@ public class Dataset {
 	}
 
 	/**
-	 * Collection is an immutable class that defines collections for datasets.
+	 * Set the collections.
+	 *
+	 * @param collections The collections to set.
+	 * @since 17
+	 */
+	public void setCollections(List<Collection> collections) {
+		this.collections = collections;
+	}
+
+	/**
+	 * Defines collections for data sets.
 	 *
 	 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
 	 * @version 1.0
@@ -57,12 +77,21 @@ public class Dataset {
 		/**
 		 * The id.
 		 */
-		private final String id;
+		private String id;
 
 		/**
 		 * The sets.
 		 */
-		private final List<Set> sets = new ArrayList<>();
+		private List<Set> sets;
+
+		/**
+		 * Default constructor for a collection.
+		 * 
+		 * @since 17
+		 */
+		public Collection() {
+			super();
+		}
 
 		/**
 		 * Creates a collection.
@@ -75,6 +104,8 @@ public class Dataset {
 			super();
 
 			this.id = id;
+
+			this.sets = new ArrayList<>();
 			for (Set set : sets)
 				if (set != null && set.isConsistent())
 					this.sets.add(set);
@@ -101,6 +132,16 @@ public class Dataset {
 		}
 
 		/**
+		 * Set the id.
+		 *
+		 * @param id The id to set.
+		 * @since 17
+		 */
+		public void setId(String id) {
+			this.id = id;
+		}
+
+		/**
 		 * Returns the sets.
 		 *
 		 * @return The sets.
@@ -111,7 +152,17 @@ public class Dataset {
 		}
 
 		/**
-		 * Set is an immutable class that defines sets for collections.
+		 * Set the sets.
+		 *
+		 * @param sets The sets to set.
+		 * @since 17
+		 */
+		public void setSets(List<Set> sets) {
+			this.sets = sets;
+		}
+
+		/**
+		 * Defines sets for collections.
 		 *
 		 * @author <a href="mailto:herbert.baier@uni-wuerzburg.de">Herbert Baier</a>
 		 * @version 1.0
@@ -121,17 +172,26 @@ public class Dataset {
 			/**
 			 * The id.
 			 */
-			private final String id;
+			private String id;
 
 			/**
 			 * The xml extension.
 			 */
-			private final String xml;
+			private String xml;
 
 			/**
 			 * The image extension.
 			 */
-			private final String image;
+			private String image;
+
+			/**
+			 * Default constructor for a set.
+			 * 
+			 * @since 17
+			 */
+			public Set() {
+				super();
+			}
 
 			/**
 			 * Creates a set.
@@ -170,6 +230,16 @@ public class Dataset {
 			}
 
 			/**
+			 * Set the id.
+			 *
+			 * @param id The id to set.
+			 * @since 17
+			 */
+			public void setId(String id) {
+				this.id = id;
+			}
+
+			/**
 			 * Returns the xml extension.
 			 *
 			 * @return The xml extension.
@@ -180,6 +250,16 @@ public class Dataset {
 			}
 
 			/**
+			 * Set the xml extension.
+			 *
+			 * @param xml The xml extension to set.
+			 * @since 17
+			 */
+			public void setXml(String xml) {
+				this.xml = xml;
+			}
+
+			/**
 			 * Returns the image extension.
 			 *
 			 * @return The image extension.
@@ -187,6 +267,16 @@ public class Dataset {
 			 */
 			public String getImage() {
 				return image;
+			}
+
+			/**
+			 * Set the image extension.
+			 *
+			 * @param image The image extension to set.
+			 * @since 17
+			 */
+			public void setImage(String image) {
+				this.image = image;
 			}
 		}
 	}
