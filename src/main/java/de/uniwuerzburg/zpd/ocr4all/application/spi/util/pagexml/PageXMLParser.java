@@ -161,29 +161,30 @@ public class PageXMLParser {
 			 */
 			public static class TextEquivalenceCore {
 				/**
-				 * The text equivalence.
+				 * The text equivalences.
 				 */
 				@JacksonXmlProperty(localName = "TextEquiv")
-				private TextEquivalence textEquivalence;
+				@JacksonXmlElementWrapper(useWrapping = false)
+				private List<TextEquivalence> textEquivalences;
 
 				/**
-				 * Returns the text equivalence.
+				 * Returns the text equivalences.
 				 *
-				 * @return The text equivalence.
+				 * @return The text equivalences.
 				 * @since 17
 				 */
-				public TextEquivalence getTextEquivalence() {
-					return textEquivalence;
+				public List<TextEquivalence> getTextEquivalences() {
+					return textEquivalences;
 				}
 
 				/**
-				 * Set the text equivalence.
+				 * Set the text equivalences.
 				 *
-				 * @param textEquivalence The text equivalence to set.
+				 * @param textEquivalences The text equivalences to set.
 				 * @since 17
 				 */
-				public void setTextEquivalence(TextEquivalence textEquivalence) {
-					this.textEquivalence = textEquivalence;
+				public void setTextEquivalences(List<TextEquivalence> textEquivalences) {
+					this.textEquivalences = textEquivalences;
 				}
 
 				/**
