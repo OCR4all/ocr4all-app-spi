@@ -7,6 +7,7 @@
  */
 package de.uniwuerzburg.zpd.ocr4all.application.spi.core;
 
+import de.uniwuerzburg.zpd.ocr4all.application.communication.spi.ServiceProviderTask;
 import de.uniwuerzburg.zpd.ocr4all.application.spi.env.Database;
 import de.uniwuerzburg.zpd.ocr4all.application.spi.model.argument.ModelArgument;
 
@@ -39,10 +40,10 @@ public interface WorkerServiceProvider<D extends Database> extends ServiceProvid
 		 * 
 		 * @param database      The database for the worker.
 		 * @param modelArgument The models with their arguments.
-		 * @return The worker output.
+		 * @return The service provider task.
 		 * @since 17
 		 */
-		public String execute(D database, ModelArgument modelArgument);
+		public ServiceProviderTask execute(D database, ModelArgument modelArgument);
 	}
 
 }
